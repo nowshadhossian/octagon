@@ -4,11 +4,11 @@ import com.kids.crm.model.Student;
 import com.kids.crm.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class StudentController {
     private final StudentService studentService;
 
@@ -26,4 +26,12 @@ public class StudentController {
     private Student find(){
         return studentService.findByName("Tom");
     }
+
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    private String showsList(Model model){
+        model.addAttribute("studentList", studentService.findAllStudent());
+        model.addAttribute("msg", "Introduction of Freemarker in Project");
+        return "studentlist";
+    }
+
 }
