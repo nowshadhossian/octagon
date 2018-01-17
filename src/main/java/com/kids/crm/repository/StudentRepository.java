@@ -8,7 +8,8 @@ import java.util.List;
 
 @Repository
 public interface StudentRepository extends CrudRepository<Student, Long> {
-     Student findByName(String name);
+
 
     List<Student> findAll();
+     List<Student> findByName(String name);
 }

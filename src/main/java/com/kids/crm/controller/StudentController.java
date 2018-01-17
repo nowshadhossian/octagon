@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class StudentController {
@@ -18,11 +19,13 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.GET)
+    @ResponseBody
     private void saveStudent(){
         studentService.saveStudent("Tom", 43);
     }
 
     @RequestMapping(value = "/find", method = RequestMethod.GET)
+    @ResponseBody
     private Student find(){
         return studentService.findByName("Tom");
     }
@@ -34,4 +37,16 @@ public class StudentController {
         return "studentlist";
     }
 
+
+    @RequestMapping(value = "/success", method = RequestMethod.GET)
+    @ResponseBody
+    private String success(){
+        return "success";
+    }
+
+    @RequestMapping(value = "/fail", method = RequestMethod.GET)
+    @ResponseBody
+    private String fail(){
+        return "fail";
+    }
 }

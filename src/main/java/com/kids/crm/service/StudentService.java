@@ -24,8 +24,8 @@ public class StudentService {
         repository.save(student);
     }
 
-    public Student findByName(String name) {
-        return repository.findByName(name);
+    public Student findByName(String name){
+        return repository.findByName(name).stream().findFirst().orElse(new Student());
     }
 
     public List<Student> findAllStudent() {

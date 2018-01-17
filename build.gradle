@@ -47,7 +47,9 @@ dependencies {
 	runtime('org.springframework.boot:spring-boot-devtools')
 	compile('mysql:mysql-connector-java')
 /*	compileOnly('org.springframework.boot:spring-boot-configuration-processor')*/
-	compileOnly('org.projectlombok:lombok')
+	// https://mvnrepository.com/artifact/org.projectlombok/lombok
+	compileOnly('org.projectlombok:lombok:1.16.20')
+
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('io.projectreactor:reactor-test')
 	testCompile('org.springframework.security:spring-security-test')
