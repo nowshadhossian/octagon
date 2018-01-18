@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class SubjectSelectionController {
     private static final String BASE_ROUTE = "/subject";
 
-    @RequestMapping(name = BASE_ROUTE, method = RequestMethod.GET)
+    @RequestMapping(value = BASE_ROUTE, method = RequestMethod.GET)
     private String test(Authentication authentication, ModelMap modelMap){
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         modelMap.addAttribute("name", userDetails.getName());

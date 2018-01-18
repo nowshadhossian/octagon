@@ -10,6 +10,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistration;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
 @EnableWebSecurity
@@ -33,8 +37,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()
-                     /*.loginPage("/login")*/
-                     .defaultSuccessUrl("/subject", true) //redirect after login. true means always go to this url. False mean goto last accessed url
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/subject", true) //redirect after login. true means always go to this url. False mean goto last accessed url
                 .permitAll()
                       .and()
                 .logout()
