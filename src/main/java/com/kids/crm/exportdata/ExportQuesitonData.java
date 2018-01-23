@@ -54,14 +54,14 @@ public class ExportQuesitonData {
                             question.setSession(Session.builder().name((String) getCellValue(currentCell)).build());
                             break;
                         case 3:
-                           // question.setYear((int) getCellValue(currentCell));
+                            question.setYear(new Double((double)getCellValue(currentCell)).intValue());
                             break;
                         case 4:
-                            //question.setPaper((int) getCellValue(currentCell));
+                            question.setPaper(new Double((double)getCellValue(currentCell)).intValue());
                             break;
 
                         case 5:
-                           // question.setQuestionNo((int) getCellValue(currentCell));
+                            question.setQuestionNo(new Double((double)getCellValue(currentCell)).intValue());
                             break;
 
                         case 6:
