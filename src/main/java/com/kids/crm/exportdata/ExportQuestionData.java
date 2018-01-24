@@ -15,12 +15,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class ExportQuesitonData {
+public class ExportQuestionData {
     private static final String FILE_NAME = "E:\\excelfile\\Question Information.xlsx";
 
     public static void main(String args[]){
-        ExportQuesitonData exportQuesitonData = new ExportQuesitonData();
-        exportQuesitonData.readQuestionExcel();
+        ExportQuestionData exportQuestionData = new ExportQuestionData();
+        exportQuestionData.readQuestionExcel();
     }
 
     public void readQuestionExcel() {
