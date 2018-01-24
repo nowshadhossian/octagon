@@ -2,6 +2,7 @@ package com.kids.crm.exportdata;
 
 import com.kids.crm.model.Question;
 import com.kids.crm.model.Session;
+import com.kids.crm.model.Subject;
 import com.kids.crm.model.Topic;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -23,10 +24,10 @@ public class ExportQuestionData {
         exportQuestionData.readQuestionExcel();
     }
 
-    public void readQuestionExcel() {
+    public List<Question> readQuestionExcel() {
         FileInputStream excelFile = null;
+        List<Question> questionList = new ArrayList<>();
         try {
-            List<Question> questionList = new ArrayList<>();
             excelFile = new FileInputStream(new File(FILE_NAME));
             XSSFWorkbook workbook = new XSSFWorkbook(excelFile);
             Sheet datatypeSheet = workbook.getSheetAt(0);
@@ -69,6 +70,7 @@ public class ExportQuestionData {
                             break;
                     }
                 }
+                question.setSubject(Subject.builder().name("Physics").build());
                 questionList.add(question);
 
             }
@@ -76,6 +78,8 @@ public class ExportQuestionData {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return questionList;
     }
 
     private static Object getCellValue(Cell cell) {
