@@ -1,14 +1,14 @@
 package com.kids.crm.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table
 @Entity(name = "subject")
 public class Subject {

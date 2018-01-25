@@ -32,6 +32,9 @@ public class OctagonApplicationTests {
 	@Autowired
 	QuestionRepository questionRepository;
 
+	@Autowired
+	ExportQuestionData exportQuestionData;
+
 	@Ignore
 	@Test
 	public void saveUser() {
@@ -73,12 +76,16 @@ public class OctagonApplicationTests {
 						.name("Momentum")
 						.build()))
 				.build();*/
-		questionRepository.deleteAll();
-		ExportQuestionData exportQuestionData = new ExportQuestionData();
 		List<Question> questionList = exportQuestionData.readQuestionExcel();
-        questionList.forEach(question1 -> questionRepository.save(question1));
-		//questionRepository.save(question);
-
+        questionList.forEach(question1 -> {
+        	String subJectName = question1.getSubject().getName();
+        	question1.setSubject(null);
+        	question1.setSubject(exportQuestionData.findOrCreateSubject(subJectName));
+        	String sessionName = question1.getSession().getName();
+        	question1.setSession(null);
+			question1.setSession(exportQuestionData.findOrCreateSession(sessionName));
+			questionRepository.save(question1);
+		});
 	}
 
 }

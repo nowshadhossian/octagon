@@ -1,13 +1,15 @@
 package com.kids.crm.exportdata;
 
-import com.kids.crm.model.Question;
-import com.kids.crm.model.Session;
-import com.kids.crm.model.Subject;
-import com.kids.crm.model.Topic;
+import com.kids.crm.model.*;
+import com.kids.crm.repository.QuestionRepository;
+import com.kids.crm.repository.SessionRepository;
+import com.kids.crm.repository.SubjectRepository;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,14 +17,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
+@Component
 public class ExportQuestionData {
     private static final String FILE_NAME = "E:\\excelfile\\Question Information.xlsx";
 
-    public static void main(String args[]){
-        ExportQuestionData exportQuestionData = new ExportQuestionData();
-        exportQuestionData.readQuestionExcel();
-    }
+    @Autowired
+    QuestionRepository questionRepository;
+
+    @Autowired
+    SubjectRepository subjectRepository;
+
+    @Autowired
+    SessionRepository sessionRepository;
 
     public List<Question> readQuestionExcel() {
         FileInputStream excelFile = null;
@@ -46,7 +54,7 @@ public class ExportQuestionData {
                     int columnIndex = currentCell.getColumnIndex();
                     switch (columnIndex) {
                         case 0:
-                            question.setFileName((String) getCellValue(currentCell));
+                            question.setFileName((String) getCellValue(currentCell)+".jpg");
                             break;
                         case 1:
                             question.setAnswer((String) getCellValue(currentCell));
@@ -67,6 +75,10 @@ public class ExportQuestionData {
 
                         case 6:
                             question.setTopic(Topic.builder().name((String) getCellValue(currentCell)).build());
+                            break;
+
+                        case 7:
+                            question.setSubTopics(Set.of(SubTopic.builder().name((String) getCellValue(currentCell)).build()));
                             break;
                     }
                 }
@@ -95,5 +107,23 @@ public class ExportQuestionData {
         }
 
         return null;
+    }
+
+    public Subject findOrCreateSubject(String name) {
+        Subject subject = subjectRepository.findByName(name);
+        if (subject != null) {
+            return subject;
+        } else {
+            return Subject.builder().name(name).build();
+        }
+    }
+
+    public Session findOrCreateSession(String name) {
+        Session session = sessionRepository.findByName(name);
+        if (session != null) {
+            return session;
+        } else {
+            return Session.builder().name(name).build();
+        }
     }
 }
