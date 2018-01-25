@@ -17,13 +17,13 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String answer;
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name="session_id")
     private Session session;
     private int year;
     private int questionNo;
     private String fileName;
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.MERGE, CascadeType.ALL})
+    @ManyToMany()
     @JoinTable(name = "question_sub_topic",
                 joinColumns = @JoinColumn(name = "question_id"),
                 inverseJoinColumns = @JoinColumn(name=  "sub_topic_id")
@@ -33,7 +33,7 @@ public class Question {
     @JoinColumn(name="topic_id")
     private Topic topic;
     private int paper;
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name="subject_id")
     private Subject subject;
     private String answerExplanation;

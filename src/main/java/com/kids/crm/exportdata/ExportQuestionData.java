@@ -3,6 +3,7 @@ package com.kids.crm.exportdata;
 import com.kids.crm.model.*;
 import com.kids.crm.repository.QuestionRepository;
 import com.kids.crm.repository.SessionRepository;
+import com.kids.crm.repository.SubTopicRepository;
 import com.kids.crm.repository.SubjectRepository;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -14,14 +15,11 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class ExportQuestionData {
-    private static final String FILE_NAME = "E:\\excelfile\\Question Information.xlsx";
+    private static final String FILE_NAME = "/Users/nowshad/Downloads/octa-images-exam/Question_Information.xlsx";
 
     @Autowired
     QuestionRepository questionRepository;
@@ -31,6 +29,9 @@ public class ExportQuestionData {
 
     @Autowired
     SessionRepository sessionRepository;
+
+    @Autowired
+    SubTopicRepository subTopicRepository;
 
     public List<Question> readQuestionExcel() {
         FileInputStream excelFile = null;
@@ -60,7 +61,7 @@ public class ExportQuestionData {
                             question.setAnswer((String) getCellValue(currentCell));
                             break;
                         case 2:
-                            question.setSession(Session.builder().name((String) getCellValue(currentCell)).build());
+                            question.setSession(findOrCreateSession((String) getCellValue(currentCell)));
                             break;
                         case 3:
                             question.setYear(new Double((double)getCellValue(currentCell)).intValue());
@@ -78,11 +79,10 @@ public class ExportQuestionData {
                             break;
 
                         case 7:
-                            question.setSubTopics(Set.of(SubTopic.builder().name((String) getCellValue(currentCell)).build()));
+                            question.setSubTopics(findOrCreateSubTopic((String) getCellValue(currentCell)));
                             break;
                     }
                 }
-                question.setSubject(Subject.builder().name("Physics").build());
                 questionList.add(question);
 
             }
@@ -114,7 +114,7 @@ public class ExportQuestionData {
         if (subject != null) {
             return subject;
         } else {
-            return Subject.builder().name(name).build();
+            return subjectRepository.save(Subject.builder().name(name).code("3333").build());
         }
     }
 
@@ -123,7 +123,18 @@ public class ExportQuestionData {
         if (session != null) {
             return session;
         } else {
-            return Session.builder().name(name).build();
+            return sessionRepository.save(Session.builder().name(name).build());
         }
+    }
+
+    public Set<SubTopic> findOrCreateSubTopic(String commaSeparatedSubTopic) {
+        Set<SubTopic> subTopics = new HashSet<>();
+        for (String subTopicStr : commaSeparatedSubTopic.split(",")) {
+            subTopicRepository.findByName(subTopicStr.trim())
+                    .ifPresentOrElse(subTopics::add,
+                            () -> subTopics.add(subTopicRepository.save(SubTopic.builder().name(subTopicStr.trim()).build())
+                            ));
+        }
+        return subTopics;
     }
 }
