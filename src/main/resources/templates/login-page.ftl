@@ -1,4 +1,5 @@
-
+<img src="/images/goru.png" alt="b"/>
+<img src="/ui-lib/2.png" alt="e"/>
  <form action="/login" method="post">
      <fieldset>
          <legend>Please Login</legend>
