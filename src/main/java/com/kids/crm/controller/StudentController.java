@@ -34,7 +34,7 @@ public class StudentController {
     private String showsList(Model model){
         model.addAttribute("studentList", studentService.findAllStudent());
         model.addAttribute("msg", "Introduction of Freemarker in Project");
-        return "studentlist";
+        return "dashboard";
     }
 
 
