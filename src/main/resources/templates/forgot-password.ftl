@@ -19,29 +19,21 @@
 <body class="bg-dark">
 <div class="container">
     <div class="card card-login mx-auto mt-5">
-        <div class="card-header">Login</div>
+        <div class="card-header">Reset Password</div>
         <div class="card-body">
+            <div class="text-center mt-4 mb-5">
+                <h4>Forgot your password?</h4>
+                <p>Enter your email address and we will send you instructions on how to reset your password.</p>
+            </div>
             <form>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Enter email"/>
+                    <input class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Enter email address">
                 </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input class="form-control" id="exampleInputPassword1" type="password" placeholder="Password"/>
-                </div>
-                <div class="form-group">
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox"> Remember Password</label>
-                    </div>
-                </div>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <button class="btn btn-primary btn-block" href="index.html">Login</button>
+                <a class="btn btn-primary btn-block" href="login.html">Reset Password</a>
             </form>
             <div class="text-center">
-                <a class="d-block small mt-3" href="/register">Register an Account</a>
-                <a class="d-block small" href="/forgot-password">Forgot Password?</a>
+                <a class="d-block small mt-3" href="register.html">Register an Account</a>
+                <a class="d-block small" href="login.html">Login Page</a>
             </div>
         </div>
     </div>
@@ -52,7 +44,5 @@
 <!-- Core plugin JavaScript-->
 <script src="/jq/jquery-easing/jquery.easing.min.js"></script>
 </body>
-</body>
 
 </html>
-

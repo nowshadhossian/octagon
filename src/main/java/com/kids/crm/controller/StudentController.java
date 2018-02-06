@@ -37,6 +37,18 @@ public class StudentController {
         return "dashboard";
     }
 
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    private String register(Model model){
+        model.addAttribute("studentList", studentService.findAllStudent());
+        model.addAttribute("msg", "Introduction of Freemarker in Project");
+        return "register";
+    }
+
+    @RequestMapping(value = "/forgot-password", method = RequestMethod.GET)
+    private String forgetPassword(Model model){
+        return "forgot-password";
+    }
+
 
     @RequestMapping(value = "/success", method = RequestMethod.GET)
     @ResponseBody
