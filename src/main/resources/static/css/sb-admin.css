@@ -344,3 +344,10 @@ footer.sticky-footer {
 @media (min-width: 992px) {
   body.sidenav-toggled footer.sticky-footer {
     width: calc(100% - 55px); } }
+
+.form-check {
+  position: inherit ;
+  display: inherit;
+  margin-bottom: inherit;
+  padding-left: 1.5rem;
+}

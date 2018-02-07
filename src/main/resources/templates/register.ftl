@@ -52,6 +52,29 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="form-check-label" for="defaultCheck2">Enrolling..</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Physics
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+                        <label class="form-check-label" for="defaultCheck2">
+                            Chamistry
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+                        <label class="form-check-label" for="defaultCheck2">
+                            Biology
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label for="email">Email address</label>
                     <input class="form-control" id="email" name="email" type="email" aria-describedby="emailHelp" placeholder="Enter email">
                 </div>

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>SB Admin - Start Bootstrap Template</title>
+    <title>Octagon ForgetPassword Page</title>
     <!-- Bootstrap core CSS-->
     <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <!-- Custom fonts for this template-->
@@ -32,8 +32,8 @@
                 <a class="btn btn-primary btn-block" href="login.html">Reset Password</a>
             </form>
             <div class="text-center">
-                <a class="d-block small mt-3" href="register.html">Register an Account</a>
-                <a class="d-block small" href="login.html">Login Page</a>
+                <a class="d-block small mt-3" href="/register">Register an Account</a>
+                <a class="d-block small" href="/login">Login Page</a>
             </div>
         </div>
     </div>
