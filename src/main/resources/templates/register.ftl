@@ -75,6 +75,58 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="exampleFormControlSelect1">Session</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <option>Summer 2018</option>
+                        <option>Spring 2018</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                                <label for="exampleFormControlSelect1">Subject</label>
+                                <select class="form-control" id="exampleFormControlSelect1">
+                                    <option>Physics</option>
+                                    <option>Chemistry</option>
+                                    <option>Bio</option>
+                                </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="lastName">Last name</label>
+                            <input class="form-control" id="refereesName" name="refereesName" type="text" aria-describedby="nameHelp" placeholder="Enter referees name">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <label for="guardianName">Name</label>
+                            <input class="form-control" id="guardianName" name="guardianName" type="text"
+                                   aria-describedby="nameHelp" placeholder="Enter name">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="contactNo">Contact No</label>
+                            <input class="form-control" id="contactNo" name="contactNo" type="text"
+                                   aria-describedby="nameHelp" placeholder="Enter No">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="relation">Relation</label>
+                            <input class="form-control" id="relation" name="relation" type="text"
+                                   aria-describedby="nameHelp" placeholder="Enter Relation">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="email">Email</label>
+                            <input class="form-control" id="email" name="email" type="text" aria-describedby="nameHelp"
+                                   placeholder="Enter Email">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label for="email">Email address</label>
                     <input class="form-control" id="email" name="email" type="email" aria-describedby="emailHelp" placeholder="Enter email">
                 </div>
@@ -91,7 +143,7 @@
                         </div>
                     </div>
                 </div>
-                <a class="btn btn-primary btn-block" href="login.html">Register</a>
+                <a class="btn btn-primary btn-block" href="/register">Register</a>
             </form>
             <div class="text-center">
                 <a class="d-block small mt-3" href="/login">Login Page</a>
