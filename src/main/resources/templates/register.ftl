@@ -99,8 +99,8 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="form-row">
+                <div class="form-group guardian-col">
+                    <div class="form-row guardian-row">
                         <div class="col-md-3">
                             <label for="guardianName">Name</label>
                             <input class="form-control" id="guardianName" name="guardianName" type="text"
@@ -124,6 +124,7 @@
                                    placeholder="Enter Email">
                         </div>
                     </div>
+                    <a class="d-block small mt-3">Add Guardian</a>
                 </div>
 
                 <div class="form-group">
