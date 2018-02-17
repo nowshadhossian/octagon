@@ -55,7 +55,7 @@ public class ExportQuestionData {
                     int columnIndex = currentCell.getColumnIndex();
                     switch (columnIndex) {
                         case 0:
-                            question.setFileName((String) getCellValue(currentCell)+".jpg");
+                            question.setFileName((String) getCellValue(currentCell)+".png");
                             break;
                         case 1:
                             question.setAnswer((String) getCellValue(currentCell));
