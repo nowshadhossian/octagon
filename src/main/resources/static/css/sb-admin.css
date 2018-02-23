@@ -351,3 +351,8 @@ footer.sticky-footer {
   margin-bottom: inherit;
   padding-left: 1.5rem;
 }
+
+
+.guardian-row {
+  padding-bottom: 11px;
+}
