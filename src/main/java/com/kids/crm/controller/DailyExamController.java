@@ -22,6 +22,8 @@ public class DailyExamController {
     private String dailyExam(Authentication authentication, ModelMap modelMap, HttpServletResponse response, HttpServletRequest request) throws UnsupportedEncodingException {
         AuthUser authUser = (AuthUser) authentication.getPrincipal();
         modelMap.addAttribute("name", authUser.getName());
-        return "redirect:http://localhost:3000?u=" + authUser.getId(); //+ URLEncoder.encode(Encryption.encrypt(String.valueOf(authUser.getId())), "UTF-8");
+     //   response.addHeader("userId", "" + authUser.getId());
+        String encryptedUserId = Encryption.encrypt(String.valueOf(authUser.getId()));
+        return "redirect:http://localhost:3000/?u=" + URLEncoder.encode(encryptedUserId, "UTF-8");
     }
 }

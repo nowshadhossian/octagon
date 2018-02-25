@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Objects;
@@ -34,7 +35,6 @@ public class RestApiController {
         this.userRepository = userRepository;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = BASE_ROUTE + "/token/{encryptedUserId}", method = RequestMethod.GET)
     private String getJwtToken(@PathVariable String encryptedUserId, Authentication authentication) {
        return getJwtToken(encryptedUserId);
@@ -44,7 +44,7 @@ public class RestApiController {
     public String getJwtToken(String encryptedUserId){
         long userId = 0;
         try {
-            userId = Long.parseLong(encryptedUserId); //Long.parseLong(Encryption.decrypt(encryptedUserId));
+            userId = Long.parseLong(Encryption.decrypt(encryptedUserId));
             User user = userRepository.findById(userId)
                     .orElse(null);
             if (user != null) {
@@ -59,15 +59,13 @@ public class RestApiController {
     }
 
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = BASE_ROUTE + "/question/{questionId}/answer/{answer}", method = RequestMethod.GET)
-    private boolean isAnswerCorrect(@PathVariable long questionId, @PathVariable String answer) {
+    private boolean isAnswerCorrect(@PathVariable long questionId, @PathVariable String answer, Authentication authentication, HttpServletRequest request) {
         return questionRepository.findById(questionId)
                 .map(question -> Objects.equals(answer, question.getAnswer()))
                 .orElse(false);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = BASE_ROUTE + "/questions/{limit}/subject/{subjectId}", method = RequestMethod.GET)
     private QuestionsData randomQuestions(@PathVariable int limit, @PathVariable long subjectId) {
         int totalQuestions = questionRepository.countBySubjectId(subjectId);
@@ -80,11 +78,10 @@ public class RestApiController {
         return mapper.from(questions);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = BASE_ROUTE + "/questions/{limit}/subject/{subjectId}/etoken", method = RequestMethod.GET)
     private QuestionsData randomQuestionsWithEncrypted(@PathVariable int limit, @PathVariable long subjectId, @RequestParam String encryptedUserId, HttpServletResponse response) {
         response.addHeader("jwtToken", getJwtToken(encryptedUserId));
-        response.addHeader("Access-Control-Expose-Headers", "jwtToken");
+       // response.addHeader("Access-Control-Expose-Headers", "jwtToken");
         int totalQuestions = questionRepository.countBySubjectId(subjectId);
 
         //TODO random question which are not answered by the student
