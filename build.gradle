@@ -46,6 +46,12 @@ dependencies {
 	/*compile('org.springframework.boot:spring-boot-starter-websocket')*/
 	runtime('org.springframework.boot:spring-boot-devtools')
 	compile('mysql:mysql-connector-java')
+	compile 'com.auth0:java-jwt:3.3.0'
+	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+// https://mvnrepository.com/artifact/org.jasypt/jasypt
+	compile group: 'org.jasypt', name: 'jasypt', version: '1.9.2'
+
 /*	compileOnly('org.springframework.boot:spring-boot-configuration-processor')*/
 	// https://mvnrepository.com/artifact/org.projectlombok/lombok
 	compileOnly('org.projectlombok:lombok:1.16.20')
