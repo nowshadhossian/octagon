@@ -9,6 +9,7 @@ import java.util.List;
 public class AuthUser implements UserDetails {
     private User user;
     private long id;
+    private Role role;
 
     public AuthUser(User user) {
         this.user = user;
@@ -16,6 +17,10 @@ public class AuthUser implements UserDetails {
 
     public long getId() {
         return user.getId();
+    }
+
+    public Role getRole() {
+        return role;
     }
 
     @Override

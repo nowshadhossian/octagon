@@ -9,6 +9,7 @@ import com.kids.crm.repository.BoardRepository;
 import com.kids.crm.repository.QuestionRepository;
 import com.kids.crm.repository.SubjectRepository;
 import com.kids.crm.repository.UserRepository;
+import com.kids.crm.service.Encryption;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,6 +54,12 @@ public class OctagonApplicationTests {
 	}
 
 	@Test
+	public void encryption(){
+		System.out.println(Encryption.encrypt("happy"));
+	}
+
+	@Test
+	@Ignore
 	public void createQuestion(){
 		/*Board board = Board.builder().name("GCE Cambridge").build();
 		boardRepository.save(board);

@@ -13,5 +13,7 @@ His name is ${name}
            value="${_csrf.token}"/>
     <input type="submit" value="Logout">
 </form>
+
+<a href="/daily/exam">Daily Exam</a>
 </body>
 </html>
