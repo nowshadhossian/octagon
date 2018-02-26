@@ -66,6 +66,12 @@ public class RestApiController {
                 .orElse(false);
     }
 
+    @RequestMapping(value = BASE_ROUTE + "/question/{questionId}/time-count/{duration}", method = RequestMethod.GET)
+    private void recordPerQuestionTime(@PathVariable long questionId, @PathVariable int duration) {
+        System.out.println(questionId + " question, duration: " + duration); //save time taken per question
+    }
+
+
     @RequestMapping(value = BASE_ROUTE + "/questions/{limit}/subject/{subjectId}", method = RequestMethod.GET)
     private QuestionsData randomQuestions(@PathVariable int limit, @PathVariable long subjectId) {
         int totalQuestions = questionRepository.countBySubjectId(subjectId);
