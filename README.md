@@ -1,3 +1,14 @@
+##Installation:
+
+**1. Mongodb**
+brew install mongodb
+
+mongod --dbpath /Users/nowshad/programming/data/db
+
+Download Robo 3T as mongodb client
+
+
+
 **Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
 
 When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.

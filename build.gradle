@@ -45,6 +45,7 @@ dependencies {
 	/*compile('org.springframework.boot:spring-boot-starter-webflux')*/
 	/*compile('org.springframework.boot:spring-boot-starter-websocket')*/
 	runtime('org.springframework.boot:spring-boot-devtools')
+	compile("org.springframework.boot:spring-boot-starter-data-mongodb")
 	compile('mysql:mysql-connector-java')
 	compile 'com.auth0:java-jwt:3.3.0'
 	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3

@@ -3,10 +3,10 @@ package com.kids.crm.model;
 import org.springframework.security.core.GrantedAuthority;
 
 public enum Role implements GrantedAuthority{
-    TEACHER("Teacher"),
-    STUDENT("Student"),
-    ASSISTANT("Assistant"),
-    SUPER_ADMIN("Super_Admin");
+    TEACHER("ROLE_TEACHER"),
+    STUDENT("ROLE_STUDENT"),
+    ASSISTANT("ROLE_ASSISTANT"),
+    SUPER_ADMIN("ROLE_SUPER_ADMIN");
 
     private String name;
 
