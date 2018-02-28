@@ -4,6 +4,8 @@ import com.kids.crm.controller.api.data.QuestionsData;
 import com.kids.crm.model.Question;
 import com.kids.crm.model.StudentAnswer;
 import com.kids.crm.model.User;
+import com.kids.crm.model.mongo.QuestionSolvingTime;
+import com.kids.crm.mongo.repository.QuestionSolvingTimeRepository;
 import com.kids.crm.repository.QuestionRepository;
 import com.kids.crm.repository.StudentAnswerRepository;
 import com.kids.crm.repository.UserRepository;
@@ -30,14 +32,18 @@ public class RestApiController {
     private final JwtToken jwtToken;
     private final UserRepository userRepository;
     private final StudentAnswerRepository studentAnswerRepository;
+    private final QuestionSolvingTimeRepository questionSolvingTimeRepository;
+    private final RestApiManager restApiManager;
 
     @Autowired
-    public RestApiController(QuestionRepository questionRepository, DataMapper mapper, JwtToken jwtToken, UserRepository userRepository, StudentAnswerRepository studentAnswerRepository) {
+    public RestApiController(QuestionRepository questionRepository, DataMapper mapper, JwtToken jwtToken, UserRepository userRepository, StudentAnswerRepository studentAnswerRepository, QuestionSolvingTimeRepository questionSolvingTimeRepository, RestApiManager restApiManager) {
         this.questionRepository = questionRepository;
         this.mapper = mapper;
         this.jwtToken = jwtToken;
         this.userRepository = userRepository;
         this.studentAnswerRepository = studentAnswerRepository;
+        this.questionSolvingTimeRepository = questionSolvingTimeRepository;
+        this.restApiManager = restApiManager;
     }
 
     @RequestMapping(value = BASE_ROUTE + "/token/{encryptedUserId}", method = RequestMethod.GET)
@@ -80,9 +86,16 @@ public class RestApiController {
                 }).orElse(false);
     }
 
-    @RequestMapping(value = BASE_ROUTE + "/question/{questionId}/time-count/{duration}", method = RequestMethod.GET)
-    private void recordPerQuestionTime(@PathVariable long questionId, @PathVariable int duration) {
-        System.out.println(questionId + " question, duration: " + duration); //save time taken per question
+    @RequestMapping(value = BASE_ROUTE + "/question/{questionId}/time-count/{duration}/action/{action}", method = RequestMethod.GET)
+    private void recordPerQuestionTime(HttpServletRequest request, @PathVariable long questionId, @PathVariable int duration, @PathVariable String action) {
+        QuestionSolvingTime questionSolvingTime = QuestionSolvingTime.builder()
+                .questionId(questionId)
+                .action(action)
+                .duration(duration)
+                .createDate(new Date())
+                .userId(restApiManager.getUserId(request))
+                .build();
+        questionSolvingTimeRepository.save(questionSolvingTime);
     }
 
 
