@@ -3,6 +3,7 @@
 **1. Mongodb**
 brew install mongodb
 
+To start MongoDB:
 mongod --dbpath /Users/nowshad/programming/data/db
 
 Download Robo 3T as mongodb client

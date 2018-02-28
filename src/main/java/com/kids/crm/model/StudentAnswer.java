@@ -20,5 +20,6 @@ public class StudentAnswer {
     @JoinColumn(name="question_id")
     private Question question;
     private String answer;
-    private Date given;
+    private Date attendedOn;
+    private boolean gotCorrect;
 }
