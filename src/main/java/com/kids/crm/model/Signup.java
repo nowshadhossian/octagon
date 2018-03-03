@@ -12,4 +12,11 @@ import lombok.Setter;
 public class Signup {
     private String firstName;
     private String lastName;
+    private String phoneNo;
+    private String Address;
+    private long[] enrollingIds;
+    private String session;
+    private String email;
+    private String password;
+    private String confirmPassword;
 }

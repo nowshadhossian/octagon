@@ -29,8 +29,6 @@ public class RegistrationController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, params = "register")
     public String registerProcess(Model model, @ModelAttribute(name = "signup") Signup signup, BindingResult bindingResult){
-        model.addAttribute("studentList", studentService.findAllStudent());
-        model.addAttribute("msg", "Introduction of Freemarker in Project");
         return "register";
     }
 

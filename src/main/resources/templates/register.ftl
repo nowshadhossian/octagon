@@ -51,34 +51,35 @@
                     <textarea class="form-control" rows="5" id="address" name="address"></textarea>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group  enrolling-input">
                     <label class="form-check-label" for="defaultCheck2">Enrolling..</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <input class="form-check-input" type="checkbox" value="0" id="defaultCheck1">
                         <label class="form-check-label" for="defaultCheck1">
                             Physics
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+                        <input class="form-check-input" type="checkbox" value="1" id="defaultCheck2">
                         <label class="form-check-label" for="defaultCheck2">
                             Chamistry
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
+                        <input class="form-check-input" type="checkbox" value="2" id="defaultCheck3">
                         <label class="form-check-label" for="defaultCheck3">
                             Biology
                         </label>
                     </div>
+                    <input type="hidden" name="enrollingIds" value=""/>
                 </div>
 
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Session</label>
-                    <select class="form-control" id="session">
-                        <option>Summer 2018</option>
-                        <option>Spring 2018</option>
+                    <select class="form-control" id="session" name="session">
+                        <option value="Summer 2018">Summer 2018</option>
+                        <option value="Spring 2018">Spring 2018</option>
                     </select>
                 </div>
 
@@ -166,7 +167,7 @@
                             <input class="form-control" id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm password">
                         </div>
                     </div>
-                </div>-->
+                </div>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <button type="submit" class="btn btn-primary btn-block" name="register" value="register">Register</button>
             </form>
