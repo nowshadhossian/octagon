@@ -22,11 +22,11 @@
     <div class="card card-register mx-auto mt-5">
         <div class="card-header">Register an Account</div>
         <div class="card-body">
-            <form>
+            <form name="signup" action="/register-form" method="post">
                 <div class="form-group">
                     <div class="form-row">
                         <div class="col-md-6">
-                            <label for="firstName">First name</label>
+                            <label for="firstrName">First name</label>
                             <input class="form-control" id="firstName" name="firstName" type="text" aria-describedby="nameHelp" placeholder="Enter first name">
                         </div>
                         <div class="col-md-6">
@@ -167,7 +167,7 @@
                         </div>
                     </div>
                 </div>
-                <a class="btn btn-primary btn-block" href="/register">Register</a>
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
             </form>
             <div class="text-center">
                 <a class="d-block small mt-3" href="/login">Login Page</a>
