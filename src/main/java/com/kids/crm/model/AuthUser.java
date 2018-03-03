@@ -20,7 +20,7 @@ public class AuthUser implements UserDetails {
     }
 
     public Role getRole() {
-        return role;
+        return user.getRole();
     }
 
     @Override

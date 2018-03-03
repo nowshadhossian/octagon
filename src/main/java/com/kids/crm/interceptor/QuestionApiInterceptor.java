@@ -1,6 +1,7 @@
 package com.kids.crm.interceptor;
 
 
+import com.kids.crm.controller.api.RestApiManager;
 import com.kids.crm.service.JwtToken;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,13 @@ public class QuestionApiInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     private JwtToken jwtToken;
 
+    @Autowired
+    RestApiManager restApiManager;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (!request.getRequestURI().contains("/etoken") && List.of("GET", "POST", "DELETE", "PUT").contains(request.getMethod().toUpperCase())) {
-            String authorizationHeader = request.getHeader("Authorization");
-            String token = authorizationHeader.substring(authorizationHeader.indexOf(" ") + 1);
+            String token = restApiManager.getJwtTokenFromRequest(request);
             jwtToken.verifyToken(token).orElseThrow(RuntimeException::new);
         }
 

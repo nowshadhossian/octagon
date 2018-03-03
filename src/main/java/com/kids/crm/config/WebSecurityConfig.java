@@ -18,7 +18,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     UserService userService;
 
-
+    @Bean
+    public AfterLoginSuccess afterLoginSuccess(){
+        return new AfterLoginSuccess();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -35,7 +38,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                     .and()
                 .formLogin()
                         .loginPage("/login")
-                        .defaultSuccessUrl("/subject", true) //redirect after login. true means always go to this url. False mean goto last accessed url
+                        .successHandler(afterLoginSuccess())
+                    //MOVED_TO_AFTERLOGINSUCCESS    .defaultSuccessUrl("/subject", true) //redirect after login. true means always go to this url. False mean goto last accessed url
                 .permitAll()
                       .and()
                 .logout()
