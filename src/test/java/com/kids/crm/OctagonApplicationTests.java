@@ -12,6 +12,7 @@ import com.kids.crm.repository.QuestionRepository;
 import com.kids.crm.repository.SubjectRepository;
 import com.kids.crm.repository.UserRepository;
 import com.kids.crm.service.Encryption;
+import com.kids.crm.service.MailSender;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,6 +47,9 @@ public class OctagonApplicationTests {
 	@Autowired
 	UserLoginSessionRepository userLoginSessionRepository;
 
+	@Autowired
+	MailSender emailSender;
+
 	@Ignore
 	@Test
 	public void saveUser() {
@@ -69,6 +73,11 @@ public class OctagonApplicationTests {
 	@Test
 	public void encryption(){
 		System.out.println(Encryption.encrypt("happy"));
+	}
+
+	@Test
+	public void sendEmailToParents(){
+		emailSender.sendEmailToParentsWithDailyExamResult();
 	}
 
 	@Test
