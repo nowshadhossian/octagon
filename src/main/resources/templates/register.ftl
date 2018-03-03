@@ -22,11 +22,11 @@
     <div class="card card-register mx-auto mt-5">
         <div class="card-header">Register an Account</div>
         <div class="card-body">
-            <form name="signup" action="/register-form" method="post">
+            <form action="/register" method="post" name="signup">
                 <div class="form-group">
                     <div class="form-row">
                         <div class="col-md-6">
-                            <label for="firstrName">First name</label>
+                            <label for="firstName">First name</label>
                             <input class="form-control" id="firstName" name="firstName" type="text" aria-describedby="nameHelp" placeholder="Enter first name">
                         </div>
                         <div class="col-md-6">
@@ -36,7 +36,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group date_picker">
                     <label>Date Of Birth</label>
                     <input type="text" id="datepicker" name="dateOfBirth" class="form-control" placeholder="Choose">
                 </div>
@@ -166,8 +166,9 @@
                             <input class="form-control" id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm password">
                         </div>
                     </div>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">Register</button>
+                </div>-->
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <button type="submit" class="btn btn-primary btn-block" value="register">Register</button>
             </form>
             <div class="text-center">
                 <a class="d-block small mt-3" href="/login">Login Page</a>

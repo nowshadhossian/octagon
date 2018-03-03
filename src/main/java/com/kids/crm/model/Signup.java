@@ -11,4 +11,5 @@ import lombok.Setter;
 @Getter
 public class Signup {
     private String firstName;
+    private String lastName;
 }

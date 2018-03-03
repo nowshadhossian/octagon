@@ -21,14 +21,14 @@ public class RegistrationController {
         this.studentService = studentService;
     }
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    private String register(Model model){
+    public String register(Model model){
         model.addAttribute("studentList", studentService.findAllStudent());
         model.addAttribute("msg", "Introduction of Freemarker in Project");
         return "register";
     }
 
-    @RequestMapping(value = "/register-form", method = RequestMethod.POST)
-    private String registerProcess(Model model, @ModelAttribute("signup") Signup signup, BindingResult bindingResult){
+    @RequestMapping(value = "/register", method = RequestMethod.POST, params = "register")
+    public String registerProcess(Model model, @ModelAttribute(name = "signup") Signup signup, BindingResult bindingResult){
         model.addAttribute("studentList", studentService.findAllStudent());
         model.addAttribute("msg", "Introduction of Freemarker in Project");
         return "register";
