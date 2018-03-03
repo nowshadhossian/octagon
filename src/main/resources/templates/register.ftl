@@ -168,7 +168,7 @@
                     </div>
                 </div>-->
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <button type="submit" class="btn btn-primary btn-block" value="register">Register</button>
+                <button type="submit" class="btn btn-primary btn-block" name="register" value="register">Register</button>
             </form>
             <div class="text-center">
                 <a class="d-block small mt-3" href="/login">Login Page</a>
