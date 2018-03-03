@@ -1,9 +1,7 @@
 package com.kids.crm.controller.api;
 
 import com.kids.crm.controller.api.data.QuestionsData;
-import com.kids.crm.model.Question;
-import com.kids.crm.model.StudentAnswer;
-import com.kids.crm.model.User;
+import com.kids.crm.model.*;
 import com.kids.crm.model.mongo.QuestionSolvingTime;
 import com.kids.crm.mongo.repository.QuestionSolvingTimeRepository;
 import com.kids.crm.repository.QuestionRepository;
@@ -18,9 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -101,27 +97,45 @@ public class RestApiController {
 
     @RequestMapping(value = BASE_ROUTE + "/questions/{limit}/subject/{subjectId}", method = RequestMethod.GET)
     private QuestionsData randomQuestions(@PathVariable int limit, @PathVariable long subjectId) {
-        int totalQuestions = questionRepository.countBySubjectId(subjectId);
+        return mapper.from(randomQuestionId(subjectId));
+    }
 
-        //TODO random question which are not answered by the student
-        List<Question> questions = questionRepository.findBySubjectId(subjectId).stream()
-                .limit(10)
+    private List<Question> randomQuestionId(long subjectId){
+        Set<Long> studentAnswers = studentAnswerRepository.findAll()
+                .stream()
+                .map(StudentAnswer::getQuestion)
+                .map(Question::getId)
+                .collect(Collectors.toSet());
+
+        List<IdOnly> unAnsweredQuestions = questionRepository.findBySubjectId(subjectId) //TODO put question in redis
+                .stream()
+                .filter(idOnly -> !studentAnswers.contains(idOnly.getId()))
                 .collect(Collectors.toList());
 
-        return mapper.from(questions);
+        if (unAnsweredQuestions.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        if (unAnsweredQuestions.size() <= 10) {
+            return questionRepository.findByIdIn(unAnsweredQuestions.stream()
+                    .map(IdOnly::getId)
+                    .collect(Collectors.toSet()));
+        }
+
+        Set<Long> randomQuestionIds = new HashSet<>();
+        Random random = new Random();
+        while(randomQuestionIds.size() < 10){
+            int randomQuestionId = random.nextInt(unAnsweredQuestions.size());
+            randomQuestionIds.add(unAnsweredQuestions.get(randomQuestionId).getId());
+        }
+        return questionRepository.findByIdIn(randomQuestionIds);
     }
 
     @RequestMapping(value = BASE_ROUTE + "/questions/{limit}/subject/{subjectId}/etoken", method = RequestMethod.GET)
     private QuestionsData randomQuestionsWithEncrypted(@PathVariable int limit, @PathVariable long subjectId, @RequestParam String encryptedUserId, HttpServletResponse response) {
         response.addHeader("jwtToken", getJwtToken(encryptedUserId));
         // response.addHeader("Access-Control-Expose-Headers", "jwtToken");
-        int totalQuestions = questionRepository.countBySubjectId(subjectId);
 
-        //TODO random question which are not answered by the student
-        List<Question> questions = questionRepository.findBySubjectId(subjectId).stream()
-                .limit(10)
-                .collect(Collectors.toList());
-
-        return mapper.from(questions);
+        return mapper.from(randomQuestionId(subjectId));
     }
 }
