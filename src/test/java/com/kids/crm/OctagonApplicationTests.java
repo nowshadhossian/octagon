@@ -1,17 +1,14 @@
 package com.kids.crm;
 
 import com.kids.crm.exportdata.ExportQuestionData;
-import com.kids.crm.model.Question;
-import com.kids.crm.model.Role;
-import com.kids.crm.model.Subject;
-import com.kids.crm.model.User;
+import com.kids.crm.model.*;
 import com.kids.crm.model.mongo.UserLoginSession;
 import com.kids.crm.mongo.repository.UserLoginSessionRepository;
-import com.kids.crm.repository.BoardRepository;
-import com.kids.crm.repository.QuestionRepository;
-import com.kids.crm.repository.SubjectRepository;
-import com.kids.crm.repository.UserRepository;
+import com.kids.crm.repository.*;
 import com.kids.crm.service.Encryption;
+import com.kids.crm.service.MailSender;
+import com.kids.crm.utils.DateUtils;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +17,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -46,6 +45,11 @@ public class OctagonApplicationTests {
 	@Autowired
 	UserLoginSessionRepository userLoginSessionRepository;
 
+	@Autowired
+	MailSender emailSender;
+
+	@Autowired private StudentAnswerRepository studentAnswerRepository;
+
 	@Ignore
 	@Test
 	public void saveUser() {
@@ -53,6 +57,28 @@ public class OctagonApplicationTests {
 		user.setEmail("test@test.com");
 		user.setName("Test");
 		user.setRole(Role.STUDENT);
+		user.setPassword(passwordEncoder.encode("me2"));
+		userRepository.save(user);
+	}
+
+	@Test
+	@Ignore
+	public void saveSecondUser() {
+		User user = new User();
+		user.setEmail("second@test.com");
+		user.setName("Second Hossain");
+		user.setRole(Role.STUDENT);
+		user.setPassword(passwordEncoder.encode("me2"));
+		userRepository.save(user);
+	}
+
+	@Test
+	@Ignore
+	public void saveTeacher() {
+		User user = new User();
+		user.setEmail("teacher@test.com");
+		user.setName("Talukdar Hossain");
+		user.setRole(Role.TEACHER);
 		user.setPassword(passwordEncoder.encode("me2"));
 		userRepository.save(user);
 	}
@@ -69,6 +95,22 @@ public class OctagonApplicationTests {
 	@Test
 	public void encryption(){
 		System.out.println(Encryption.encrypt("happy"));
+	}
+
+	@Test
+	public void sendEmailToParents(){
+		emailSender.sendEmailToParentsWithDailyExamResult();
+	}
+
+	@Test
+	public void yesterdayDailyExamResult(){
+		Date yesterdayStart = DateUtils.toDate(LocalDate.now().minusDays(1));
+		Date yesterdayEnd = DateUtils.toDate(LocalDate.now());
+
+		User user = userRepository.findByEmail("test@test.com")
+				.orElse(null);
+		List<StudentAnswer> list = studentAnswerRepository.findByUserAndAttendedOnBetweenAndExamType(user, yesterdayStart, yesterdayEnd, ExamType.DAILY_EXAM);
+		Assert.assertEquals(list.size(), 2);
 	}
 
 	@Test
