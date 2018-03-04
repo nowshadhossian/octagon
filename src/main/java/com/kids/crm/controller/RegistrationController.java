@@ -31,5 +31,4 @@ public class RegistrationController {
     public String registerProcess(Model model, @ModelAttribute(name = "signup") Signup signup, BindingResult bindingResult){
         return "register";
     }
-
 }

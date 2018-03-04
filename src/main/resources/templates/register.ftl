@@ -54,25 +54,19 @@
                 <div class="form-group  enrolling-input">
                     <label class="form-check-label" for="defaultCheck2">Enrolling..</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="0" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                            Physics
-                        </label>
+                        <input class="form-check-input" type="checkbox" value="1" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">Physics</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="1" id="defaultCheck2">
-                        <label class="form-check-label" for="defaultCheck2">
-                            Chamistry
-                        </label>
+                        <input class="form-check-input" type="checkbox" value="2" id="defaultCheck2">
+                        <label class="form-check-label" for="defaultCheck2">Chamistry</label>
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="2" id="defaultCheck3">
-                        <label class="form-check-label" for="defaultCheck3">
-                            Biology
-                        </label>
+                        <input class="form-check-input" type="checkbox" value="3" id="defaultCheck3">
+                        <label class="form-check-label" for="defaultCheck3">Biology</label>
                     </div>
-                    <input type="hidden" name="enrollingIds" value=""/>
+                    <input class="enroleids" type="hidden" name="enrollingIds" value="[0]"/>
                 </div>
 
                 <div class="form-group">
@@ -87,10 +81,10 @@
                     <div class="form-row">
                         <div class="col-md-6">
                                 <label for="exampleFormControlSelect1">Subject</label>
-                                <select class="form-control" id="subject">
-                                    <option>Physics</option>
-                                    <option>Chemistry</option>
-                                    <option>Bio</option>
+                                <select class="form-control" id="subject" name="subject">
+                                    <option value="1">Physics</option>
+                                    <option value="2">Chemistry</option>
+                                    <option value="3">Bio</option>
                                 </select>
                         </div>
                         <div class="col-md-6">
@@ -105,24 +99,24 @@
                         <div class="form-row guardian-row">
                             <div class="col-md-3">
                                 <label for="guardianName">Name</label>
-                                <input class="form-control" id="guardianName-0" name="guardianName" type="text"
+                                <input class="form-control guardian-name" name="guardianName[0]" type="text"
                                        aria-describedby="nameHelp" placeholder="Enter name">
                             </div>
                             <div class="col-md-3">
                                 <label for="contactNo">Contact No</label>
-                                <input class="form-control" id="contactNo-0" name="contactNo" type="text"
+                                <input class="form-control guardian-contactNo"  name="contactNo[0]" type="text"
                                        aria-describedby="nameHelp" placeholder="Enter No">
                             </div>
 
                             <div class="col-md-3">
                                 <label for="relation">Relation</label>
-                                <input class="form-control" id="relation-0" name="relation" type="text"
+                                <input class="form-control guardian-relation" name="relation[0]" type="text"
                                        aria-describedby="nameHelp" placeholder="Enter Relation">
                             </div>
 
                             <div class="col-md-3">
                                 <label for="email">Email</label>
-                                <input class="form-control" id="email-0" name="email" type="text"
+                                <input class="form-control guardian-email" name="guardianEmail[0]" type="text"
                                        aria-describedby="nameHelp"
                                        placeholder="Enter Email">
                             </div>
@@ -135,18 +129,18 @@
                 <script id="template-guardian-list-item" type="text/template">
                     <div class="form-row guardian-row">
                         <div class="col-md-3">
-                            <input class="form-control" name="guardianName" type="text" aria-describedby="nameHelp" placeholder="Enter name">
+                            <input class="form-control  guardian-name" name="guardianName" type="text" aria-describedby="nameHelp" placeholder="Enter name">
                         </div>
                         <div class="col-md-3">
-                            <input class="form-control" name="contactNo" type="text" aria-describedby="nameHelp" placeholder="Enter No">
-                        </div>
-
-                        <div class="col-md-3">
-                            <input class="form-control" name="relation" type="text" aria-describedby="nameHelp" placeholder="Enter Relation">
+                            <input class="form-control guardian-contactNo" name="contactNo" type="text" aria-describedby="nameHelp" placeholder="Enter No">
                         </div>
 
                         <div class="col-md-3">
-                            <input class="form-control" name="email" type="text" aria-describedby="nameHelp" placeholder="Enter Email">
+                            <input class="form-control guardian-relation" name="relation" type="text" aria-describedby="nameHelp" placeholder="Enter Relation">
+                        </div>
+
+                        <div class="col-md-3">
+                            <input class="form-control guardian-email" name="guardianEmail" type="text" aria-describedby="nameHelp" placeholder="Enter Email">
                         </div>
                     </div>
                 </script>
@@ -169,7 +163,7 @@
                     </div>
                 </div>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <button type="submit" class="btn btn-primary btn-block" name="register" value="register">Register</button>
+                <button id="register" type="submit" class="btn btn-primary btn-block" name="register" value="register">Register</button>
             </form>
             <div class="text-center">
                 <a class="d-block small mt-3" href="/login">Login Page</a>
