@@ -76,6 +76,7 @@ public class RestApiController {
                             .attendedOn(new Date())
                             .question(question)
                             .gotCorrect(answerIsCorrect)
+                            .examType(ExamType.DAILY_EXAM)
                             .build();
                     studentAnswerRepository.save(studentAnswer);
                     return answerIsCorrect;

@@ -2,7 +2,7 @@ package com.kids.crm.model;
 
 import org.springframework.security.core.GrantedAuthority;
 
-public enum Role implements GrantedAuthority{
+public enum Role implements GrantedAuthority {
     TEACHER("ROLE_TEACHER"),
     STUDENT("ROLE_STUDENT"),
     ASSISTANT("ROLE_ASSISTANT"),
@@ -17,5 +17,9 @@ public enum Role implements GrantedAuthority{
     @Override
     public String getAuthority() {
         return name;
+    }
+
+    public boolean isStudent() {
+        return this == STUDENT;
     }
 }

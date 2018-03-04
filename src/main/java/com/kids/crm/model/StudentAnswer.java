@@ -22,4 +22,8 @@ public class StudentAnswer {
     private String answer;
     private Date attendedOn;
     private boolean gotCorrect;
+    private ExamType examType;
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="user_id")
+    private User user;
 }
