@@ -352,7 +352,16 @@ footer.sticky-footer {
   padding-left: 1.5rem;
 }
 
+.form-check-label {
+  padding-left: 0.25rem;
+  margin-bottom: 1px;
+}
+
 
 .guardian-row {
+  padding-bottom: 11px;
+}
+
+.guardian-row, .referee-row {
   padding-bottom: 11px;
 }

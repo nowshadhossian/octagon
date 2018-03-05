@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -21,8 +20,8 @@ public class Signup {
     private String email;
     private String password;
     private String confirmPassword;
-    private String subjectName;
-    private String refereesName;
+    private String[] subject;
+    private String[] refereesName;
     private String[] guardianName;
     private String[]contactNo;
     private String[] relation;
