@@ -24,11 +24,13 @@ public class RegistrationController {
     public String register(Model model){
         model.addAttribute("studentList", studentService.findAllStudent());
         model.addAttribute("msg", "Introduction of Freemarker in Project");
+        model.addAttribute("signup", new Signup());
         return "register";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, params = "register")
-    public String registerProcess(Model model, @ModelAttribute(name = "signup") Signup signup, BindingResult bindingResult){
+    public String registerProcess(Model model, @ModelAttribute Signup signup, BindingResult bindingResult){
+        bindingResult.rejectValue("firstName", "","Wong ok goit it???");
         return "register";
     }
 }

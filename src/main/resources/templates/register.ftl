@@ -1,4 +1,4 @@
-
+<#import "/spring.ftl" as spring/>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,12 +22,14 @@
     <div class="card card-register mx-auto mt-5">
         <div class="card-header">Register an Account</div>
         <div class="card-body">
-            <form action="/register" method="post" name="signup">
+            <form action="/register" method="post">
                 <div class="form-group">
                     <div class="form-row">
                         <div class="col-md-6">
+                            <@spring.bind "signup.firstName" />
                             <label for="firstName">First name</label>
-                            <input class="form-control" id="firstName" name="firstName" type="text" aria-describedby="nameHelp" placeholder="Enter first name">
+                            <input class="form-control" id="firstName" name="${spring.status.expression}" type="text" value="${spring.status.value?default("")}" aria-describedby="nameHelp" placeholder="Enter first name">
+                            <@spring.showErrors "<br>"/>
                         </div>
                         <div class="col-md-6">
                             <label for="lastName">Last name</label>
