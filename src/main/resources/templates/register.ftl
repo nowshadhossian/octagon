@@ -15,6 +15,7 @@
     <link href="/css/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- Custom styles for this template-->
     <link href="/css/sb-admin.css" rel="stylesheet">
+    <link href="/css/jquery-ui.css" rel="stylesheet" >
 </head>
 
 <body class="bg-dark">
@@ -40,9 +41,8 @@
 
                 <div class="form-group date_picker">
                     <label>Date Of Birth</label>
-                    <input type="text" id="datepicker" name="dateOfBirth" class="form-control" placeholder="Choose">
+                    <input class="form-control" id="date" name="dateOfBirth" placeholder="MM/DD/YYYY enter date" type="text"/>
                 </div>
-
                 <div class="form-group">
                     <label for="phoneNo">Phone No</label>
                     <input class="form-control" id="phoneNo" name="phoneNo" type="number" aria-describedby="phoneNo" placeholder="Enter Phone Number">
@@ -201,5 +201,12 @@
 <!-- Core plugin JavaScript-->
 <script src="/js/jquery-easing/jquery.easing.min.js"></script>
 <script src="/js/sb-admin.min.js"></script>
+<!-- Include Date Range Picker -->
+<script src="/js/jquery-ui.js"></script>
+<script>
+    $( function() {
+        $( "#date" ).datepicker();
+    } );
+</script>
 </body>
 </html>
