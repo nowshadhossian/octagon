@@ -21,7 +21,7 @@ public class QuestionApiInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (!request.getRequestURI().contains("/etoken") && List.of("GET", "POST", "DELETE", "PUT").contains(request.getMethod().toUpperCase())) {
-            String token = restApiManager.getJwtTokenFromRequest(request);
+            String token = restApiManager.getJwtTokenFromRequest();
             jwtToken.verifyToken(token).orElseThrow(RuntimeException::new);
         }
 
