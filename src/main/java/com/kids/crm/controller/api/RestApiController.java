@@ -9,6 +9,7 @@ import com.kids.crm.repository.StudentAnswerRepository;
 import com.kids.crm.repository.UserRepository;
 import com.kids.crm.service.Encryption;
 import com.kids.crm.service.JwtToken;
+import com.kids.crm.service.exception.UserNotFoundException;
 import org.jasypt.exceptions.EncryptionOperationNotPossibleException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -43,7 +44,7 @@ public class RestApiController {
     }
 
     @RequestMapping(value = BASE_ROUTE + "/token/{encryptedUserId}", method = RequestMethod.GET)
-    private String getJwtToken(@PathVariable String encryptedUserId, Authentication authentication) {
+    private String getJwtTokenResponse(@PathVariable String encryptedUserId, Authentication authentication) {
         return getJwtToken(encryptedUserId);
 
     }
@@ -76,6 +77,7 @@ public class RestApiController {
                             .attendedOn(new Date())
                             .question(question)
                             .gotCorrect(answerIsCorrect)
+                            .user(restApiManager.getUser())
                             .examType(ExamType.DAILY_EXAM)
                             .build();
                     studentAnswerRepository.save(studentAnswer);
@@ -90,7 +92,7 @@ public class RestApiController {
                 .action(action)
                 .duration(duration)
                 .createDate(new Date())
-                .userId(restApiManager.getUserId(request))
+                .userId(restApiManager.getUserId())
                 .build();
         questionSolvingTimeRepository.save(questionSolvingTime);
     }
@@ -98,11 +100,11 @@ public class RestApiController {
 
     @RequestMapping(value = BASE_ROUTE + "/questions/{limit}/subject/{subjectId}", method = RequestMethod.GET)
     private QuestionsData randomQuestions(@PathVariable int limit, @PathVariable long subjectId) {
-        return mapper.from(randomQuestionId(subjectId));
+        return mapper.from(randomQuestionId(subjectId, restApiManager.getUser()));
     }
 
-    private List<Question> randomQuestionId(long subjectId){
-        Set<Long> studentAnswers = studentAnswerRepository.findAll()
+    private List<Question> randomQuestionId(long subjectId, User user){
+        Set<Long> studentAnswers = studentAnswerRepository.findByUser(user)
                 .stream()
                 .map(StudentAnswer::getQuestion)
                 .map(Question::getId)
@@ -133,10 +135,12 @@ public class RestApiController {
     }
 
     @RequestMapping(value = BASE_ROUTE + "/questions/{limit}/subject/{subjectId}/etoken", method = RequestMethod.GET)
-    private QuestionsData randomQuestionsWithEncrypted(@PathVariable int limit, @PathVariable long subjectId, @RequestParam String encryptedUserId, HttpServletResponse response) {
-        response.addHeader("jwtToken", getJwtToken(encryptedUserId));
+    private QuestionsData randomQuestionsWithEncrypted(@PathVariable int limit, @PathVariable long subjectId, @RequestHeader String encryptedUserId, HttpServletResponse response, HttpServletRequest request) {
+        String jwtToken = getJwtToken(encryptedUserId);
+        response.addHeader("jwtToken", jwtToken);
         // response.addHeader("Access-Control-Expose-Headers", "jwtToken");
-
-        return mapper.from(randomQuestionId(subjectId));
+        User user = userRepository.findById(restApiManager.getUserId(jwtToken))
+                .orElseThrow(() -> new UserNotFoundException(-1));
+        return mapper.from(randomQuestionId(subjectId, user));
     }
 }
