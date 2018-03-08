@@ -68,12 +68,12 @@ public class RestApiController {
 
 
     @RequestMapping(value = BASE_ROUTE + "/question/{questionId}/answer/{answer}", method = RequestMethod.GET)
-    private boolean isAnswerCorrect(@PathVariable long questionId, @PathVariable String answer, Authentication authentication, HttpServletRequest request) {
+    private String isAnswerCorrect(@PathVariable long questionId, @PathVariable String answer, Authentication authentication, HttpServletRequest request) {
         return questionRepository.findById(questionId)
                 .map(question -> {
                     boolean answerIsCorrect = Objects.equals(answer, question.getAnswer());
                     StudentAnswer studentAnswer = StudentAnswer.builder()
-                            .answer(question.getAnswer())
+                            .answer(answer)
                             .attendedOn(new Date())
                             .question(question)
                             .gotCorrect(answerIsCorrect)
@@ -81,8 +81,8 @@ public class RestApiController {
                             .examType(ExamType.DAILY_EXAM)
                             .build();
                     studentAnswerRepository.save(studentAnswer);
-                    return answerIsCorrect;
-                }).orElse(false);
+                    return "{\"success\": \"" + question.getAnswer() +"\"}";
+                }).orElseThrow(RuntimeException::new);
     }
 
     @RequestMapping(value = BASE_ROUTE + "/question/{questionId}/time-count/{duration}/action/{action}", method = RequestMethod.GET)
