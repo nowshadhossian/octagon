@@ -15,6 +15,7 @@
     <link href="/css/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- Custom styles for this template-->
     <link href="/css/sb-admin.css" rel="stylesheet">
+    <link href="/css/jquery-ui.css" rel="stylesheet" >
 </head>
 
 <body class="bg-dark">

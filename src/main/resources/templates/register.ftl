@@ -175,10 +175,9 @@
         </div>
 
 </div>
+<#include "layout/no-nav/bottom.ftl">
 <script>
     $( function() {
         $( "#date" ).datepicker();
     } );
 </script>
-
-<#include "layout/no-nav/bottom.ftl">
