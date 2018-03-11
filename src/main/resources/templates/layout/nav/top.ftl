@@ -10,10 +10,10 @@
 <#include "/layout/nav/nav.ftl">
 <div class="content-wrapper">
     <div class="container-fluid">
-        <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
+       <#-- <!-- Breadcrumbs&ndash;&gt;
+       <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="index.html">Dashboard</a>
             </li>
             <li class="breadcrumb-item active">Blank Page</li>
-        </ol>
+        </ol>-->

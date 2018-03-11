@@ -1,3 +1,14 @@
+<#assign title="Subject Home | Octagon">
+<#include "/layout/nav/top.ftl">
+<div class="row">
+    <div class="col-12">
+        <h1>Hello ${name}!!!</h1>
+        <p>This is an example of a blank page that you can use as a starting point for creating new ones.</p>
+    </div>
+</div>
+<#include "/layout/nav/bottom.ftl">
+<#--
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,4 +30,4 @@ His name is ${name}
 
 <a href="/daily/exam">Daily Exam</a>
 </body>
-</html>
+</html>-->
