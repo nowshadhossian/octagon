@@ -24,4 +24,7 @@ public class Signup {
     private String[]contactNo;
     private String[] relation;
     private String[] guardianEmail;
+
+    //teacher
+    private String degree;
 }

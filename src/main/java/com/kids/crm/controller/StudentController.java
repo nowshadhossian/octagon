@@ -24,11 +24,11 @@ public class StudentController {
         studentService.saveStudent("Tom", 43);
     }
 
-    @RequestMapping(value = "/find", method = RequestMethod.GET)
+   /* @RequestMapping(value = "/find", method = RequestMethod.GET)
     @ResponseBody
     private Student find(){
         return studentService.findByName("Tom");
-    }
+    }*/
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     private String showsList(Model model){

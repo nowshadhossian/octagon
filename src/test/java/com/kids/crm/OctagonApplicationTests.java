@@ -55,7 +55,7 @@ public class OctagonApplicationTests {
 	public void saveUser() {
 		User user = new User();
 		user.setEmail("test@test.com");
-		user.setName("Test");
+		user.setFirstName("Test");
 		user.setRole(Role.STUDENT);
 		user.setPassword(passwordEncoder.encode("me2"));
 		userRepository.save(user);
@@ -66,7 +66,7 @@ public class OctagonApplicationTests {
 	public void saveSecondUser() {
 		User user = new User();
 		user.setEmail("second@test.com");
-		user.setName("Second Hossain");
+		user.setFirstName("Second Hossain");
 		user.setRole(Role.STUDENT);
 		user.setPassword(passwordEncoder.encode("me2"));
 		userRepository.save(user);
@@ -77,7 +77,7 @@ public class OctagonApplicationTests {
 	public void saveTeacher() {
 		User user = new User();
 		user.setEmail("teacher@test.com");
-		user.setName("Talukdar Hossain");
+		user.setFirstName("Talukdar Hossain");
 		user.setRole(Role.TEACHER);
 		user.setPassword(passwordEncoder.encode("me2"));
 		userRepository.save(user);

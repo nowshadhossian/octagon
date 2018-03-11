@@ -18,15 +18,15 @@ public class StudentService {
 
     public void saveStudent(String name, int age) {
         Student student = new Student();
-        student.setAge(age);
-        student.setName(name);
+      /*  student.setAge(age);
+        student.setName(name);*/
 
         repository.save(student);
     }
 
-    public Student findByName(String name){
+   /* public Student findByName(String name){
         return repository.findByName(name).stream().findFirst().orElse(new Student());
-    }
+    }*/
 
     public List<Student> findAllStudent() {
         return repository.findAll();

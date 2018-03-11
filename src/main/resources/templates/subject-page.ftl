@@ -5,7 +5,10 @@
 </head>
 <body>
 <h2>Success here</h2>
+
 His name is ${name}
+
+
 
 <form action="/logout" method="post">
     <input type="hidden"
