@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class RegisterTeacherController {
@@ -19,7 +20,6 @@ public class RegisterTeacherController {
     @Autowired private UserRepository userRepository;
 
 
-
     @RequestMapping(value = BASE_ROUTE, method = RequestMethod.GET)
     public String register(Model model){
         model.addAttribute("signup", new Signup());
@@ -27,7 +27,7 @@ public class RegisterTeacherController {
     }
 
     @RequestMapping(value = BASE_ROUTE, method = RequestMethod.POST)
-    public String registerTeacher(Model model, Signup signup){
+    public String registerTeacher(Model model, Signup signup, RedirectAttributes redirectAttributes){
         User teacher = Teacher.builder()
                 .address(signup.getAddress())
                 .degree(signup.getDegree())
@@ -41,7 +41,7 @@ public class RegisterTeacherController {
 
         userRepository.save(teacher);
 
-
+        redirectAttributes.addFlashAttribute("successMsg", "Successfully created Teacher account.");
         return "redirect:/login";
     }
 }

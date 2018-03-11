@@ -1,5 +1,23 @@
 <#assign title="Login Page | Octagon">
 <#include "layout/no-nav/top.ftl">
+<#if successMsg??>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+      ${successMsg}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+</#if>
+
+<#if (SPRING_SECURITY_LAST_EXCEPTION)??>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      Invalid Username or Password
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+</#if>
+
  <div class="card card-login mx-auto mt-5">
         <div class="card-header">Login</div>
         <div class="card-body">
