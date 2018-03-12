@@ -2,6 +2,7 @@ package com.kids.crm.controller;
 
 import com.kids.crm.model.Signup;
 import com.kids.crm.service.StudentService;
+import com.kids.crm.validator.SignupValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +16,11 @@ public class RegistrationController {
 
 
     private final StudentService studentService;
-
+    private final SignupValidator validator;
     @Autowired
-    public RegistrationController(StudentService studentService) {
+    public RegistrationController(StudentService studentService, SignupValidator validator) {
         this.studentService = studentService;
+        this.validator = validator;
     }
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String register(Model model){
@@ -30,7 +32,10 @@ public class RegistrationController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, params = "register")
     public String registerProcess(Model model, @ModelAttribute Signup signup, BindingResult bindingResult){
-        bindingResult.rejectValue("firstName", "","Wong ok goit it???");
-        return "register";
+        validator.validate(signup, bindingResult);
+        if(bindingResult.hasErrors()){
+            return "register";
+        }
+        return "dashboard";
     }
 }

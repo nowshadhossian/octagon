@@ -13,28 +13,37 @@
                             <@spring.showErrors "<br>"/>
                         </div>
                         <div class="col-md-6">
+                            <@spring.bind "signup.lastName" />
                             <label for="lastName">Last name</label>
-                            <input class="form-control" id="lastName" name="lastName" type="text" aria-describedby="nameHelp" placeholder="Enter last name">
+                            <input class="form-control" id="lastName" name="${spring.status.expression}" value="${spring.status.value?default("")}" type="text" aria-describedby="nameHelp" placeholder="Enter last name">
+                           <@spring.showErrors "<br>"/>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group date_picker">
+                     <@spring.bind "signup.dateOfBirth" />
                     <label>Date Of Birth</label>
-                    <input class="form-control" id="date" name="dateOfBirth" placeholder="MM/DD/YYYY enter date" type="text"/>
+                    <input class="form-control" id="date" name="${spring.status.expression}" value="${spring.status.value?default("")}" placeholder="MM/DD/YYYY enter date" type="text"/>
+                     <@spring.showErrors "<br>"/>
                 </div>
                 <div class="form-group">
+                     <@spring.bind "signup.phoneNo" />
                     <label for="phoneNo">Phone No</label>
-                    <input class="form-control" id="phoneNo" name="phoneNo" type="number" aria-describedby="phoneNo" placeholder="Enter Phone Number">
+                    <input class="form-control" id="phoneNo" name="${spring.status.expression}" value="${spring.status.value?default("")}" type="number" aria-describedby="phoneNo" placeholder="Enter Phone Number">
+                     <@spring.showErrors "<br>"/>
                 </div>
 
                 <div class="form-group">
+                     <@spring.bind "signup.address" />
                     <label for="comment">Address:</label>
-                    <textarea class="form-control" rows="5" id="address" name="address"></textarea>
+                    <textarea class="form-control" rows="5" id="address"  name="${spring.status.expression}" value="${spring.status.value?default("")}"></textarea>
+                     <@spring.showErrors "<br>"/>
                 </div>
 
                 <div class="form-group  enrolling-input">
                     <label class="form-check-label" for="defaultCheck2">Enrolling..</label>
+                     <@spring.bind "signup.enrollingIds" />
                     <div class="form-check">
                         <input class="form-check-input"  name="enrollingIds" type="checkbox" value="1" id="defaultCheck1">
                         <label class="form-check-label" for="defaultCheck1">Physics</label>
@@ -48,6 +57,7 @@
                         <input class="form-check-input" name="enrollingIds" type="checkbox" value="3" id="defaultCheck3">
                         <label class="form-check-label" for="defaultCheck3">Biology</label>
                     </div>
+                     <@spring.showErrors "<br>"/>
                 </div>
 
                 <div class="form-group">
@@ -149,19 +159,25 @@
                 </script>
 
                 <div class="form-group">
+                     <@spring.bind "signup.email" />
                     <label for="email">Email address</label>
-                    <input class="form-control" id="email" name="email" type="email" aria-describedby="emailHelp" placeholder="Enter email">
+                    <input class="form-control" id="email"  name="${spring.status.expression}" value="${spring.status.value?default("")}" type="email" aria-describedby="emailHelp" placeholder="Enter email">
+                    <@spring.showErrors "<br>"/>
                 </div>
 
                 <div class="form-group">
                     <div class="form-row">
                         <div class="col-md-6">
+                            <@spring.bind "signup.password" />
                             <label for="password">Password</label>
-                            <input class="form-control" id="password" name="password" type="password" placeholder="Password">
+                            <input class="form-control" id="password" name="${spring.status.expression}" value="${spring.status.value?default("")}" type="password" placeholder="Password">
+                            <@spring.showErrors "<br>"/>
                         </div>
                         <div class="col-md-6">
+                            <@spring.bind "signup.confirmPassword" />
                             <label for="confirmPassword">Confirm password</label>
-                            <input class="form-control" id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm password">
+                            <input class="form-control" id="confirmPassword" name="${spring.status.expression}" value="${spring.status.value?default("")}" type="password" placeholder="Confirm password">
+                            <@spring.showErrors "<br>"/>
                         </div>
                     </div>
                 </div>

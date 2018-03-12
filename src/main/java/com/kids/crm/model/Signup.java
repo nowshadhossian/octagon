@@ -12,11 +12,12 @@ public class Signup {
     private String firstName;
     private String lastName;
     private String phoneNo;
-    private String Address;
+    private String address;
     private String[] enrollingIds;
     private String session;
     private String email;
     private String password;
+    private String dateOfBirth;
     private String confirmPassword;
     private String[] subject;
     private String[] refereesName;
