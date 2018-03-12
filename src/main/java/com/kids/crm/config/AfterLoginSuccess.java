@@ -1,6 +1,6 @@
 package com.kids.crm.config;
 
-import com.kids.crm.model.AuthUser;
+import com.kids.crm.model.User;
 import com.kids.crm.model.mongo.UserLoginSession;
 import com.kids.crm.mongo.repository.UserLoginSessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class AfterLoginSuccess implements AuthenticationSuccessHandler{
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        AuthUser authUser = (AuthUser) authentication.getPrincipal();
+        User authUser = (User) authentication.getPrincipal();
         UserLoginSession userLoginSession = UserLoginSession.builder()
                 .email(authUser.getUsername())
                 .name(authUser.getName())
