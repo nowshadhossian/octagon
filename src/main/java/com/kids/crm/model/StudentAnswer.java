@@ -19,6 +19,9 @@ public class StudentAnswer {
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="question_id")
     private Question question;
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="subject_id")
+    private Subject subject;
     private String answer;
     private Date attendedOn;
     private boolean gotCorrect;

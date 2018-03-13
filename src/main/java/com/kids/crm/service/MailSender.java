@@ -1,9 +1,8 @@
 package com.kids.crm.service;
 
-import com.kids.crm.model.ExamType;
-import com.kids.crm.model.StudentAnswer;
-import com.kids.crm.model.User;
+import com.kids.crm.model.*;
 import com.kids.crm.repository.StudentAnswerRepository;
+import com.kids.crm.repository.StudentRepository;
 import com.kids.crm.repository.UserRepository;
 import com.kids.crm.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +32,8 @@ public class MailSender {
     private StudentAnswerRepository studentAnswerRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    StudentRepository studentRepository;
 
     @Value("${mail.from.email}")
     private String from;
@@ -85,39 +86,39 @@ public class MailSender {
     }
 
     public void sendEmailToParentsWithDailyExamResult() {
-        String subject = "[Octagon] Daily Exam Result";
+        String mailSubject = "[Octagon] Daily Exam Result";
 
         Date yesterdayStart = DateUtils.toDate(LocalDate.now().minusDays(1));
         Date yesterdayEnd = DateUtils.toDate(LocalDate.now());
 
-        List<User> users = userRepository.findAll()
-                .stream()
-                .filter(user -> user.getRole().isStudent())
-                .collect(Collectors.toList());
+        List<Student> students = studentRepository.findAll();
 
 
-        for (User user : users) {
-            List<StudentAnswer> studentAnswers = studentAnswerRepository.findByUserAndAttendedOnBetweenAndExamType(user, yesterdayStart, yesterdayEnd, ExamType.DAILY_EXAM);
-            if (studentAnswers.isEmpty()) {
-                Map<String, String> params = new HashMap<>();
-                params.put("name", user.getName());
+        //TODO need testing
+        for (Student student : students) {
+            List<Subject> subjects = student.getSubjects();
+            for(Subject subject: subjects){
+                List<StudentAnswer> studentAnswers = studentAnswerRepository.findByUserAndAttendedOnBetweenAndSubjectAndExamType(student, yesterdayStart, yesterdayEnd, subject, ExamType.DAILY_EXAM);
+                if (studentAnswers.isEmpty()) {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("name", student.getName());
 
-                String body = getTemplate(params, "DailyExamResultToParentsDidNotAppear.html");
-                send(subject, body, "parents@parent.com");
-            } else {
-                long correct = studentAnswers.stream().filter(StudentAnswer::isGotCorrect).count();
-                long wrong = studentAnswers.stream().filter(answer -> !answer.isGotCorrect()).count();
-                Map<String, String> params = new HashMap<>();
-                params.put("name", user.getName());
-                params.put("correct", "" + correct);
-                params.put("wrong", "" + wrong);
-                params.put("skipped", "" + (10 - correct - wrong));
+                    String body = getTemplate(params, "DailyExamResultToParentsDidNotAppear.html");
+                    send(mailSubject, body, "parents@parent.com");
+                } else {
+                    long correct = studentAnswers.stream().filter(StudentAnswer::isGotCorrect).count();
+                    long wrong = studentAnswers.stream().filter(answer -> !answer.isGotCorrect()).count();
+                    Map<String, String> params = new HashMap<>();
+                    params.put("name", student.getName());
+                    params.put("correct", "" + correct);
+                    params.put("wrong", "" + wrong);
+                    params.put("skipped", "" + (10 - correct - wrong));
 
 
-                String body = getTemplate(params, "DailyExamResultToParents.html");
-                send(subject, body, "parents@parent.com");
+                    String body = getTemplate(params, "DailyExamResultToParents.html");
+                    send(mailSubject, body, "parents@parent.com");
+                }
             }
-
         }
     }
 }

@@ -7,9 +7,6 @@ import com.kids.crm.pojo.LastAttendedResult;
 import com.kids.crm.repository.StudentAnswerRepository;
 import com.kids.crm.repository.UserRepository;
 import com.kids.crm.utils.DateUtils;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,11 +22,13 @@ public class UserService implements UserDetailsService {
 
     private UserRepository userRepository;
     private StudentAnswerRepository studentAnswerRepository;
+    private UserSession userSession;
 
     @Autowired
-    public UserService(UserRepository userRepository, StudentAnswerRepository studentAnswerRepository) {
+    public UserService(UserRepository userRepository, StudentAnswerRepository studentAnswerRepository, UserSession userSession) {
         this.userRepository = userRepository;
         this.studentAnswerRepository = studentAnswerRepository;
+        this.userSession = userSession;
     }
 
 
@@ -44,7 +43,9 @@ public class UserService implements UserDetailsService {
 
         Map<String, LastAttendedResult> resultsMap = new HashMap<>();
         DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
-        studentAnswersWeekly.stream()
+        studentAnswersWeekly
+                .stream()
+                .filter(answer -> Objects.equals(answer.getSubject().getId(), userSession.getCurrentSubject().getId()))
                 .forEach(answer -> {
                             if (resultsMap.containsKey(df.format(answer.getAttendedOn()))) {
                                 LastAttendedResult lastAttendedResult = resultsMap.get(df.format(answer.getAttendedOn()));
