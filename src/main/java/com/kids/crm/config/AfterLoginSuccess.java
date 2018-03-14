@@ -40,7 +40,7 @@ public class AfterLoginSuccess implements AuthenticationSuccessHandler{
         if (authorities.contains("ROLE_STUDENT")) {
             return "/subject";
         } else if (authorities.contains("ROLE_TEACHER")) {
-            return "/teacher";
+            return "/teacher/dashboard";
         } else {
             throw new IllegalStateException();
         }

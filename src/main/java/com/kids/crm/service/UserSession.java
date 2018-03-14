@@ -1,9 +1,12 @@
 package com.kids.crm.service;
 
+import com.kids.crm.model.Batch;
 import com.kids.crm.model.Subject;
 import com.kids.crm.model.User;
+import com.kids.crm.repository.BatchRepository;
 import com.kids.crm.repository.QuestionRepository;
 import com.kids.crm.repository.SubjectRepository;
+import com.kids.crm.service.exception.BatchNotFoundException;
 import com.kids.crm.service.exception.SubjectNotFoundException;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,9 +23,13 @@ import org.springframework.stereotype.Service;
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserSession {
     private Subject currentSubject;
+    private Batch currentBatch;
 
     @Autowired
     SubjectRepository subjectRepository;
+
+    @Autowired
+    BatchRepository batchRepository;
 
     public User getLoggedInUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -30,6 +37,10 @@ public class UserSession {
     }
 
     public Subject getCurrentSubject() {
-        return subjectRepository.findById(1l).orElseThrow(SubjectNotFoundException::new);
+        return getCurrentBatch().getSubject();
+    }
+
+    public Batch getCurrentBatch(){
+        return batchRepository.findById(1l).orElseThrow(BatchNotFoundException::new);
     }
 }

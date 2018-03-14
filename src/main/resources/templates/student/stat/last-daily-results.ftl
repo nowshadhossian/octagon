@@ -1,5 +1,6 @@
 <#-- @ftlvariable name="lastWeeklyResults" type="java.util.List<com.kids.crm.pojo.LastAttendedResult>" -->
 <#assign title="Subject Home | Octagon">
+<#assign navPage="/layout/nav/student-nav.ftl">
 <#include "/layout/nav/top.ftl">
 <div class="row">
     <div class="col-12">

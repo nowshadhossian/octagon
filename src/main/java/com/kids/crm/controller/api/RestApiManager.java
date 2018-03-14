@@ -2,9 +2,12 @@ package com.kids.crm.controller.api;
 
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.kids.crm.model.Batch;
 import com.kids.crm.model.User;
+import com.kids.crm.repository.BatchRepository;
 import com.kids.crm.repository.UserRepository;
 import com.kids.crm.service.JwtToken;
+import com.kids.crm.service.exception.BatchNotFoundException;
 import com.kids.crm.service.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -23,6 +26,9 @@ public class RestApiManager {
     HttpServletRequest request;
     private @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    BatchRepository batchRepository;
 
     public long getUserId() {
         String token = getJwtTokenFromRequest();
@@ -45,5 +51,9 @@ public class RestApiManager {
     public String getJwtTokenFromRequest() {
         String authorizationHeader = request.getHeader("Authorization");
         return authorizationHeader.substring(authorizationHeader.indexOf(" ") + 1);
+    }
+
+    public Batch getCurrentBatch(){
+        return batchRepository.findById(1l).orElseThrow(BatchNotFoundException::new);
     }
 }

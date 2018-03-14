@@ -17,10 +17,10 @@ public class Student extends User{
 
     @ManyToMany
     @JoinTable(
-            name="student_subject",
+            name="student_batch",
             joinColumns = @JoinColumn(name="student_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "subject_id", referencedColumnName = "id")
+            inverseJoinColumns = @JoinColumn(name = "batch_id", referencedColumnName = "id")
     )
-    private List<Subject> subjects;
+    private List<Batch> batches;
 
 }

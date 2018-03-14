@@ -29,4 +29,7 @@ public class StudentAnswer {
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="user_id")
     private User user;
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="batch_id")
+    private Batch batch;
 }

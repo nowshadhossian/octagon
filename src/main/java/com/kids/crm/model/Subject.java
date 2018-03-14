@@ -21,7 +21,4 @@ public class Subject {
     @ManyToOne
     @JoinColumn(name="board_id")
     private Board board;
-
-    @ManyToMany(mappedBy = "subjects")
-    private List<Student> students;
 }

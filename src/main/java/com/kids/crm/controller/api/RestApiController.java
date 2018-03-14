@@ -77,6 +77,7 @@ public class RestApiController {
                             .attendedOn(new Date())
                             .question(question)
                             .subject(question.getSubject())
+                            .batch(restApiManager.getCurrentBatch())
                             .gotCorrect(answerIsCorrect)
                             .user(restApiManager.getUser())
                             .examType(ExamType.DAILY_EXAM)

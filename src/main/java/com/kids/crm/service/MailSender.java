@@ -96,9 +96,9 @@ public class MailSender {
 
         //TODO need testing
         for (Student student : students) {
-            List<Subject> subjects = student.getSubjects();
-            for(Subject subject: subjects){
-                List<StudentAnswer> studentAnswers = studentAnswerRepository.findByUserAndAttendedOnBetweenAndSubjectAndExamType(student, yesterdayStart, yesterdayEnd, subject, ExamType.DAILY_EXAM);
+            List<Batch> batches = student.getBatches();
+            for(Batch batch: batches){
+                List<StudentAnswer> studentAnswers = studentAnswerRepository.findByUserAndAttendedOnBetweenAndBatchAndExamType(student, yesterdayStart, yesterdayEnd, batch, ExamType.DAILY_EXAM);
                 if (studentAnswers.isEmpty()) {
                     Map<String, String> params = new HashMap<>();
                     params.put("name", student.getName());

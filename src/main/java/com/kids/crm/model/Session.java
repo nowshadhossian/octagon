@@ -17,4 +17,5 @@ public class Session {
     private Long id;
     @Column(unique=true)
     private String name;
+    private int year;//new
 }

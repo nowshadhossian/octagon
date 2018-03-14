@@ -61,10 +61,10 @@ public class ExportQuestionData {
                             question.setAnswer((String) getCellValue(currentCell));
                             break;
                         case 2:
-                            question.setSession(findOrCreateSession((String) getCellValue(currentCell)));
+                            question.setYear(new Double((double)getCellValue(currentCell)).intValue());
                             break;
                         case 3:
-                            question.setYear(new Double((double)getCellValue(currentCell)).intValue());
+                            question.setSession(findOrCreateSession((String) getCellValue(currentCell), question.getYear()));
                             break;
                         case 4:
                             question.setPaper(new Double((double)getCellValue(currentCell)).intValue());
@@ -118,12 +118,12 @@ public class ExportQuestionData {
         }
     }
 
-    public Session findOrCreateSession(String name) {
-        Session session = sessionRepository.findByName(name);
+    public Session findOrCreateSession(String name, int year) {
+        Session session = sessionRepository.findByNameAndYear(name, year);
         if (session != null) {
             return session;
         } else {
-            return sessionRepository.save(Session.builder().name(name).build());
+            return sessionRepository.save(Session.builder().name(name).year(year).build());
         }
     }
 

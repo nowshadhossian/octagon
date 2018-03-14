@@ -103,6 +103,22 @@ public class OctagonApplicationTests {
 	}
 
 	@Test
+	public void lombokEqualChecker(){
+		Subject subject = new Subject();
+		subject.setCode("" + 123);
+		Batch b = new Batch();
+		b.setId(2);
+		b.setSubject(subject);
+
+		Batch b2 = new Batch();
+		b2.setId(2);
+
+		Assert.assertTrue(b2.equals(b));
+
+
+	}
+
+	@Test
 	public void yesterdayDailyExamResult(){
 		Date yesterdayStart = DateUtils.toDate(LocalDate.now().minusDays(1));
 		Date yesterdayEnd = DateUtils.toDate(LocalDate.now());

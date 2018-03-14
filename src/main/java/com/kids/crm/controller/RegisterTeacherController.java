@@ -6,6 +6,7 @@ import com.kids.crm.model.Teacher;
 import com.kids.crm.model.User;
 import com.kids.crm.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,8 @@ public class RegisterTeacherController {
     private final String BASE_ROUTE = "register/teacher";
 
     @Autowired private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     @RequestMapping(value = BASE_ROUTE, method = RequestMethod.GET)
@@ -34,7 +37,7 @@ public class RegisterTeacherController {
                 .phone(signup.getPhoneNo())
                 .build();
         teacher.setFirstName(signup.getFirstName());
-        teacher.setPassword(signup.getPassword());
+        teacher.setPassword(passwordEncoder.encode(signup.getPassword()));
         teacher.setRole(Role.TEACHER);
         teacher.setEmail(signup.getEmail());
         teacher.setLastName(signup.getLastName());
