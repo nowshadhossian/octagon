@@ -1,4 +1,4 @@
-<#-- @ftlvariable name="leaderboardAttendedResults" type="java.util.List<com.kids.crm.pojo.LastAttendedResult>" -->
+<#-- @ftlvariable name="leaderboardYesterdayResults" type="java.util.List<com.kids.crm.pojo.LastAttendedResult>" -->
 <div class="card mb-3">
     <div class="card-header">
         <i class="fa fa-table"></i> Leaderboard
@@ -15,7 +15,7 @@
             </tr>
             </thead>
             <tbody>
-                        <#list leaderboardAttendedResults as leaderboardAttendedResult>
+                        <#list leaderboardYesterdayResults as leaderboardAttendedResult>
                         <tr>
                             <td>${leaderboardAttendedResult?counter}</td>
                             <td>${leaderboardAttendedResult.getUser().getName()}</td>

@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="leaderboardYesterdayPage" type="java.lang.String" -->
 <#-- @ftlvariable name="lastWeeklyResults" type="java.util.List<com.kids.crm.pojo.LastAttendedResult>" -->
 <#assign title="Subject Home | Octagon">
 <#assign navPage="/layout/nav/student-nav.ftl">
@@ -35,6 +36,9 @@
             </div>
             <div class="card-footer small text-muted"><a href="/student/stats/daily-results">Show All</a></div>
         </div>
+
+        <#include leaderboardYesterdayPage>
+
     </div>
 </div>
 <#include "/layout/nav/bottom.ftl">

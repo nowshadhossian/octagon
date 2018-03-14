@@ -1,5 +1,6 @@
 package com.kids.crm.controller;
 
+import com.kids.crm.controller.webcomponent.LeaderboardComponent;
 import com.kids.crm.model.ExamType;
 import com.kids.crm.model.StudentAnswer;
 import com.kids.crm.model.User;
@@ -37,12 +38,17 @@ public class SubjectSelectionController {
     @Autowired
     StudentService studentService;
 
+    @Autowired
+    LeaderboardComponent leaderboardComponent;
+
     @RequestMapping(value = BASE_ROUTE, method = RequestMethod.GET)
     private String test(Authentication authentication, ModelMap modelMap) {
         User loggedIn = userSession.getLoggedInUser();
         modelMap.addAttribute("name", loggedIn.getName());
 
         modelMap.addAttribute("lastWeeklyResults", studentService.lastAttendedResultsWeekly(loggedIn, userSession.getCurrentBatch()));
+
+        modelMap.addAttribute("leaderboardYesterdayPage", leaderboardComponent.draw(userSession.getCurrentBatch(), modelMap));
 
         return "subject-page";
     }

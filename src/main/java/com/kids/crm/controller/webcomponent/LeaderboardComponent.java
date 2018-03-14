@@ -42,7 +42,7 @@ public class LeaderboardComponent {
             }
         });
 
-        modelMap.addAttribute("leaderboardAttendedResults", attendedResult);
+        modelMap.addAttribute("leaderboardYesterdayResults", attendedResult);
 
         return "/student/stat/leaderboard.ftl";
     }

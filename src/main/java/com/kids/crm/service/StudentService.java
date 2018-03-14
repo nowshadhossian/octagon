@@ -83,7 +83,7 @@ public class StudentService {
     }
 
     public Optional<LastAttendedResult> previousDayAttendedResults(User user, Batch batch){
-        Date from = DateUtils.toDate(LocalDate.now().minusDays(20)); //2
+        Date from = DateUtils.toDate(LocalDate.now().minusDays(2)); //2
         Date to = DateUtils.toDate(LocalDate.now().minusDays(1));
         return lastAttendedResults(user, from, to, batch).stream().findFirst();
     }
