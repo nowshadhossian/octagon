@@ -1,6 +1,7 @@
 package com.kids.crm.model;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,6 +15,7 @@ import java.util.List;
 @Setter
 @Table
 @Entity(name = "user")
+@EqualsAndHashCode(of = {"id"})
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User implements UserDetails{
     @Id
