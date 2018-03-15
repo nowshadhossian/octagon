@@ -32,5 +32,4 @@ public class Batch{
     @JoinColumn(name="teacher_id")
     private Teacher teacher;
 
-
 }

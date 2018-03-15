@@ -1,8 +1,10 @@
 package com.kids.crm.config;
 
 import com.kids.crm.interceptor.QuestionApiInterceptor;
+import com.kids.crm.service.converter.IdToStudentConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -26,5 +28,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addMapping("/api/**")
                 .allowedOrigins("http://localhost:3000")
                 .exposedHeaders("jwtToken", "userId");
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(getIdToStudentConverter());
+    }
+
+    @Bean
+    public IdToStudentConverter getIdToStudentConverter() {
+        return new IdToStudentConverter();
     }
 }

@@ -1,5 +1,6 @@
 package com.kids.crm.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table
+@EqualsAndHashCode(of = {"id"}, callSuper = true)
 @Entity(name = "student")
 @PrimaryKeyJoinColumn(referencedColumnName = "id")
 public class Student extends User{
@@ -22,5 +24,9 @@ public class Student extends User{
             inverseJoinColumns = @JoinColumn(name = "batch_id", referencedColumnName = "id")
     )
     private List<Batch> batches;
+
+    public void addToBatch(Batch batch){
+        batches.add(batch);
+    }
 
 }
