@@ -1,6 +1,7 @@
 package com.kids.crm.config;
 
 import com.kids.crm.interceptor.QuestionApiInterceptor;
+import com.kids.crm.service.converter.IdToBatchConverter;
 import com.kids.crm.service.converter.IdToStudentConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,10 +34,16 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(getIdToStudentConverter());
+        registry.addConverter(getIdToBatchConverter());
     }
 
     @Bean
     public IdToStudentConverter getIdToStudentConverter() {
         return new IdToStudentConverter();
+    }
+
+    @Bean
+    public IdToBatchConverter getIdToBatchConverter(){
+        return new IdToBatchConverter();
     }
 }
