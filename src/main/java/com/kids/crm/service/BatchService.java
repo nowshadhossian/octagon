@@ -28,4 +28,8 @@ public class BatchService {
     public void save(Batch batch){
         batchRepository.save(batch);
     }
+
+    public Batch findBySessionIdAndSubjecId(long sessionId, long subjectId){
+        return batchRepository.findBySubjectIdAndSessionId(subjectId, sessionId);
+    }
 }

@@ -30,12 +30,14 @@
                      <@spring.showErrors "<br>"/>
                 </div>
 
+                 <@spring.bind "signup.gender" />
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Gender</label>
-                    <select class="form-control" id="gender" name="gender">
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
+                    <select class="form-control" id="gender" name="${spring.status.expression}">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
                     </select>
+                     <@spring.showErrors "<br>"/>
                 </div>
 
                 <div class="form-group">
@@ -62,25 +64,19 @@
                 <div class="form-group  enrolling-input">
                     <h5><label class="form-check-label" for="defaultCheck2">Enrolling</label></h5>
                      <@spring.bind "signup.enrollingIds" />
-                    <div class="form-check">
-                        <input class="form-check-input"  name="enrollingIds" type="checkbox" value="1" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">Physics</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" name="enrollingIds" type="checkbox" value="2" id="defaultCheck2">
-                        <label class="form-check-label" for="defaultCheck2">Chemistry</label>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input" name="enrollingIds" type="checkbox" value="3" id="defaultCheck3">
-                        <label class="form-check-label" for="defaultCheck3">Biology</label>
-                    </div>
+                    <#list upcomingSubjects as upcomingSubject>
+                        <div class="form-check">
+                            <input class="form-check-input"  name="${spring.status.expression}" type="checkbox" value="${upcomingSubject.getId()}" id="subjects">
+                            <label class="form-check-label" for="subjects">${upcomingSubject.getName()}</label>
+                        </div>
+                    </#list>
                      <@spring.showErrors "<br>"/>
                 </div>
 
                 <div class="form-group">
+                     <@spring.bind "signup.interestSessionId" />
                     <label for="exampleFormControlSelect1">Session</label>
-                    <select class="form-control" id="session" name="session">
+                    <select class="form-control" id="session" name="${spring.status.expression}">
                         <#list upcomingSessions as upcomingSession>
                              <option value="${upcomingSession.getId()}">${upcomingSession.getName()} ${upcomingSession.getYear()}</option>
                         </#list>
@@ -90,18 +86,20 @@
                 <div class="form-group referee-col">
                     <h5><label class="form-check-label">Referees</label></h5>
                     <div class="referee-rows">
+                         <@spring.bind "signup.refereesSubjectId" />
                         <div class="form-row referee-row">
                             <div class="col-md-6">
                                 <label for="exampleFormControlSelect1">Subject</label>
-                                <select class="form-control"  name="subject">
+                                <select class="form-control"  name="${spring.status.expression}">
                                     <#list upcomingSubjects as upcomingSubject>
                                         <option value="${upcomingSubject.getId()}">${upcomingSubject.getName()}</option>
                                     </#list>
                                 </select>
                             </div>
                             <div class="col-md-6">
+                                 <@spring.bind "signup.refereesName" />
                                 <label for="lastName">Last name</label>
-                                <input class="form-control"  name="refereesName" type="text" aria-describedby="nameHelp" placeholder="Enter referees name">
+                                <input class="form-control"  name="${spring.status.expression}" type="text" aria-describedby="nameHelp" placeholder="Enter referees name">
                             </div>
                         </div>
                     </div>
@@ -121,26 +119,30 @@
                     <label class="form-check-label">Guardian Information</label>
                     <div class="guardian-rows">
                         <div class="form-row guardian-row">
+                             <@spring.bind "signup.guardianName" />
                             <div class="col-md-3">
                                 <label for="guardianName">Name</label>
-                                <input class="form-control guardian-name" name="guardianName" type="text"
+                                <input class="form-control guardian-name" name="${spring.status.expression}" type="text"
                                        aria-describedby="nameHelp" placeholder="Enter name">
                             </div>
+                            <@spring.bind "signup.guardianContactNo" />
                             <div class="col-md-3">
                                 <label for="contactNo">Contact No</label>
-                                <input class="form-control guardian-contactNo"  name="contactNo" type="text"
+                                <input class="form-control guardian-contactNo"  name="${spring.status.expression}" type="text"
                                        aria-describedby="nameHelp" placeholder="Enter No">
                             </div>
 
+                            <@spring.bind "signup.guardianRelation" />
                             <div class="col-md-3">
                                 <label for="relation">Relation</label>
-                                <input class="form-control guardian-relation" name="relation" type="text"
+                                <input class="form-control guardian-relation" name="${spring.status.expression}" type="text"
                                        aria-describedby="nameHelp" placeholder="Enter Relation">
                             </div>
 
+                            <@spring.bind "signup.guardianEmail" />
                             <div class="col-md-3">
                                 <label for="email">Email</label>
-                                <input class="form-control guardian-email" name="guardianEmail" type="text"
+                                <input class="form-control guardian-email" name="${spring.status.expression}" type="email"
                                        aria-describedby="nameHelp"
                                        placeholder="Enter Email">
                             </div>
@@ -164,11 +166,11 @@
                             <input class="form-control  guardian-name" name="guardianName" type="text" aria-describedby="nameHelp" placeholder="Enter name">
                         </div>
                         <div class="col-md-3">
-                            <input class="form-control guardian-contactNo" name="contactNo" type="text" aria-describedby="nameHelp" placeholder="Enter No">
+                            <input class="form-control guardian-contactNo" name="guardianContactNo" type="text" aria-describedby="nameHelp" placeholder="Enter No">
                         </div>
 
                         <div class="col-md-3">
-                            <input class="form-control guardian-relation" name="relation" type="text" aria-describedby="nameHelp" placeholder="Enter Relation">
+                            <input class="form-control guardian-relation" name="guardianRelation" type="text" aria-describedby="nameHelp" placeholder="Enter Relation">
                         </div>
 
                         <div class="col-md-3">
@@ -179,15 +181,17 @@
 
                 <script id="template-referee-list-item" type="text/template">
                     <div class="form-row referee-row">
+                        <@spring.bind "signup.refereesSubjectId" />
                         <div class="col-md-6">
-                            <select class="form-control" name="subject">
+                            <select class="form-control"  name="${spring.status.expression}">
                                <#list upcomingSubjects as upcomingSubject>
                                    <option value="${upcomingSubject.getId()}">${upcomingSubject.getName()}</option>
                                </#list>
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <input class="form-control" name="refereesName" type="text" aria-describedby="nameHelp"
+                            <@spring.bind "signup.refereesName" />
+                            <input class="form-control" name="${spring.status.expression}" type="text" aria-describedby="nameHelp"
                                    placeholder="Enter referees name">
                         </div>
                     </div>

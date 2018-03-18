@@ -10,17 +10,19 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table
-@Entity(name = "student_referee")
-public class StudentReferee {
+@Entity(name = "guardian")
+public class Guardian {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @ManyToOne
-    @JoinColumn(name="subject_id")
-    private Subject subject;
-    private String refereeName;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="student_id")
     private Student student;
+
+    private String name;
+    private String email;
+    private String phone;
+    private String relation;
+
 }

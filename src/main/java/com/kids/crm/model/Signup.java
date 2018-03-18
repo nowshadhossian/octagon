@@ -13,20 +13,26 @@ public class Signup {
     private String lastName;
     private String phoneNo;
     private String address;
-    private String[] enrollingIds;
+    private long[] enrollingIds;
     private String session;
     private String email;
     private String password;
     private String dateOfBirth;
     private String confirmPassword;
     private String school;
-    private String[] subject;
+    private String gender;
+    private long interestSessionId;
+
+    //referees
+    private long[] refereesSubjectId;
     private String[] refereesName;
+
+    //guardian
     private String[] guardianName;
-    private String[]contactNo;
-    private String[] relation;
+    private String[] guardianContactNo;
+    private String[] guardianRelation;
     private String[] guardianEmail;
 
-    //teacher
+    //used in teacher registration
     private String degree;
 }

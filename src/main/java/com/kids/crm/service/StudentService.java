@@ -23,12 +23,8 @@ public class StudentService {
         this.studentAnswerRepository = studentAnswerRepository;
     }
 
-    public void saveStudent(String name, int age) {
-        Student student = new Student();
-      /*  student.setAge(age);
-        student.setName(name);*/
-
-        repository.save(student);
+    public Student save(Student student){
+        return repository.save(student);
     }
 
    /* public Student findByName(String name){

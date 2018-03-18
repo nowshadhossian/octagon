@@ -1,20 +1,25 @@
 package com.kids.crm.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table
 @Entity(name = "student")
 @PrimaryKeyJoinColumn(referencedColumnName = "id")
 public class Student extends User{
     private String phone;
     private String address;
+    private Date dateOfBirth;
+    private String gender;
+    private String school;
 
     @ManyToMany
     @JoinTable(

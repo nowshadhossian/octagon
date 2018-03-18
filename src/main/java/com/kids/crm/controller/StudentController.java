@@ -18,11 +18,7 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.GET)
-    @ResponseBody
-    private void saveStudent(){
-        studentService.saveStudent("Tom", 43);
-    }
+
 
    /* @RequestMapping(value = "/find", method = RequestMethod.GET)
     @ResponseBody
