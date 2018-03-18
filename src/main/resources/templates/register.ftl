@@ -174,7 +174,7 @@
                         </div>
 
                         <div class="col-md-3">
-                            <input class="form-control guardian-email" name="guardianEmail" type="text" aria-describedby="nameHelp" placeholder="Enter Email">
+                            <input class="form-control guardian-email" name="guardianEmail" type="email" aria-describedby="nameHelp" placeholder="Enter Email">
                         </div>
                     </div>
                 </script>

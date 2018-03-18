@@ -124,7 +124,7 @@ public class MailSender {
 
 
                     String body = getTemplate(params, "DailyExamResultToParents.html");
-                    send(mailSubject, body, "parents@parent.com");
+                    send(mailSubject, body, guardianOptional.get().getEmail());
                 }
             }
         }
