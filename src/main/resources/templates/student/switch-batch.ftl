@@ -21,7 +21,18 @@
             </div>
         </div>
     <#else>
-        Ask your teacher to enrol you
+    <h1 class="text-white">
+        Ask your teacher for enrolment
+        <p>
+            <form action="/logout" method="post">
+                <input type="hidden"
+                       name="${_csrf.parameterName}"
+                       value="${_csrf.token}"/>
+                <input class="btn btn-primary" type="submit" value="Logout">
+            </form>
+        </p>
+    </h1>
+
     </#list>
 </div>
 <#include "/layout/no-nav/bottom.ftl">

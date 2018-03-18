@@ -1,12 +1,11 @@
 package com.kids.crm.controller;
 
-import com.kids.crm.model.Batch;
 import com.kids.crm.model.Student;
 import com.kids.crm.model.Teacher;
 import com.kids.crm.model.User;
-import com.kids.crm.repository.BatchRepository;
 import com.kids.crm.repository.StudentRepository;
 import com.kids.crm.repository.TeacherRepository;
+import com.kids.crm.service.BatchService;
 import com.kids.crm.service.UserSession;
 import com.kids.crm.service.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +25,14 @@ public class TeacherStudentsController {
     private final UserSession userSession;
     private final TeacherRepository teacherRepository;
     private final StudentRepository studentRepository;
-    private final BatchRepository batchRepository;
+    private final BatchService batchService;
 
     @Autowired
-    public TeacherStudentsController(UserSession userSession, TeacherRepository teacherRepository, StudentRepository studentRepository, BatchRepository batchRepository) {
+    public TeacherStudentsController(UserSession userSession, TeacherRepository teacherRepository, StudentRepository studentRepository, BatchService batchService) {
         this.userSession = userSession;
         this.teacherRepository = teacherRepository;
         this.studentRepository = studentRepository;
-        this.batchRepository = batchRepository;
+        this.batchService = batchService;
     }
 
 
@@ -49,6 +48,8 @@ public class TeacherStudentsController {
 
     @RequestMapping(value = ADD_STUDENTS, method = RequestMethod.GET)
     public String getAddStudentsPage(ModelMap modelMap){
+        userSession.setCurrentBatch(batchService.reFetch(userSession.getCurrentBatch()));
+
         List<Student> students = studentRepository.findAll();
         students.removeAll(userSession.getCurrentBatch().getStudents());
 

@@ -2,6 +2,7 @@ package com.kids.crm.service;
 
 import com.kids.crm.model.Batch;
 import com.kids.crm.repository.BatchRepository;
+import com.kids.crm.service.exception.BatchNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,5 +32,9 @@ public class BatchService {
 
     public Batch findBySessionIdAndSubjecId(long sessionId, long subjectId){
         return batchRepository.findBySubjectIdAndSessionId(subjectId, sessionId);
+    }
+
+    public Batch reFetch(Batch batch){
+        return batchRepository.findById(batch.getId()).orElseThrow(BatchNotFoundException::new);
     }
 }

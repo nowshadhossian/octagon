@@ -25,7 +25,8 @@ public class Student extends User{
     @JoinTable(
             name="student_batch",
             joinColumns = @JoinColumn(name="student_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "batch_id", referencedColumnName = "id")
+            inverseJoinColumns = @JoinColumn(name = "batch_id", referencedColumnName = "id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"student_id", "batch_id"})
     )
     private List<Batch> batches;
 

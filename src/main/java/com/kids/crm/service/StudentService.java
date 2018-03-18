@@ -24,6 +24,7 @@ public class StudentService {
     }
 
     public Student save(Student student){
+        student.setRole(Role.STUDENT);
         return repository.save(student);
     }
 
