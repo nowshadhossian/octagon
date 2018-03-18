@@ -27,7 +27,7 @@
                     </thead>
                     <tbody>
                         <#list students as student>
-                        <tr>
+                        <tr <#if student.getBatches()?size == 0> class="table-info" </#if>>
                             <td>${student?counter}</td>
                             <td>${student.getName()}</td>
                             <td>${student.getPhone()!""}</td>

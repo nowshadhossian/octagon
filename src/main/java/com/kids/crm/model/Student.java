@@ -24,6 +24,12 @@ public class Student extends User{
     )
     private List<Batch> batches;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
+    private List<StudentBatchInterest> studentBatchInterests;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
+    private List<StudentReferee> referees;
+
     public void addToBatch(Batch batch){
         batches.add(batch);
     }

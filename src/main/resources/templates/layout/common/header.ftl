@@ -11,3 +11,4 @@
 <!-- Custom styles for this template-->
 <link href="/css/sb-admin.css" rel="stylesheet">
 <link href="/ui-lib/jquery/jquery-ui.css" rel="stylesheet">
+<link href="/ui-lib/open-iconic/font/css/open-iconic-bootstrap.min.css" rel="stylesheet">

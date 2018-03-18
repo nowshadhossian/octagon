@@ -5,6 +5,7 @@ import com.kids.crm.repository.QuestionRepository;
 import com.kids.crm.repository.SessionRepository;
 import com.kids.crm.repository.SubTopicRepository;
 import com.kids.crm.repository.SubjectRepository;
+import com.kids.crm.service.SessionService;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -32,6 +33,9 @@ public class ExportQuestionData {
 
     @Autowired
     SubTopicRepository subTopicRepository;
+
+    @Autowired
+    SessionService sessionService;
 
     public List<Question> readQuestionExcel() {
         FileInputStream excelFile = null;
@@ -64,7 +68,7 @@ public class ExportQuestionData {
                             question.setYear(new Double((double)getCellValue(currentCell)).intValue());
                             break;
                         case 3:
-                            question.setSession(findOrCreateSession((String) getCellValue(currentCell), question.getYear()));
+                            question.setSession(sessionService.findOrCreateSessionByNameAndYear((String) getCellValue(currentCell), question.getYear()));
                             break;
                         case 4:
                             question.setPaper(new Double((double)getCellValue(currentCell)).intValue());
@@ -118,14 +122,7 @@ public class ExportQuestionData {
         }
     }
 
-    public Session findOrCreateSession(String name, int year) {
-        Session session = sessionRepository.findByNameAndYear(name, year);
-        if (session != null) {
-            return session;
-        } else {
-            return sessionRepository.save(Session.builder().name(name).year(year).build());
-        }
-    }
+
 
     public Set<SubTopic> findOrCreateSubTopic(String commaSeparatedSubTopic) {
         Set<SubTopic> subTopics = new HashSet<>();

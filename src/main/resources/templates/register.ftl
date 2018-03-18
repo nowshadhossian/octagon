@@ -1,3 +1,5 @@
+<#-- @ftlvariable name="upcomingSubjects" type="java.util.List<com.kids.crm.model.Subject>" -->
+<#-- @ftlvariable name="upcomingSessions" type="java.util.List<com.kids.crm.model.Session>" -->
 <#assign title="Register | Octagon">
 <#include "layout/no-nav/top.ftl">
 <div class="card card-register mx-auto mt-5">
@@ -27,6 +29,22 @@
                     <input class="form-control" id="date" name="${spring.status.expression}" value="${spring.status.value?default("")}" placeholder="MM/DD/YYYY enter date" type="text"/>
                      <@spring.showErrors "<br>"/>
                 </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Gender</label>
+                    <select class="form-control" id="gender" name="gender">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                     <@spring.bind "signup.school" />
+                    <label for="phoneNo">School</label>
+                    <input class="form-control" id="school" name="${spring.status.expression}" value="${spring.status.value?default("")}" type="text" aria-describedby="school" placeholder="Enter School Name">
+                     <@spring.showErrors "<br>"/>
+                </div>
+
                 <div class="form-group">
                      <@spring.bind "signup.phoneNo" />
                     <label for="phoneNo">Phone No</label>
@@ -42,7 +60,7 @@
                 </div>
 
                 <div class="form-group  enrolling-input">
-                    <label class="form-check-label" for="defaultCheck2">Enrolling..</label>
+                    <h5><label class="form-check-label" for="defaultCheck2">Enrolling</label></h5>
                      <@spring.bind "signup.enrollingIds" />
                     <div class="form-check">
                         <input class="form-check-input"  name="enrollingIds" type="checkbox" value="1" id="defaultCheck1">
@@ -50,7 +68,7 @@
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" name="enrollingIds" type="checkbox" value="2" id="defaultCheck2">
-                        <label class="form-check-label" for="defaultCheck2">Chamistry</label>
+                        <label class="form-check-label" for="defaultCheck2">Chemistry</label>
                     </div>
 
                     <div class="form-check">
@@ -63,21 +81,22 @@
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Session</label>
                     <select class="form-control" id="session" name="session">
-                        <option value="Summer 2018">Summer 2018</option>
-                        <option value="Spring 2018">Spring 2018</option>
+                        <#list upcomingSessions as upcomingSession>
+                             <option value="${upcomingSession.getId()}">${upcomingSession.getName()} ${upcomingSession.getYear()}</option>
+                        </#list>
                     </select>
                 </div>
 
                 <div class="form-group referee-col">
-                    <label class="form-check-label">Referees...</label>
+                    <h5><label class="form-check-label">Referees</label></h5>
                     <div class="referee-rows">
                         <div class="form-row referee-row">
                             <div class="col-md-6">
                                 <label for="exampleFormControlSelect1">Subject</label>
                                 <select class="form-control"  name="subject">
-                                    <option value="1">Physics</option>
-                                    <option value="2">Chemistry</option>
-                                    <option value="3">Bio</option>
+                                    <#list upcomingSubjects as upcomingSubject>
+                                        <option value="${upcomingSubject.getId()}">${upcomingSubject.getName()}</option>
+                                    </#list>
                                 </select>
                             </div>
                             <div class="col-md-6">
@@ -86,8 +105,16 @@
                             </div>
                         </div>
                     </div>
-                    <a class="d-block small mt-3 add-referee-link">Add Referee</a>
-                    <a class="d-block small mt-3 remove-referee-link">Remove Referee</a>
+                    <a class="small mt-3 add-referee-link">
+                        <button type="button" class="btn btn-info btn-sm">
+                            <span class="oi oi-plus"></span> Add Referee
+                        </button>
+                    </a>
+                    <a class="small mt-3 remove-referee-link">
+                        <button type="button" class="btn btn-info btn-sm">
+                            <span class="oi oi-minus"></span> Remove Referee
+                        </button>
+                    </a>
                 </div>
 
                 <div class="form-group guardian-col">
@@ -119,8 +146,16 @@
                             </div>
                         </div>
                     </div>
-                    <a class="d-block small mt-3 add-guardian-link">Add Guardian</a>
-                    <a class="d-block small mt-3 remove-guardian-link">Remove Guardian</a>
+                    <a class="small mt-3 add-guardian-link">
+                        <button type="button" class="btn btn-info btn-sm">
+                            <span class="oi oi-plus"></span> Add Guardian
+                        </button>
+                    </a>
+                    <a class="small mt-3 remove-guardian-link">
+                        <button type="button" class="btn btn-info btn-sm">
+                            <span class="oi oi-minus"></span> Remove Guardian
+                        </button>
+                    </a>
                 </div>
 
                 <script id="template-guardian-list-item" type="text/template">
@@ -146,9 +181,9 @@
                     <div class="form-row referee-row">
                         <div class="col-md-6">
                             <select class="form-control" name="subject">
-                                <option value="1">Physics</option>
-                                <option value="2">Chemistry</option>
-                                <option value="3">Bio</option>
+                               <#list upcomingSubjects as upcomingSubject>
+                                   <option value="${upcomingSubject.getId()}">${upcomingSubject.getName()}</option>
+                               </#list>
                             </select>
                         </div>
                         <div class="col-md-6">

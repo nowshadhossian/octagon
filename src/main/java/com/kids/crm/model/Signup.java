@@ -19,6 +19,7 @@ public class Signup {
     private String password;
     private String dateOfBirth;
     private String confirmPassword;
+    private String school;
     private String[] subject;
     private String[] refereesName;
     private String[] guardianName;

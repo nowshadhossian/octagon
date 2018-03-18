@@ -22,4 +22,9 @@
      </div>
     </#list>
 </div>
+ <div class="row">
+     <div>
+         <a href="/teacher/batch/add" class="btn btn-success">Add Batch</a>
+     </div>
+ </div>
 <#include "/layout/no-nav/bottom.ftl">

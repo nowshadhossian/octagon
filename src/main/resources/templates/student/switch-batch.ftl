@@ -20,6 +20,8 @@
                 </a>
             </div>
         </div>
+    <#else>
+        Ask your teacher to enrol you
     </#list>
 </div>
 <#include "/layout/no-nav/bottom.ftl">
