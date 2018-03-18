@@ -1,10 +1,12 @@
 package com.kids.crm.service;
 
 import com.kids.crm.model.*;
+import com.kids.crm.repository.GuardianRepository;
 import com.kids.crm.repository.StudentAnswerRepository;
 import com.kids.crm.repository.StudentRepository;
 import com.kids.crm.repository.UserRepository;
 import com.kids.crm.utils.DateUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -17,10 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component("HappyMail")
@@ -34,6 +33,8 @@ public class MailSender {
     private UserRepository userRepository;
     @Autowired
     StudentRepository studentRepository;
+    @Autowired
+    GuardianRepository guardianRepository;
 
     @Value("${mail.from.email}")
     private String from;
@@ -96,8 +97,15 @@ public class MailSender {
 
         //TODO need testing
         for (Student student : students) {
+            Optional<Guardian> guardianOptional = guardianRepository.findByStudent(student).stream()
+                    .filter(guardian -> StringUtils.isNotBlank(guardian.getEmail()))
+                    .findFirst();
+            if (guardianOptional == null) {
+                continue;
+            }
             List<Batch> batches = student.getBatches();
-            for(Batch batch: batches){
+            for (Batch batch : batches) {
+
                 List<StudentAnswer> studentAnswers = studentAnswerRepository.findByUserAndAttendedOnBetweenAndBatchAndExamType(student, yesterdayStart, yesterdayEnd, batch, ExamType.DAILY_EXAM);
                 if (studentAnswers.isEmpty()) {
                     Map<String, String> params = new HashMap<>();
