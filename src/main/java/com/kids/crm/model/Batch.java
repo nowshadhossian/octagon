@@ -25,7 +25,7 @@ public class Batch{
     @JoinColumn(name="session_id")
     private Session session;
 
-    @ManyToMany(mappedBy = "batches")
+    @ManyToMany(mappedBy = "batches", fetch = FetchType.EAGER)
     private List<Student> students;
 
     @ManyToOne

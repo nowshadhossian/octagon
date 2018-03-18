@@ -40,7 +40,7 @@ public class UserSession {
         return getCurrentBatch().getSubject();
     }
 
-    public Batch getCurrentBatch(){
+   /* public Batch getCurrentBatch(){
         return batchRepository.findById(1l).orElseThrow(BatchNotFoundException::new);
-    }
+    }*/
 }
