@@ -6,7 +6,7 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-                <a class="nav-link" href="/daily/exam">
+                <a class="nav-link" href="/teacher/dashboard">
                     <i class="fa fa-fw fa-area-chart"></i>
                     <span class="nav-link-text">Dashboard</span>
                 </a>

@@ -22,4 +22,8 @@ public enum Role implements GrantedAuthority {
     public boolean isStudent() {
         return this == STUDENT;
     }
+
+    public boolean isTeacher() {
+        return this == TEACHER;
+    }
 }

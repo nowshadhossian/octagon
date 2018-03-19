@@ -17,6 +17,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 @Getter
 @Setter
 @Service
@@ -31,7 +35,13 @@ public class UserSession {
     @Autowired
     BatchRepository batchRepository;
 
-    public User getLoggedInUser(){
+    @Autowired
+    HttpServletRequest request;
+
+    @Autowired
+    HttpServletResponse response;
+
+    public User getLoggedInUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (User) authentication.getPrincipal();
     }
@@ -40,7 +50,5 @@ public class UserSession {
         return getCurrentBatch().getSubject();
     }
 
-   /* public Batch getCurrentBatch(){
-        return batchRepository.findById(1l).orElseThrow(BatchNotFoundException::new);
-    }*/
+
 }
