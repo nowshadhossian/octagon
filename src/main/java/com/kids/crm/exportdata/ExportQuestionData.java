@@ -6,6 +6,8 @@ import com.kids.crm.repository.SessionRepository;
 import com.kids.crm.repository.SubTopicRepository;
 import com.kids.crm.repository.SubjectRepository;
 import com.kids.crm.service.SessionService;
+import com.kids.crm.service.TopicService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -20,7 +22,8 @@ import java.util.*;
 
 @Component
 public class ExportQuestionData {
-    private static final String FILE_NAME = "/Users/nowshad/Downloads/octa-images-exam/Question_Information.xlsx";
+    private static final String ROOT = "/Users/nowshad/Documents/0625/";
+    private static final String FILE_NAME = ROOT + "/Question-Information.xlsx";
 
     @Autowired
     QuestionRepository questionRepository;
@@ -37,7 +40,10 @@ public class ExportQuestionData {
     @Autowired
     SessionService sessionService;
 
-    public List<Question> readQuestionExcel() {
+    @Autowired
+    TopicService topicService;
+
+    public List<Question> readQuestionExcel(Subject subject) {
         FileInputStream excelFile = null;
         List<Question> questionList = new ArrayList<>();
         try {
@@ -53,13 +59,20 @@ public class ExportQuestionData {
                 }
                 Question question = Question.builder().build();
                 Iterator<Cell> cellIterator = currentRow.iterator();
-
+                boolean saveRecord = true;
                 while (cellIterator.hasNext()) {
                     Cell currentCell = cellIterator.next();
                     int columnIndex = currentCell.getColumnIndex();
                     switch (columnIndex) {
                         case 0:
-                            question.setFileName((String) getCellValue(currentCell)+".png");
+                            String fileName = (String) getCellValue(currentCell)+".png";
+                            File file = new File(ROOT + fileName);
+                            if (!file.exists()) {
+                                System.out.println("-----fileName does not exist: " + fileName);
+                                saveRecord = false;
+                                break;
+                            }
+                            question.setFileName(fileName);
                             break;
                         case 1:
                             question.setAnswer((String) getCellValue(currentCell));
@@ -79,7 +92,7 @@ public class ExportQuestionData {
                             break;
 
                         case 6:
-                            question.setTopic(Topic.builder().name((String) getCellValue(currentCell)).build());
+                            question.setTopic(topicService.findOrCreateTopic((String) getCellValue(currentCell), subject));
                             break;
 
                         case 7:
@@ -87,9 +100,13 @@ public class ExportQuestionData {
                             break;
                     }
                 }
-                questionList.add(question);
-
+                if(saveRecord){
+                    if(StringUtils.isNotBlank(question.getFileName())){
+                        questionList.add(question);
+                    }
+                }
             }
+
             System.out.println(questionList.size());
         } catch (IOException e) {
             e.printStackTrace();
@@ -125,8 +142,14 @@ public class ExportQuestionData {
 
 
     public Set<SubTopic> findOrCreateSubTopic(String commaSeparatedSubTopic) {
+        if(StringUtils.isBlank(commaSeparatedSubTopic)){
+            return Collections.emptySet();
+        }
         Set<SubTopic> subTopics = new HashSet<>();
         for (String subTopicStr : commaSeparatedSubTopic.split(",")) {
+            if(StringUtils.isBlank(subTopicStr)){
+                continue;
+            }
             subTopicRepository.findByName(subTopicStr.trim())
                     .ifPresentOrElse(subTopics::add,
                             () -> subTopics.add(subTopicRepository.save(SubTopic.builder().name(subTopicStr.trim()).build())

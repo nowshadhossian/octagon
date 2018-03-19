@@ -1,6 +1,6 @@
 <h1>File Upload</h1>
 <div>
-
+    <a href="/superadmin/question/upload">Question Upload Start Now</a>
 </div>
 
 <form action="/logout" method="post">

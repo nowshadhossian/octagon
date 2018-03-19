@@ -162,7 +162,7 @@ public class OctagonApplicationTests {
 				.build();*/
 		final Subject subject = exportQuestionData.findOrCreateSubject("Physics");
 
-		List<Question> questionList = exportQuestionData.readQuestionExcel();
+		List<Question> questionList = exportQuestionData.readQuestionExcel(subject);
         questionList.forEach(question1 -> {
         	question1.setSubject(subject);
 			questionRepository.save(question1);
