@@ -41,6 +41,8 @@ public class AfterLoginSuccess implements AuthenticationSuccessHandler{
             return "/student/switch-batch";
         } else if (authorities.contains("ROLE_TEACHER")) {
             return "/teacher/switch-batch";
+        } else if (authorities.contains("ROLE_SUPER_ADMIN")) {
+            return "/superadmin/dashboard";
         } else {
             throw new IllegalStateException();
         }
