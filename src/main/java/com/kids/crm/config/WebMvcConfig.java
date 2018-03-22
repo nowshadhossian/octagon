@@ -4,6 +4,7 @@ import com.kids.crm.interceptor.QuestionApiInterceptor;
 import com.kids.crm.service.converter.IdToBatchConverter;
 import com.kids.crm.service.converter.IdToStudentConverter;
 import com.kids.crm.service.converter.IdToSubjectConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -13,6 +14,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+
+    private final Config config;
+
+    @Autowired
+    public WebMvcConfig(Config config) {
+        this.config = config;
+    }
 
     @Bean
     public QuestionApiInterceptor questionApiInterceptor() {
@@ -28,7 +36,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-                .allowedOrigins("http://localhost:3000")
+                .allowedOrigins(config.getExamUiDomain())
                 .exposedHeaders("jwtToken", "userId");
     }
 

@@ -22,7 +22,7 @@ import java.util.*;
 
 @Component
 public class ExportQuestionData {
-    private static final String ROOT = "/Users/nowshad/Documents/0625/";
+    private static final String ROOT = "/root/0625/";
     private static final String FILE_NAME = ROOT + "/Question-Information.xlsx";
 
     @Autowired

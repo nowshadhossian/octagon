@@ -6,11 +6,22 @@ buildscript {
 		mavenCentral()
 		maven { url "https://repo.spring.io/snapshot" }
 		maven { url "https://repo.spring.io/milestone" }
+		maven { url 'http://repo.spring.io/plugins-release' }
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath 'io.spring.gradle:propdeps-plugin:0.0.9.RELEASE'
 	}
 }
+
+
+configure(allprojects) {
+	apply plugin: 'propdeps'
+	apply plugin: 'propdeps-maven'
+	apply plugin: 'propdeps-idea'
+	apply plugin: 'propdeps-eclipse'
+}
+
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
@@ -65,7 +76,7 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.apache.poi/poi
 	compile group: 'org.apache.poi', name: 'poi', version: '3.9'
 	compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.9'
-
+	optional "org.springframework.boot:spring-boot-configuration-processor"
 
 }
 

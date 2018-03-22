@@ -5,4 +5,4 @@
 <script src="/ui-lib/jquery-easing/jquery.easing.min.js"></script>
 <script src="/js/sb-admin.min.js"></script>
 <!-- Include Date Range Picker -->
-<script src="/ui-lib/jquery/jquery-ui.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
