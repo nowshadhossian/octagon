@@ -75,13 +75,11 @@ public class StudentService {
 
     public List<LastAttendedResult> lastAttendedResultsWeekly(User user, Batch batch){
         Date weekStart = DateUtils.toDate(LocalDate.now().minusDays(7));
-        Date weekEnd = DateUtils.toDate(LocalDate.now());
+        Date weekEnd = DateUtils.toDate(LocalDate.now().minusDays(-1));
         return lastAttendedResults(user, weekStart, weekEnd, batch);
     }
 
-    public Optional<LastAttendedResult> previousDayAttendedResults(User user, Batch batch){
-        Date from = DateUtils.toDate(LocalDate.now().minusDays(2)); //2
-        Date to = DateUtils.toDate(LocalDate.now().minusDays(1));
+    public Optional<LastAttendedResult> singleDayAttendedResults(User user, Batch batch, Date from, Date to){
         return lastAttendedResults(user, from, to, batch).stream().findFirst();
     }
 }

@@ -19,6 +19,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -61,9 +62,9 @@ public class RegistrationController {
         List<Session> upcomingSessions = upcomingBatches.stream()
                 .map(Batch::getSession)
                 .collect(Collectors.toList());
-        List<Subject> upcomingSubjects = upcomingBatches.stream()
+        Set<Subject> upcomingSubjects = upcomingBatches.stream()
                 .map(batch -> batch.getSubject())
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
         model.addAttribute("upcomingSessions", upcomingSessions);
         model.addAttribute("upcomingSubjects", upcomingSubjects);
     }

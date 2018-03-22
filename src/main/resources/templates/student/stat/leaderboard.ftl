@@ -27,5 +27,5 @@
             </tbody>
         </table>
     </div>
-    <div class="card-footer small text-muted"><a href="/student/stats/daily-results">Show All</a></div>
+    <div class="card-footer small text-muted"><a href="/student/stats/leaderboard-yesterday-results">Yesterday</a></div>
 </div>

@@ -48,7 +48,7 @@ public class TeacherDashboardController {
         modelMap.addAttribute("name", loggedIn.getName());
         Teacher teacher = teacherRepository.findById(loggedIn.getId()).get();
 
-        modelMap.addAttribute("leaderboardPage", leaderboardComponent.draw(userSession.getCurrentBatch(), modelMap));
+        modelMap.addAttribute("leaderboardPage", leaderboardComponent.drawForToday(userSession.getCurrentBatch(), modelMap));
 
         return "teacher/dashboard";
     }
