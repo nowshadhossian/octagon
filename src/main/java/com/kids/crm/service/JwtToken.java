@@ -20,13 +20,14 @@ import java.util.Optional;
 public class JwtToken {
     private static final String SECRET= "Helo32Fe(&@$sdA2f3$#";
 
-    public String createToken(long userId, String role){
+    public String createToken(long userId, String role, String examSettingsDtoEncrypted){
         try {
             Algorithm algorithm = Algorithm.HMAC256(SECRET);
             String token = JWT.create()
                     .withIssuer("octagon")
                     .withClaim("userId", userId)
                     .withClaim("role", role)
+                    .withClaim("examSettingsDtoEncrypted", examSettingsDtoEncrypted)
                     .withExpiresAt(Date.from(LocalDateTime.now().plusMinutes(120).atZone(ZoneId.systemDefault()).toInstant()))
                     .sign(algorithm);
             return token;

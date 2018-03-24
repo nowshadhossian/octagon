@@ -43,20 +43,20 @@ public class RestApiController {
         this.restApiManager = restApiManager;
     }
 
-    @RequestMapping(value = BASE_ROUTE + "/token/{encryptedUserId}", method = RequestMethod.GET)
+   /* @RequestMapping(value = BASE_ROUTE + "/token/{encryptedUserId}", method = RequestMethod.GET)
     private String getJwtTokenResponse(@PathVariable String encryptedUserId, Authentication authentication) {
         return getJwtToken(encryptedUserId);
 
-    }
+    }*/
 
-    public String getJwtToken(String encryptedUserId) {
+    public String getJwtToken(String encryptedUserId, String examSettingsDtoEncrypted) {
         long userId = 0;
         try {
             userId = Long.parseLong(Encryption.decrypt(encryptedUserId));
             User user = userRepository.findById(userId)
                     .orElse(null);
             if (user != null) {
-                return jwtToken.createToken(userId, user.getRole().name());
+                return jwtToken.createToken(userId, user.getRole().name(), examSettingsDtoEncrypted);
             }
         } catch (EncryptionOperationNotPossibleException e) {
             //not matched
@@ -80,7 +80,7 @@ public class RestApiController {
                             .batch(restApiManager.getCurrentBatch())
                             .gotCorrect(answerIsCorrect)
                             .user(restApiManager.getUser())
-                            .examType(ExamType.DAILY_EXAM)
+                            .examType(ExamType.getByValue(restApiManager.getExamSettingsDTO().getExamTypeId()))
                             .build();
                     studentAnswerRepository.save(studentAnswer);
                     return "{\"success\": \"" + question.getAnswer() +"\"}";
@@ -136,13 +136,13 @@ public class RestApiController {
         return questionRepository.findByIdIn(randomQuestionIds);
     }
 
-    @RequestMapping(value = BASE_ROUTE + "/questions/{limit}/subject/{subjectId}/etoken", method = RequestMethod.GET)
-    private QuestionsData randomQuestionsWithEncrypted(@PathVariable int limit, @PathVariable long subjectId, @RequestHeader String encryptedUserId, HttpServletResponse response, HttpServletRequest request) {
-        String jwtToken = getJwtToken(encryptedUserId);
+    @RequestMapping(value = BASE_ROUTE + "/questions/subject/etoken", method = RequestMethod.GET)
+    private QuestionsData randomQuestionsWithEncrypted(@RequestHeader String encryptedUserId, @RequestHeader String examSettingsDtoEncrypted, HttpServletResponse response, HttpServletRequest request) {
+        String jwtToken = getJwtToken(encryptedUserId, examSettingsDtoEncrypted);
         response.addHeader("jwtToken", jwtToken);
         // response.addHeader("Access-Control-Expose-Headers", "jwtToken");
-        User user = userRepository.findById(restApiManager.getUserId(jwtToken))
+        User user = userRepository.findById(restApiManager.getUserId(jwtToken)) //Authorization header is not available yet
                 .orElseThrow(() -> new UserNotFoundException(-1));
-        return mapper.from(randomQuestionId(subjectId, user));
+        return mapper.from(randomQuestionId(restApiManager.getCurrentBatch().getSubject().getId(), user));
     }
 }

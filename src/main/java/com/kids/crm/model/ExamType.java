@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Arrays;
+
 @Getter
 @AllArgsConstructor
 public enum ExamType {
@@ -14,5 +16,10 @@ public enum ExamType {
 
     private int id;
 
-
+    public static ExamType getByValue(int id){
+       return Arrays.stream(values())
+                .filter(examType -> examType.getId() == id)
+                .findFirst()
+                .orElse(NULL);
+    }
 }

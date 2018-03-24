@@ -8,6 +8,15 @@ mongod --dbpath /Users/nowshad/programming/data/db
 
 Download Robo 3T as mongodb client
 
+**2. Java-React Communication**
+-through URL u(encryptedUserId) and s(encrypted json settings) params are send to react [DailyExamController]
+-React take these settings & make Controller call /questions/{limit}/subject/{subjectId}/etoken with e value and s value send as RequestHeader
+-The controller take these header value > decrypts the u value and send as JWTToken claim as long and encrypted settings s as claims > send them in header
+named jwtToken to react.
+- React take these jwtToken and send as Authorization header in every request[QuestionApiInterceptor verifies JWTToken in every request]
+
+
+
 
 
 **Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
