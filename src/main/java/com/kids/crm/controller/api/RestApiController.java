@@ -4,11 +4,13 @@ import com.kids.crm.controller.api.data.QuestionsData;
 import com.kids.crm.model.*;
 import com.kids.crm.model.mongo.QuestionSolvingTime;
 import com.kids.crm.mongo.repository.QuestionSolvingTimeRepository;
+import com.kids.crm.pojo.ExamSettingsDTO;
 import com.kids.crm.repository.QuestionRepository;
 import com.kids.crm.repository.StudentAnswerRepository;
 import com.kids.crm.repository.UserRepository;
 import com.kids.crm.service.Encryption;
 import com.kids.crm.service.JwtToken;
+import com.kids.crm.service.QuestionService;
 import com.kids.crm.service.exception.UserNotFoundException;
 import org.jasypt.exceptions.EncryptionOperationNotPossibleException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @RestController
 public class RestApiController {
@@ -31,9 +34,10 @@ public class RestApiController {
     private final StudentAnswerRepository studentAnswerRepository;
     private final QuestionSolvingTimeRepository questionSolvingTimeRepository;
     private final RestApiManager restApiManager;
+    private final QuestionService questionService;
 
     @Autowired
-    public RestApiController(QuestionRepository questionRepository, DataMapper mapper, JwtToken jwtToken, UserRepository userRepository, StudentAnswerRepository studentAnswerRepository, QuestionSolvingTimeRepository questionSolvingTimeRepository, RestApiManager restApiManager) {
+    public RestApiController(QuestionRepository questionRepository, DataMapper mapper, JwtToken jwtToken, UserRepository userRepository, StudentAnswerRepository studentAnswerRepository, QuestionSolvingTimeRepository questionSolvingTimeRepository, RestApiManager restApiManager, QuestionService questionService) {
         this.questionRepository = questionRepository;
         this.mapper = mapper;
         this.jwtToken = jwtToken;
@@ -41,6 +45,7 @@ public class RestApiController {
         this.studentAnswerRepository = studentAnswerRepository;
         this.questionSolvingTimeRepository = questionSolvingTimeRepository;
         this.restApiManager = restApiManager;
+        this.questionService = questionService;
     }
 
    /* @RequestMapping(value = BASE_ROUTE + "/token/{encryptedUserId}", method = RequestMethod.GET)
@@ -136,6 +141,40 @@ public class RestApiController {
         return questionRepository.findByIdIn(randomQuestionIds);
     }
 
+    private List<Question> randomQuestionId(long subjectId, User user, ExamSettingsDTO examSettingsDTO){
+
+
+        Set<Long> studentAnswers = studentAnswerRepository.findByUser(user)
+                .stream()
+                .map(StudentAnswer::getQuestion)
+                .map(Question::getId)
+                .collect(Collectors.toSet());
+
+        Iterable<Question> questions = questionService.findQuestionsByExamSettings(subjectId, examSettingsDTO);
+        List<Long> unAnsweredQuestions = StreamSupport.stream(questions.spliterator(), false)
+                                    .filter(question -> !studentAnswers.contains(question.getId()))
+                                    .map(Question::getId)
+                                    .collect(Collectors.toList());
+
+        if (unAnsweredQuestions.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        if (unAnsweredQuestions.size() <= 10) {
+            return questionRepository.findByIdIn(new HashSet<>(unAnsweredQuestions));
+        }
+
+
+
+        Set<Long> randomQuestionIds = new HashSet<>();
+        Random random = new Random();
+        while(randomQuestionIds.size() < examSettingsDTO.getTotalQuestion()){
+            int randomQuestionId = random.nextInt(unAnsweredQuestions.size());
+            randomQuestionIds.add(unAnsweredQuestions.get(randomQuestionId));
+        }
+        return questionRepository.findByIdIn(randomQuestionIds);
+    }
+
     @RequestMapping(value = BASE_ROUTE + "/questions/subject/etoken", method = RequestMethod.GET)
     private QuestionsData randomQuestionsWithEncrypted(@RequestHeader String encryptedUserId, @RequestHeader String examSettingsDtoEncrypted, HttpServletResponse response, HttpServletRequest request) {
         String jwtToken = getJwtToken(encryptedUserId, examSettingsDtoEncrypted);
@@ -143,6 +182,12 @@ public class RestApiController {
         // response.addHeader("Access-Control-Expose-Headers", "jwtToken");
         User user = userRepository.findById(restApiManager.getUserId(jwtToken)) //Authorization header is not available yet
                 .orElseThrow(() -> new UserNotFoundException(-1));
-        return mapper.from(randomQuestionId(restApiManager.getCurrentBatch().getSubject().getId(), user));
+        if(ExamType.getByValue(restApiManager.getExamSettingsDTO().getExamTypeId()) == ExamType.DAILY_EXAM){
+            return mapper.from(randomQuestionId(restApiManager.getCurrentBatch().getSubject().getId(), user));
+        } else {
+            return mapper.from(randomQuestionId(restApiManager.getCurrentBatch().getSubject().getId(), user, restApiManager.getExamSettingsDTO()));
+        }
+
+
     }
 }

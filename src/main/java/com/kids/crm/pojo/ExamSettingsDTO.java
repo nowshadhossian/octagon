@@ -12,4 +12,8 @@ public class ExamSettingsDTO {
     private int examTypeId;
     private int totalQuestion;
 
+    //custom Exam
+    private long topicId;
+    private int year;
+
 }

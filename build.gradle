@@ -39,6 +39,42 @@ repositories {
 }
 
 
+/***
+ * QueryDSL starts
+ */
+sourceSets {
+	main {
+		java {
+			srcDirs 'src/main/java', 'src/main/generated'
+		}
+	}
+}
+
+
+task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
+	file(new File(projectDir, "/src/main/generated")).deleteDir()
+	file(new File(projectDir, "/src/main/generated")).mkdirs()
+	source = sourceSets.main.java
+	classpath = configurations.compile + configurations.compileOnly
+	options.compilerArgs = [
+			"-proc:only",
+			"-processor", "com.querydsl.apt.jpa.JPAAnnotationProcessor"
+	]
+	destinationDir = file('src/main/generated')
+}
+
+compileJava {
+	dependsOn generateQueryDSL
+}
+
+clean.doLast {
+	file(new File(projectDir, "/src/main/generated")).deleteDir()
+}
+/***
+ * QueryDSL ends
+ */
+
+
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-actuator')
 	/*compile('org.springframework.boot:spring-boot-starter-amqp')*/
@@ -77,6 +113,12 @@ dependencies {
 	compile group: 'org.apache.poi', name: 'poi', version: '3.9'
 	compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.9'
 	optional "org.springframework.boot:spring-boot-configuration-processor"
+
+	// https://mvnrepository.com/artifact/com.querydsl/querydsl-apt
+	compile group: 'com.querydsl', name: 'querydsl-apt', version: '4.2.1'
+	// https://mvnrepository.com/artifact/com.querydsl/querydsl-jpa
+	compile group: 'com.querydsl', name: 'querydsl-jpa', version: '4.2.1'
+
 
 }
 

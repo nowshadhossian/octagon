@@ -42,7 +42,7 @@ public class StudentStatsController {
         User loggedIn = userSession.getLoggedInUser();
 
         Date from = DateUtils.toDate(LocalDate.now().minusYears(2));
-        Date to = DateUtils.toDate(LocalDate.now());
+        Date to = DateUtils.toDate(LocalDate.now().minusDays(-1));
         modelMap.addAttribute("lastWeeklyResults", studentService.lastAttendedResults(loggedIn, from, to, userSession.getCurrentBatch()));
 
         return "/student/stat/last-daily-results";

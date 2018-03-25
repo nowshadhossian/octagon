@@ -43,7 +43,7 @@ public class StudentService {
         DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
         studentAnswersWeekly
                 .stream()
-                .filter(answer -> Objects.equals(answer.getSubject().getId(), batch.getId()))
+                .filter(answer -> Objects.equals(answer.getSubject().getId(), batch.getSubject().getId()))
                 .forEach(answer -> {
                             if (resultsMap.containsKey(df.format(answer.getAttendedOn()))) {
                                 LastAttendedResult lastAttendedResult = resultsMap.get(df.format(answer.getAttendedOn()));
