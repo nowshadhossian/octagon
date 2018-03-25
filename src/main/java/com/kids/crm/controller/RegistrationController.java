@@ -77,7 +77,6 @@ public class RegistrationController {
             return "register";
         }
 
-
         Student student = Student.builder()
                 .address(signup.getAddress())
                 .phone(signup.getPhoneNo())
