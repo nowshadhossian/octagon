@@ -8,8 +8,6 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 public class QuestionService {
     private final QuestionRepository questionRepository;
@@ -19,17 +17,16 @@ public class QuestionService {
         this.questionRepository = questionRepository;
     }
 
-    public Iterable<Question> findQuestionsByExamSettings(long subjectId, ExamSettingsDTO examSettingsDTO){
+    public Iterable<Question> findQuestionsByExamSettings(long subjectId, ExamSettingsDTO examSettingsDTO) {
         BooleanExpression predicate = QQuestion.question.subject.id.eq(subjectId);
-        if(examSettingsDTO.getTopicId() > 0){
-            predicate.and(QQuestion.question.topic.id.eq(examSettingsDTO.getTopicId()));
+        if (examSettingsDTO.getTopicId() > 0) {
+            predicate = predicate.and(QQuestion.question.topic.id.eq(examSettingsDTO.getTopicId()));
         }
-        if(examSettingsDTO.getYear() > 0){
-            predicate.and(QQuestion.question.year.eq(examSettingsDTO.getYear()));
+        if (examSettingsDTO.getYear() > 0) {
+            predicate = predicate.and(QQuestion.question.year.eq(examSettingsDTO.getYear()));
         }
 
-        Iterable<Question> questions;
-        if(predicate == null){
+        if (predicate == null) {
             return questionRepository.findAll();
         } else {
             return questionRepository.findAll(predicate);

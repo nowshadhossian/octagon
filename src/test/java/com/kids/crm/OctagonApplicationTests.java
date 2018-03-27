@@ -4,9 +4,11 @@ import com.kids.crm.exportdata.ExportQuestionData;
 import com.kids.crm.model.*;
 import com.kids.crm.model.mongo.UserLoginSession;
 import com.kids.crm.mongo.repository.UserLoginSessionRepository;
+import com.kids.crm.pojo.ExamSettingsDTO;
 import com.kids.crm.repository.*;
 import com.kids.crm.service.Encryption;
 import com.kids.crm.service.MailSender;
+import com.kids.crm.service.QuestionService;
 import com.kids.crm.utils.DateUtils;
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -47,6 +49,9 @@ public class OctagonApplicationTests {
 
 	@Autowired
 	MailSender emailSender;
+
+	@Autowired
+	QuestionService questionService;
 
 	@Autowired private StudentAnswerRepository studentAnswerRepository;
 
@@ -167,6 +172,14 @@ public class OctagonApplicationTests {
         	question1.setSubject(subject);
 			questionRepository.save(question1);
 		});
+	}
+
+	@Test
+	public void queryDslReturningCorrectTopic(){
+		Iterable<Question> questions = questionService.findQuestionsByExamSettings(1, ExamSettingsDTO.builder().topicId(2).year(2017).build());
+		Question question = questions.iterator().next();
+		Assert.assertTrue(question.getYear() == 2017);
+		Assert.assertTrue(question.getTopic().getId() == 2);
 	}
 
 }
