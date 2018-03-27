@@ -1,7 +1,9 @@
 package com.kids.crm.model;
 
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 
+@Getter
 public enum Role implements GrantedAuthority {
     TEACHER("ROLE_TEACHER"),
     STUDENT("ROLE_STUDENT"),

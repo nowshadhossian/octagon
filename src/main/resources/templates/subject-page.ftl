@@ -19,6 +19,7 @@
                             <th>Sl#</th>
                             <th>Correct</th>
                             <th>Wrong</th>
+                            <th>Total</th>
                             <th>AttendedOn</th>
                         </tr>
                     </thead>
@@ -28,6 +29,7 @@
                                 <td>${result?counter}</td>
                                 <td>${result.getCorrect()}</td>
                                 <td>${result.getWrong()}</td>
+                                <td>${result.getWrong() + result.getCorrect()}</td>
                                 <td>${result.getDate()}</td>
                             </tr>
                         </#list>

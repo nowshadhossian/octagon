@@ -51,6 +51,7 @@ public class StudentStatsController {
     @RequestMapping(value = LEADERBOARD_YESTERDAY_RESULTS_ROUTE, method = RequestMethod.GET)
     private String leaderboardPageYesterday(Authentication authentication, ModelMap modelMap) {
         modelMap.addAttribute("leaderboardYesterdayForInclude", leaderboardComponent.drawForYesterday(userSession.getCurrentBatch(), modelMap));
+        modelMap.addAttribute("loggedIn", userSession.getLoggedInUser());
         return "/student/stat/leaderboard-yesterday";
     }
 }
