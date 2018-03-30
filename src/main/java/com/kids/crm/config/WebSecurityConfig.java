@@ -1,5 +1,6 @@
 package com.kids.crm.config;
 
+import com.kids.crm.model.Role;
 import com.kids.crm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +33,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                    .antMatchers("/teacher/**").hasRole(Role.TEACHER.getNameStripped())
+                    .antMatchers("/student/**").hasRole(Role.STUDENT.getNameStripped())
                     .antMatchers("/save","/find", "/list", "/register/**",
                             "/forgot-password", "/images/**", "/css/**", "/js/**", "/ui-lib/**", "/api/**").permitAll()
                     .anyRequest().authenticated()

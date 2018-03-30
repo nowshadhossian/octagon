@@ -1,13 +1,13 @@
 package com.kids.crm.controller;
 
+import com.kids.crm.model.Batch;
 import com.kids.crm.model.Student;
-import com.kids.crm.model.Teacher;
-import com.kids.crm.model.User;
+import com.kids.crm.repository.StudentAnswerRepository;
 import com.kids.crm.repository.StudentRepository;
 import com.kids.crm.repository.TeacherRepository;
 import com.kids.crm.service.BatchService;
+import com.kids.crm.service.TeacherService;
 import com.kids.crm.service.UserSession;
-import com.kids.crm.service.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class TeacherStudentsController {
@@ -26,21 +27,23 @@ public class TeacherStudentsController {
     private final TeacherRepository teacherRepository;
     private final StudentRepository studentRepository;
     private final BatchService batchService;
+    private final TeacherService teacherService;
+    private final StudentAnswerRepository studentAnswerRepository;
 
     @Autowired
-    public TeacherStudentsController(UserSession userSession, TeacherRepository teacherRepository, StudentRepository studentRepository, BatchService batchService) {
+    public TeacherStudentsController(UserSession userSession, TeacherRepository teacherRepository, StudentRepository studentRepository, BatchService batchService, TeacherService teacherService, StudentAnswerRepository studentAnswerRepository) {
         this.userSession = userSession;
         this.teacherRepository = teacherRepository;
         this.studentRepository = studentRepository;
         this.batchService = batchService;
+        this.teacherService = teacherService;
+        this.studentAnswerRepository = studentAnswerRepository;
     }
 
 
     @RequestMapping(value = MY_STUDENTS_ROUTE, method = RequestMethod.GET)
     public String getMyStudentsPage(ModelMap modelMap){
-        User loggedIn = userSession.getLoggedInUser();
-        Teacher teacher = teacherRepository.findById(loggedIn.getId()).orElseThrow(() -> new UserNotFoundException(loggedIn.getId()));
-
+        userSession.setCurrentBatch(batchService.reFetch(userSession.getCurrentBatch()));
         modelMap.addAttribute("students", userSession.getCurrentBatch().getStudents());
         modelMap.addAttribute("batch", userSession.getCurrentBatch());
         return "/teacher/my-students";
@@ -65,5 +68,11 @@ public class TeacherStudentsController {
         studentRepository.save(student);
 
         return "redirect:" + ADD_STUDENTS;
+    }
+
+    @RequestMapping(value = "/teacher/students/remove", method = RequestMethod.POST)
+    public String removeStudent(ModelMap modelMap, Student student){
+        teacherService.removeStudentFromBatch(student.getId(), userSession.getCurrentBatch().getId());
+        return "redirect:" + MY_STUDENTS_ROUTE;
     }
 }

@@ -20,6 +20,7 @@
                         <th>Name</th>
                         <th>Phone</th>
                         <th>Email</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -29,6 +30,13 @@
                             <td>${student.getName()}</td>
                             <td>${student.getPhone()!""}</td>
                             <td>${student.getUsername()}</td>
+                            <td>
+                                <form onsubmit="return confirm('Do you want to remove the student?');" action="/teacher/students/remove" method="POST">
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    <input type="hidden" name="student" value=${student.getId()}>
+                                    <button class="btn-danger">Remove</button>
+                                </form>
+                            </td>
                         </tr>
                         </#list>
                     </tbody>

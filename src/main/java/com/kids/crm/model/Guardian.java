@@ -16,7 +16,7 @@ public class Guardian {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="student_id")
     private Student student;
 

@@ -28,4 +28,8 @@ public enum Role implements GrantedAuthority {
     public boolean isTeacher() {
         return this == TEACHER;
     }
+
+    public String getNameStripped(){
+        return getName().substring(5);
+    }
 }

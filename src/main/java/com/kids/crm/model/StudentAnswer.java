@@ -16,20 +16,20 @@ public class StudentAnswer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="question_id")
     private Question question;
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="subject_id")
     private Subject subject;
     private String answer;
     private Date attendedOn;
     private boolean gotCorrect;
     private ExamType examType;
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="batch_id")
     private Batch batch;
 }

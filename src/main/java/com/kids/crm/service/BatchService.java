@@ -37,4 +37,8 @@ public class BatchService {
     public Batch reFetch(Batch batch){
         return batchRepository.findById(batch.getId()).orElseThrow(BatchNotFoundException::new);
     }
+
+    public Batch findById(long batchId){
+        return batchRepository.findById(batchId).orElseThrow(BatchNotFoundException::new);
+    }
 }

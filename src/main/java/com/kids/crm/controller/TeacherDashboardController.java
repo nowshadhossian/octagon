@@ -46,10 +46,16 @@ public class TeacherDashboardController {
     private String teacherDashboard(Authentication authentication, ModelMap modelMap) {
         User loggedIn = userSession.getLoggedInUser();
         modelMap.addAttribute("name", loggedIn.getName());
-        Teacher teacher = teacherRepository.findById(loggedIn.getId()).get();
-
+        modelMap.addAttribute("loggedIn", userSession.getLoggedInUser());
         modelMap.addAttribute("leaderboardPage", leaderboardComponent.drawForToday(userSession.getCurrentBatch(), modelMap));
 
         return "teacher/dashboard";
+    }
+
+    @RequestMapping(value = "/teacher/student/leaderboard-yesterday-results", method = RequestMethod.GET)
+    private String leaderboardPageYesterday(Authentication authentication, ModelMap modelMap) {
+        modelMap.addAttribute("leaderboardYesterdayForInclude", leaderboardComponent.drawForYesterday(userSession.getCurrentBatch(), modelMap));
+        modelMap.addAttribute("loggedIn", userSession.getLoggedInUser());
+        return "/student/stat/leaderboard-yesterday";
     }
 }

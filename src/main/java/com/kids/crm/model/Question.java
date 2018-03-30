@@ -29,7 +29,7 @@ public class Question {
                 inverseJoinColumns = @JoinColumn(name=  "sub_topic_id")
     )
     private Set<SubTopic> subTopics;
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="topic_id")
     private Topic topic;
     private int paper;

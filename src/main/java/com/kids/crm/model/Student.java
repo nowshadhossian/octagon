@@ -40,6 +40,10 @@ public class Student extends User{
         batches.add(batch);
     }
 
+    public void removeFromBatch(Batch batch){
+        batches.remove(batch);
+    }
+
     public boolean equals(Object o) {
         if (o == this) {
             return true;

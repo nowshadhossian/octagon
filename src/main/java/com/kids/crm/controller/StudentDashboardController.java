@@ -39,6 +39,7 @@ public class StudentDashboardController {
         modelMap.addAttribute("lastWeeklyResults", studentService.lastAttendedResultsWeekly(loggedIn, userSession.getCurrentBatch()));
 
         modelMap.addAttribute("leaderboardTodayPageToInclude", leaderboardComponent.drawForToday(userSession.getCurrentBatch(), modelMap));
+        modelMap.addAttribute("loggedIn", userSession.getLoggedInUser());
 
         return "subject-page";
     }
