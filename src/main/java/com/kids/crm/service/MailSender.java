@@ -108,11 +108,11 @@ public class MailSender {
 
                 List<StudentAnswer> studentAnswers = studentAnswerRepository.findByUserAndAttendedOnBetweenAndBatchAndExamType(student, yesterdayStart, yesterdayEnd, batch, ExamType.DAILY_EXAM);
                 if (studentAnswers.isEmpty()) {
-                    Map<String, String> params = new HashMap<>();
+                   /* Map<String, String> params = new HashMap<>();
                     params.put("name", student.getName());
 
                     String body = getTemplate(params, "DailyExamResultToParentsDidNotAppear.html");
-                    send(mailSubject, body, "parents@parent.com");
+                    send(mailSubject, body, "parents@parent.com");*/
                 } else {
                     long correct = studentAnswers.stream().filter(StudentAnswer::isGotCorrect).count();
                     long wrong = studentAnswers.stream().filter(answer -> !answer.isGotCorrect()).count();

@@ -9,13 +9,14 @@
             <div class="card-header">
                 <i class="fa fa-table"></i> Last Week Results
             </div>
-            <div class="card-body">
+            <div class="card-body" style="overflow: auto">
                 <table class="table table-striped">
                     <thead>
                     <tr>
                         <th>Sl#</th>
                         <th>Correct</th>
                         <th>Wrong</th>
+                        <th>Total</th>
                         <th>AttendedOn</th>
                     </tr>
                     </thead>
@@ -25,6 +26,7 @@
                             <td>${result?counter}</td>
                             <td>${result.getCorrect()}</td>
                             <td>${result.getWrong()}</td>
+                            <td>${result.getWrong() + result.getCorrect()}</td>
                             <td>${result.getDate()}</td>
                         </tr>
                         </#list>

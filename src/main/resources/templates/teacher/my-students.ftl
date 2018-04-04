@@ -12,7 +12,7 @@
             <div class="card-header">
                 <i class="fa fa-table"></i> My Students
             </div>
-            <div class="card-body">
+            <div class="card-body" style="overflow: auto">
                 <table class="table table-striped">
                     <thead>
                     <tr>
