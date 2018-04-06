@@ -3,6 +3,14 @@
 <#assign title="Dashboard | Octagon">
 <#assign navPage="/layout/nav/student-nav.ftl">
 <#include "/layout/nav/top.ftl">
+<#if errorMsg??>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      ${errorMsg}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+</#if>
 <div class="row">
     <div class="col-12">
         <h1>Hello ${name}!!!</h1>
