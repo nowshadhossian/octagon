@@ -52,6 +52,7 @@ sourceSets {
 
 
 task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
+	group 'dev'
 	file(new File(projectDir, "/src/main/generated")).deleteDir()
 	file(new File(projectDir, "/src/main/generated")).mkdirs()
 	source = sourceSets.main.java
@@ -118,6 +119,7 @@ dependencies {
 	compile group: 'com.querydsl', name: 'querydsl-apt', version: '4.2.1'
 	// https://mvnrepository.com/artifact/com.querydsl/querydsl-jpa
 	compile group: 'com.querydsl', name: 'querydsl-jpa', version: '4.2.1'
+	runtime("io.micrometer:micrometer-registry-prometheus")
 
 
 }

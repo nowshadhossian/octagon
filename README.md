@@ -30,6 +30,17 @@ Reverse Proxy makes the app run in port 80 for both the apps.
 The above in /usr/local/etc/nginx/nginx.conf
 
 
+**4. Metric**
+For metric using prometheus & grafana.
+//prometheus
+docker run -p 9090:9090 -v /tmp/prometheus.yml:/etc/prometheus/prometheus.yml  prom/prometheus
+
+//grafana
+docker run -d -p 3090:3000 grafana/grafana
+
+
+open browser and try localhost:3090 for grafana
+
 
 **Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
 
