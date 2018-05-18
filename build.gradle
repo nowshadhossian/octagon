@@ -120,6 +120,8 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.querydsl/querydsl-jpa
 	compile group: 'com.querydsl', name: 'querydsl-jpa', version: '4.2.1'
 	runtime("io.micrometer:micrometer-registry-prometheus")
+	provided group: 'com.hazelcast', name: 'hazelcast-hibernate', version: '3.8.2', ext: 'pom'
+
 
 
 }
