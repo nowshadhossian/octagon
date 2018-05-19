@@ -1,18 +1,18 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <a class="navbar-brand" href="/teacher/dashboard">MasterMCQ</a>
+    <a class="navbar-brand" href="/superadmin/dashboard">MasterMCQ</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-                <a class="nav-link" href="/teacher/dashboard">
+                <a class="nav-link" href="/superadmin/dashboard">
                     <i class="fa fa-fw fa-area-chart"></i>
                     <span class="nav-link-text">Dashboard</span>
                 </a>
             </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                <a class="nav-link" href="/teacher/switch-batch">
+                <a class="nav-link" href="/superadmin/danger-zone">
                     <i class="fa fa-fw fa-table"></i>
                     <span class="nav-link-text">Danger Zone</span>
                 </a>

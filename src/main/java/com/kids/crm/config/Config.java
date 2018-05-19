@@ -11,5 +11,6 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "app")
 public class Config {
     String examUiDomain;
+    String companyName;
 
 }
