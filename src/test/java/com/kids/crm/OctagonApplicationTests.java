@@ -165,7 +165,7 @@ public class OctagonApplicationTests {
 						.name("Momentum")
 						.build()))
 				.build();*/
-		final Subject subject = exportQuestionData.findOrCreateSubject("Physics");
+		final Subject subject = exportQuestionData.findOrCreateSubject("Medical");
 
 		List<Question> questionList = exportQuestionData.readQuestionExcel(subject);
         questionList.forEach(question1 -> {

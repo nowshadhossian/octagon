@@ -33,7 +33,7 @@ public class StudentSwitchBatchController {
     }
 
     @GetMapping(value = "/student/batch/{batch}")
-    public String activateBatchPage(ModelMap modelMap, Batch batch){
+    public String activateBatchPage( Batch batch){
         userSession.setCurrentBatch(batch);
 
         return "redirect:/student/dashboard";

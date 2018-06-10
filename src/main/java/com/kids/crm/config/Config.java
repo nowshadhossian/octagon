@@ -12,5 +12,6 @@ import org.springframework.stereotype.Component;
 public class Config {
     String examUiDomain;
     String companyName;
+    boolean multipleAnswers;
 
 }

@@ -1,5 +1,7 @@
 package com.kids.crm.controller.api;
 
+import com.kids.crm.config.Config;
+import com.kids.crm.controller.api.data.QuestionData;
 import com.kids.crm.controller.api.data.QuestionsData;
 import com.kids.crm.model.*;
 import com.kids.crm.model.mongo.QuestionSolvingTime;
@@ -35,9 +37,10 @@ public class RestApiController {
     private final QuestionSolvingTimeRepository questionSolvingTimeRepository;
     private final RestApiManager restApiManager;
     private final QuestionService questionService;
+    private final Config config;
 
     @Autowired
-    public RestApiController(QuestionRepository questionRepository, DataMapper mapper, JwtToken jwtToken, UserRepository userRepository, StudentAnswerRepository studentAnswerRepository, QuestionSolvingTimeRepository questionSolvingTimeRepository, RestApiManager restApiManager, QuestionService questionService) {
+    public RestApiController(QuestionRepository questionRepository, DataMapper mapper, JwtToken jwtToken, UserRepository userRepository, StudentAnswerRepository studentAnswerRepository, QuestionSolvingTimeRepository questionSolvingTimeRepository, RestApiManager restApiManager, QuestionService questionService, Config config) {
         this.questionRepository = questionRepository;
         this.mapper = mapper;
         this.jwtToken = jwtToken;
@@ -46,6 +49,7 @@ public class RestApiController {
         this.questionSolvingTimeRepository = questionSolvingTimeRepository;
         this.restApiManager = restApiManager;
         this.questionService = questionService;
+        this.config = config;
     }
 
    /* @RequestMapping(value = BASE_ROUTE + "/token/{encryptedUserId}", method = RequestMethod.GET)
@@ -88,7 +92,7 @@ public class RestApiController {
                             .examType(ExamType.getByValue(restApiManager.getExamSettingsDTO().getExamTypeId()))
                             .build();
                     studentAnswerRepository.save(studentAnswer);
-                    return "{\"success\": \"" + question.getAnswer() +"\"}";
+                    return "{\"correctOption\": \"" + question.getAnswer() +"\"}";
                 }).orElseThrow(RuntimeException::new);
     }
 
@@ -182,11 +186,15 @@ public class RestApiController {
         // response.addHeader("Access-Control-Expose-Headers", "jwtToken");
         User user = userRepository.findById(restApiManager.getUserId(jwtToken)) //Authorization header is not available yet
                 .orElseThrow(() -> new UserNotFoundException(-1));
+        QuestionsData questionsData;
         if(ExamType.getByValue(restApiManager.getExamSettingsDTO().getExamTypeId()) == ExamType.DAILY_EXAM){
-            return mapper.from(randomQuestionId(restApiManager.getCurrentBatch().getSubject().getId(), user));
+            questionsData = mapper.from(randomQuestionId(restApiManager.getCurrentBatch().getSubject().getId(), user));
         } else {
-            return mapper.from(randomQuestionId(restApiManager.getCurrentBatch().getSubject().getId(), user, restApiManager.getExamSettingsDTO()));
+            questionsData = mapper.from(randomQuestionId(restApiManager.getCurrentBatch().getSubject().getId(), user, restApiManager.getExamSettingsDTO()));
         }
+
+        questionsData.setSettings(config.isMultipleAnswers());
+        return questionsData;
 
 
     }
