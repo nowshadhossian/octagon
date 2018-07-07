@@ -6,6 +6,8 @@ import com.kids.crm.repository.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class TopicService {
     private final TopicRepository topicRepository;
@@ -18,5 +20,13 @@ public class TopicService {
     public Topic findOrCreateTopic(String topic, Subject subject){
         return topicRepository.findByNameAndSubject(topic, subject)
                 .orElseGet(() -> topicRepository.save(Topic.builder().name(topic).subject(subject).build()));
+    }
+
+    public List<Topic> getAllTopic() {
+        return topicRepository.findAll();
+    }
+
+    public void insertTopic(Topic topic) {
+        topicRepository.save(topic);
     }
 }

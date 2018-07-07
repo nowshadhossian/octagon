@@ -1,7 +1,6 @@
 package com.kids.crm.controller.superadmin;
 
 import com.kids.crm.model.Subject;
-import com.kids.crm.model.Topic;
 import com.kids.crm.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,13 +24,13 @@ public class SubjectController {
         modelMap.addAttribute("allSubjects",subjectList);
         return "super/subject";
     }
-    @GetMapping("add-subject")
+    @GetMapping("add")
     public String addSubject(@ModelAttribute("model") ModelMap modelMap) {
         Subject subject = new Subject();
         modelMap.addAttribute("subject", subject);
         return "super/add-subject";
     }
-    @PostMapping("/add-subject")
+    @PostMapping("/add")
     public String createSubject(@ModelAttribute Subject subject) {
         subjectService.insertOrUpdateSubject(subject);
         return "redirect:/superadmin/subject";

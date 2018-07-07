@@ -5,7 +5,7 @@
     <div class="col-12">
         <h1>Subject</h1>
         <div>
-            <a href="/superadmin/subject/add-subject" class="btn btn-dark">Add Subject</a>
+            <a href="/superadmin/subject/add" class="btn btn-dark">Add Subject</a>
         </div>
         <div>
             <div>
