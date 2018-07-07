@@ -23,6 +23,18 @@
                     <span class="nav-link-text">Question Upload</span>
                 </a>
             </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                <a class="nav-link" href="/superadmin/topic">
+                    <i class="fa fa-fw fa-table"></i>
+                    <span class="nav-link-text">Topic</span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                <a class="nav-link" href="/superadmin/subject">
+                    <i class="fa fa-fw fa-table"></i>
+                    <span class="nav-link-text">Subject</span>
+                </a>
+            </li>
         </ul>
         <ul class="navbar-nav sidenav-toggler">
             <li class="nav-item">
