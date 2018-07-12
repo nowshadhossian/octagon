@@ -92,7 +92,7 @@ public class RestApiController {
                             .examType(ExamType.getByValue(restApiManager.getExamSettingsDTO().getExamTypeId()))
                             .build();
                     studentAnswerRepository.save(studentAnswer);
-                    return "{\"correctOption\": \"" + question.getAnswer() +"\"}";
+                    return "{\"correctOption\": \"" + question.getAnswer() +"\"" + ", \"explanation\": \"" + question.getAnswerExplanation() + "\""+ "}";
                 }).orElseThrow(RuntimeException::new);
     }
 

@@ -22,9 +22,13 @@ public class QQuestion extends EntityPathBase<Question> {
 
     public static final QQuestion question = new QQuestion("question");
 
+    public final BooleanPath active = createBoolean("active");
+
     public final StringPath answer = createString("answer");
 
     public final StringPath answerExplanation = createString("answerExplanation");
+
+    public final StringPath curriculum = createString("curriculum");
 
     public final StringPath fileName = createString("fileName");
 
@@ -41,6 +45,8 @@ public class QQuestion extends EntityPathBase<Question> {
     public final SetPath<SubTopic, QSubTopic> subTopics = this.<SubTopic, QSubTopic>createSet("subTopics", SubTopic.class, QSubTopic.class, PathInits.DIRECT2);
 
     public final QTopic topic;
+
+    public final StringPath variant = createString("variant");
 
     public final NumberPath<Integer> year = createNumber("year", Integer.class);
 
