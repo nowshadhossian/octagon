@@ -18,9 +18,9 @@
                 </a>
             </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                <a class="nav-link" href="/superadmin/question-upload">
+                <a class="nav-link" href="/superadmin/questions/">
                     <i class="fa fa-fw fa-table"></i>
-                    <span class="nav-link-text">Question Upload</span>
+                    <span class="nav-link-text">Questions</span>
                 </a>
             </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
@@ -33,6 +33,12 @@
                 <a class="nav-link" href="/superadmin/subject">
                     <i class="fa fa-fw fa-table"></i>
                     <span class="nav-link-text">Subject</span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                <a class="nav-link" href="/superadmin/session">
+                    <i class="fa fa-fw fa-table"></i>
+                    <span class="nav-link-text">Session</span>
                 </a>
             </li>
         </ul>

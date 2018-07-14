@@ -19,12 +19,12 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 @Service
-public class UploadServiceImpl implements UploadService{
+public class StorageServiceImpl implements StorageService {
 
     private final Path rootLocation;
 
     @Autowired
-    public UploadServiceImpl(StorageProperties properties) {
+    public StorageServiceImpl(StorageProperties properties) {
         this.rootLocation = Paths.get(properties.getLocation());
     }
 
@@ -42,8 +42,6 @@ public class UploadServiceImpl implements UploadService{
     public void store(MultipartFile file, String fileName) {
         if(fileName==null || fileName.isEmpty()) {
             fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        } else {
-            fileName = fileName+ "." + FilenameUtils.getExtension(file.getOriginalFilename());
         }
         try {
             if (file.isEmpty()) {

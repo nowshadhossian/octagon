@@ -4,9 +4,13 @@ import com.kids.crm.model.QQuestion;
 import com.kids.crm.model.Question;
 import com.kids.crm.pojo.ExamSettingsDTO;
 import com.kids.crm.repository.QuestionRepository;
+import com.kids.crm.service.exception.NotFoundException;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Optional;
 
 @Component
 public class QuestionService {
@@ -32,5 +36,24 @@ public class QuestionService {
             return questionRepository.findAll(predicate);
         }
 
+    }
+
+    public List<Question> getAllQuestions() {
+        return questionRepository.findAll();
+    }
+    public void saveQuestion(Question question) {
+        questionRepository.save(question);
+    }
+    public Question getQuestionById(Long questionId){
+        Optional<Question> questionOptional = questionRepository.findById(questionId);
+        if (!(questionOptional.isPresent())){
+            throw new NotFoundException("Topic not found");
+        }
+        return questionOptional.get();
+    }
+
+    public String generateQuestionName(Question question,String ext) {
+        String name = question.getYear()+question.getSession().getId().toString()+question.getSubject().getId().toString()+question.getQuestionNo()+"."+ext;
+        return name;
     }
 }

@@ -17,4 +17,7 @@ public class SubTopic {
     private Long id;
     @Column(unique=true)
     private String name;
+    @ManyToOne
+    @JoinColumn(name="topic_id")
+    private Topic topic;
 }

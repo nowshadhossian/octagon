@@ -26,20 +26,19 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <#list model["topics"] as topic>
+                    <#list topics as topic>
                         <tr>
                             <td>${topic.id}</td>
                             <td>${topic.name}</td>
                             <td></td>
                             <td><#if topic.subject??>${topic.subject.name}</#if></td>
-                            <td></td>
+                            <td><a href="/superadmin/topic/${topic.id}/edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
                         </tr>
                     </#list>
                     </tbody>
                 </table>
             </div>
         </div>
-
     </div>
 </div>
 <#include "/layout/nav/bottom.ftl">

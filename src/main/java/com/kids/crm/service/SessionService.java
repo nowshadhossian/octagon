@@ -5,6 +5,8 @@ import com.kids.crm.repository.SessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class SessionService {
     private final SessionRepository sessionRepository;
@@ -18,5 +20,12 @@ public class SessionService {
     public Session findOrCreateSessionByNameAndYear(String name, int year){
         return sessionRepository.findByNameAndYear(name, year)
                  .orElseGet(() -> sessionRepository.save(Session.builder().name(name).year(year).build()));
+    }
+    public List<Session> getAllSessions(){
+        return sessionRepository.findAll();
+    }
+
+    public void saveSession(Session session){
+        sessionRepository.save(session);
     }
 }

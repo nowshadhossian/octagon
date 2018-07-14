@@ -3,10 +3,12 @@ package com.kids.crm.service;
 import com.kids.crm.model.Subject;
 import com.kids.crm.model.Topic;
 import com.kids.crm.repository.TopicRepository;
+import com.kids.crm.service.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class TopicService {
@@ -25,8 +27,14 @@ public class TopicService {
     public List<Topic> getAllTopic() {
         return topicRepository.findAll();
     }
-
-    public void insertTopic(Topic topic) {
+    public Topic findTopicByTopicId(long topicId) {
+        Optional<Topic> topic = topicRepository.findById(topicId);
+        if (!(topic.isPresent())){
+            throw new NotFoundException("Topic not found");
+        }
+        return topic.get();
+    }
+    public void saveTopic(Topic topic) {
         topicRepository.save(topic);
     }
 }
