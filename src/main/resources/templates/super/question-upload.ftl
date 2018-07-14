@@ -53,14 +53,14 @@
                     <label for="session">Session</label>
                     <select class="form-control" id="subject" name="session" required>
                         <option value="">Select session...</option>
-                        <#list allSession as session>
+                        <#list sessions as session>
                             <option value="${session.id}" <#if question.session?? && session.id==question.session.id>selected</#if> >${session.name}</option>
                         </#list>
                     </select>
                 </div>
                 <div class="form-group col-md-8">
                     <label for="answerNotes">Answer notes</label>
-                    <textarea class="form-control" rows="6" id="answerNotes"  name="answerNotes" value="${question.note!""}"></textarea>
+                    <textarea class="form-control" rows="6" id="answerNotes"  name="answerExplanation" value="${question.note!""}"></textarea>
                 </div>
             </div>
 
@@ -98,7 +98,7 @@
                     <label for="subject">Subject</label>
                     <select class="form-control" id="subject" name="subject" required>
                         <option value="">Select Subject...</option>
-                        <#list allSubject as subject>
+                        <#list subjects as subject>
                             <option value="${subject.id}" <#if question.subject?? && question.subject.id==subject.id>selected</#if> >${subject.name}</option>
                         </#list>
                     </select>
@@ -114,7 +114,7 @@
                     <label for="topic">Topic</label>
                     <select class="form-control" id="topic" name="topic" required>
                         <option value="">Select Topic...</option>
-                        <#list allTopic as topic>
+                        <#list topics as topic>
                             <option value="${topic.id}" <#if question.topic?? && question.topic.id==topic.id>selected</#if> >${topic.name}</option>
                         </#list>
                     </select>

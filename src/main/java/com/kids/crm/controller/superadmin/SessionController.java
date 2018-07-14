@@ -18,13 +18,13 @@ public class SessionController {
     @Autowired
     private SessionService sessionService;
     @GetMapping(value = {"","/"})
-    public String sessionPage(@ModelAttribute("model")ModelMap modelMap) {
-        List<Session> allSession = sessionService.getAllSessions();
-        modelMap.addAttribute("allSession",allSession);
+    public String sessionPage(ModelMap modelMap) {
+        List<Session> sessions = sessionService.getAllSessions();
+        modelMap.addAttribute("sessions",sessions);
         return "super/session-page";
     }
     @GetMapping("/create")
-    public String createNewSessionForm(@ModelAttribute("model")ModelMap modelMap){
+    public String createNewSessionForm(ModelMap modelMap){
         return "super/session-create";
     }
     @PostMapping("/create")

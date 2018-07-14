@@ -22,7 +22,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <#list model["allSubjects"] as subject>
+                    <#list subjects as subject>
                     <tr>
                         <td>${subject.code}</td>
                         <td>${subject.name}</td>

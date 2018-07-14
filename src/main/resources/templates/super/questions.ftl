@@ -25,7 +25,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <#list allQuestions as question>
+                    <#list questions as question>
                     <tr>
                         <td><#if question.subject??>${question.subject.name}</#if></td>
                         <td><#if question.topic??>${question.topic.name}</#if></td>

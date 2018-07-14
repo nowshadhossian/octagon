@@ -32,22 +32,22 @@ public class QuestionUploadController {
 
     @GetMapping(value = {"","/"})
     public String questionsList(ModelMap modelMap){
-        List<Question> allQuestions = questionService.getAllQuestions();
-        List<SubTopic> allSubTopic = subTopicService.getAllSubTopic();
-        modelMap.addAttribute("allQuestions",allQuestions);
-        modelMap.addAttribute("allSubTopic",allSubTopic);
+        List<Question> questions = questionService.getAllQuestions();
+        List<SubTopic> topics = subTopicService.getAllSubTopic();
+        modelMap.addAttribute("questions",questions);
+        modelMap.addAttribute("topics",topics);
         return "super/questions";
     }
 
     @GetMapping("/upload")
     public String getQuestionUploadPage(ModelMap modelMap) {
         modelMap.addAttribute("question",new Question());
-        List<Topic> allTopic = topicService.getAllTopic();
-        List<Subject> allSubject = subjectService.getSubjects();
-        List<Session> allSession = sessionService.getAllSessions();
-        modelMap.addAttribute("allTopic",allTopic);
-        modelMap.addAttribute("allSubject",allSubject);
-        modelMap.addAttribute("allSession",allSession);
+        List<Topic> topics = topicService.getAllTopic();
+        List<Subject> subjects = subjectService.getSubjects();
+        List<Session> sessions = sessionService.getAllSessions();
+        modelMap.addAttribute("topics",topics);
+        modelMap.addAttribute("subjects",subjects);
+        modelMap.addAttribute("sessions",sessions);
         return "super/question-upload";
     }
     @PostMapping("/save")
@@ -67,12 +67,12 @@ public class QuestionUploadController {
         }
         Question question = questionService.getQuestionById(Long.parseLong(questionId));
         modelMap.addAttribute("question",question);
-        List<Topic> allTopic = topicService.getAllTopic();
-        List<Subject> allSubject = subjectService.getSubjects();
-        List<Session> allSession = sessionService.getAllSessions();
-        modelMap.addAttribute("allTopic",allTopic);
-        modelMap.addAttribute("allSubject",allSubject);
-        modelMap.addAttribute("allSession",allSession);
+        List<Topic> topics = topicService.getAllTopic();
+        List<Subject> subjects = subjectService.getSubjects();
+        List<Session> sessions = sessionService.getAllSessions();
+        modelMap.addAttribute("topics",topics);
+        modelMap.addAttribute("subjects",subjects);
+        modelMap.addAttribute("sessions",sessions);
         return "super/question-upload";
     }
 }

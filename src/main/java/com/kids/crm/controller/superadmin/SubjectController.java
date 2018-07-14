@@ -19,13 +19,13 @@ public class SubjectController {
     private SubjectService subjectService;
 
     @GetMapping(value = {"","/"})
-    public String subjectPage(@ModelAttribute("model") ModelMap modelMap) {
-        List<Subject> subjectList = subjectService.getSubjects();
-        modelMap.addAttribute("allSubjects",subjectList);
+    public String subjectPage(ModelMap modelMap) {
+        List<Subject> subjects = subjectService.getSubjects();
+        modelMap.addAttribute("subjects",subjects);
         return "super/subject";
     }
     @GetMapping("add")
-    public String addSubject(@ModelAttribute("model") ModelMap modelMap) {
+    public String addSubject(ModelMap modelMap) {
         Subject subject = new Subject();
         modelMap.addAttribute("subject", subject);
         return "super/add-subject";

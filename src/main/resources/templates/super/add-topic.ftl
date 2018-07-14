@@ -18,7 +18,7 @@
                 <div class="col-sm-8">
                     <select name="subject.id" class="selectpicker show-tick">
                         <option value="">Select</option>
-                        <#list allSubject as subject>
+                        <#list subjects as subject>
                             <option value="${subject.id}" <#if topic.subject??><#if topic.subject.id==subject.id>selected</#if></#if> >${subject.name}</option>
                         </#list>
                     </select>

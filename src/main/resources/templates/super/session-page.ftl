@@ -22,7 +22,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <#list model["allSession"] as session>
+                    <#list sessions as session>
                     <tr>
                         <td>${session.name}</td>
                         <td>${session.year}</td>

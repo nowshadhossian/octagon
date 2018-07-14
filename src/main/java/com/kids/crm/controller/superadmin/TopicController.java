@@ -33,8 +33,8 @@ public class TopicController {
     public String addTopic(ModelMap modelMap) {
         Topic topic = new Topic();
         modelMap.addAttribute("topic",topic);
-        List<Subject> subjectList = subjectService.getSubjects();
-        modelMap.addAttribute("allSubject",subjectList);
+        List<Subject> subjects = subjectService.getSubjects();
+        modelMap.addAttribute("subjects",subjects);
         return "super/add-topic";
     }
 
@@ -52,11 +52,10 @@ public class TopicController {
         Topic topic = topicService.findTopicByTopicId(Long.parseLong(topicId));
         modelMap.addAttribute("topic",topic);
 
-        List<Subject> subjectList = subjectService.getSubjects();
-        modelMap.addAttribute("allSubject",subjectList);
+        List<Subject> subjects = subjectService.getSubjects();
+        modelMap.addAttribute("subjects",subjects);
 
-        List<SubTopic> subTopicList = subTopicService.getSubTopicsByTopicId(Long.parseLong(topicId));
-        List<SubTopic> subTopics = subTopicList;
+        List<SubTopic> subTopics = subTopicService.getSubTopicsByTopicId(Long.parseLong(topicId));
         modelMap.addAttribute("subTopics",subTopics);
         return "super/add-topic";
     }
