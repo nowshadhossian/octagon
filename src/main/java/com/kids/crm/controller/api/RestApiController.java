@@ -1,10 +1,12 @@
 package com.kids.crm.controller.api;
 
 import com.kids.crm.config.Config;
-import com.kids.crm.controller.api.data.QuestionData;
+import com.kids.crm.controller.api.data.AnswerData;
+import com.kids.crm.controller.api.data.AnswerStatsData;
 import com.kids.crm.controller.api.data.QuestionsData;
 import com.kids.crm.model.*;
 import com.kids.crm.model.mongo.QuestionSolvingTime;
+import com.kids.crm.model.mongo.QuestionStats;
 import com.kids.crm.mongo.repository.QuestionSolvingTimeRepository;
 import com.kids.crm.pojo.ExamSettingsDTO;
 import com.kids.crm.repository.QuestionRepository;
@@ -13,6 +15,7 @@ import com.kids.crm.repository.UserRepository;
 import com.kids.crm.service.Encryption;
 import com.kids.crm.service.JwtToken;
 import com.kids.crm.service.QuestionService;
+import com.kids.crm.service.QuestionStatService;
 import com.kids.crm.service.exception.UserNotFoundException;
 import org.jasypt.exceptions.EncryptionOperationNotPossibleException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +41,10 @@ public class RestApiController {
     private final RestApiManager restApiManager;
     private final QuestionService questionService;
     private final Config config;
+    private final QuestionStatService questionStatService;
 
     @Autowired
-    public RestApiController(QuestionRepository questionRepository, DataMapper mapper, JwtToken jwtToken, UserRepository userRepository, StudentAnswerRepository studentAnswerRepository, QuestionSolvingTimeRepository questionSolvingTimeRepository, RestApiManager restApiManager, QuestionService questionService, Config config) {
+    public RestApiController(QuestionRepository questionRepository, DataMapper mapper, JwtToken jwtToken, UserRepository userRepository, StudentAnswerRepository studentAnswerRepository, QuestionSolvingTimeRepository questionSolvingTimeRepository, RestApiManager restApiManager, QuestionService questionService, Config config, QuestionStatService questionStatService) {
         this.questionRepository = questionRepository;
         this.mapper = mapper;
         this.jwtToken = jwtToken;
@@ -50,6 +54,7 @@ public class RestApiController {
         this.restApiManager = restApiManager;
         this.questionService = questionService;
         this.config = config;
+        this.questionStatService = questionStatService;
     }
 
    /* @RequestMapping(value = BASE_ROUTE + "/token/{encryptedUserId}", method = RequestMethod.GET)
@@ -77,7 +82,7 @@ public class RestApiController {
 
 
     @RequestMapping(value = BASE_ROUTE + "/question/{questionId}/answer/{answer}", method = RequestMethod.GET)
-    private String isAnswerCorrect(@PathVariable long questionId, @PathVariable String answer, Authentication authentication, HttpServletRequest request) {
+    private AnswerData isAnswerCorrect(@PathVariable long questionId, @PathVariable String answer, Authentication authentication, HttpServletRequest request) {
         return questionRepository.findById(questionId)
                 .map(question -> {
                     boolean answerIsCorrect = Objects.equals(answer, question.getAnswer());
@@ -92,7 +97,10 @@ public class RestApiController {
                             .examType(ExamType.getByValue(restApiManager.getExamSettingsDTO().getExamTypeId()))
                             .build();
                     studentAnswerRepository.save(studentAnswer);
-                    return "{\"correctOption\": \"" + question.getAnswer() +"\"}";
+                    return AnswerData.builder()
+                            .correctOption(Arrays.asList(question.getAnswer().split(",")))
+                            .explanation(question.getAnswerExplanation())
+                            .build();
                 }).orElseThrow(RuntimeException::new);
     }
 
@@ -178,6 +186,21 @@ public class RestApiController {
         }
         return questionRepository.findByIdIn(randomQuestionIds);
     }
+
+    @RequestMapping(value = BASE_ROUTE + "/question/{questionId}/answer/stats", method = RequestMethod.GET)
+    private AnswerStatsData retrieveAnswerStats(HttpServletRequest request, @PathVariable long questionId) {
+        QuestionStats questionStats = questionStatService.findQuestionStatById(questionId).orElse(QuestionStats.builder()
+                .timesAnsweredCount(0)
+                .answeredCountWithOption(Map.of("A", 0, "B", 0, "C", 0, "D", 0))
+                .build());
+
+        return AnswerStatsData.builder()
+                .timesAnswered(questionStats.getTimesAnsweredCount())
+                .options(new ArrayList<>(questionStats.getAnsweredCountWithOption().values()))
+                .build();
+
+    }
+
 
     @RequestMapping(value = BASE_ROUTE + "/questions/subject/etoken", method = RequestMethod.GET)
     private QuestionsData randomQuestionsWithEncrypted(@RequestHeader String encryptedUserId, @RequestHeader String examSettingsDtoEncrypted, HttpServletResponse response, HttpServletRequest request) {

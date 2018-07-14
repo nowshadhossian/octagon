@@ -1,5 +1,6 @@
 package com.kids.crm;
 
+import com.kids.crm.config.Config;
 import com.kids.crm.exportdata.ExportQuestionData;
 import com.kids.crm.model.*;
 import com.kids.crm.model.mongo.UserLoginSession;
@@ -55,6 +56,9 @@ public class OctagonApplicationTests {
 
 	@Autowired private StudentAnswerRepository studentAnswerRepository;
 
+	@Autowired
+	Config config;
+
 	@Ignore
 	@Test
 	public void saveUser() {
@@ -89,12 +93,19 @@ public class OctagonApplicationTests {
 	}
 
 	@Test
+	@Ignore
 	public void saveUserLoginSession(){
 		UserLoginSession userLoginSession = UserLoginSession.builder()
 				.email("b@b.com")
 				.name("Happy")
 				.build();
 		userLoginSessionRepository.save(userLoginSession);
+	}
+
+	@Test
+	public void readConfig(){
+		System.out.println(config.getExamUiDomain() + " " + config.getCompanyName());
+		Assert.assertTrue(true);
 	}
 
 	@Test
