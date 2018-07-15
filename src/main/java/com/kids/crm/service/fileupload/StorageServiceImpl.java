@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -53,6 +54,7 @@ public class StorageServiceImpl implements StorageService {
                         "Cannot store file with relative path outside current directory "
                                 + fileName);
             }
+            deleteFile(fileName);
             try (InputStream inputStream = file.getInputStream()) {
                 Files.copy(inputStream, this.rootLocation.resolve(fileName),
                         StandardCopyOption.REPLACE_EXISTING);
@@ -90,6 +92,17 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public void deleteAll() {
+
+    }
+
+    @Override
+    public boolean deleteFile(String fileName) {
+        File file = new File(rootLocation+"/"+fileName);
+        if (file.exists()){
+            return file.delete();
+        } else {
+            return false;
+        }
 
     }
 }

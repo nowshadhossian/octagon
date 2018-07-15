@@ -1,6 +1,7 @@
 <#assign title="Dashboard | Octagon">
 <#assign navPage="/layout/nav/super-nav.ftl">
 <#include "/layout/nav/top.ftl">
+
 <div class="row">
     <div class="col-12">
         <#if question.id??>
@@ -46,7 +47,7 @@
                     <label for="year">Year</label>
                     <select class="form-control" id="year" name="year" required>
                         <option>Select Year...</option>
-                        <#list 1980..2030 as i>
+                        <#list 1980..(.now?string('yyyy')?number) as i>
                             <option value="${i}" <#if question.year?? && question.year==i>selected</#if> >${i}</option>
                         </#list>
                     </select>
@@ -60,7 +61,7 @@
                 </div>
                 <div class="form-group col-md-8">
                     <label for="answerNotes">Answer notes</label>
-                    <textarea class="form-control" rows="6" id="answerNotes"  name="answerExplanation" value="${question.note!""}"></textarea>
+                    <textarea class="form-control" rows="6" id="answerNotes"  name="answerExplanation">${question.answerExplanation!""}</textarea>
                 </div>
             </div>
 
@@ -129,9 +130,11 @@
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="exampleFormControlSelect1">Sub topic</label>
-                    <select class="form-control" id="subTopic" name="subTopic">
+                    <select class="form-control" id="subTopic" name="subTopics">
                         <option value="">Select Sub-topic...</option>
-
+                        <#list subTopics as subTopic>
+                            <option value="${subTopic.id}" <#if question.subTopics?has_content && question.subTopics?seq_contains(subTopic)>selected</#if>>${subTopic.name}</option>
+                        </#list>
                     </select>
                 </div>
                 <div class="form-group col-md-4">
@@ -144,10 +147,10 @@
                 <div class="form-group col-md-4">
                     <label for="correctAnswers">Correct Answers: </label>
                     <div>
-                        A <input type="checkbox" id="optionA" name="answer" value="A" />
-                        B <input type="checkbox" id="optionB" name="answer" value="B" />
-                        C <input type="checkbox" id="optionC" name="answer" value="C" />
-                        D <input type="checkbox" id="optionD" name="answer" value="D" />
+                        A <input type="checkbox" id="optionA" name="answer" value="A" <#if question.answer?? && question.answer?contains("A")>checked </#if>/>
+                        B <input type="checkbox" id="optionB" name="answer" value="B" <#if question.answer?? && question.answer?contains("B")>checked</#if>/>
+                        C <input type="checkbox" id="optionC" name="answer" value="C" <#if question.answer?? && question.answer?contains("C")>checked</#if>/>
+                        D <input type="checkbox" id="optionD" name="answer" value="D" <#if question.answer?? && question.answer?contains("D")>checked</#if>/>
                     </div>
                 </div>
                 <div class="form-group col-md-4">
@@ -170,14 +173,14 @@
                     <label>Version</label>
                     <select class="form-control" id="version" name="version" required>
                         <option>Select version</option>
-                        <option value="1">Bengali</option>
-                        <option value="2">English</option>
+                        <option value="1" <#if question.version?? && question.version==1>selected</#if>>Bengali</option>
+                        <option value="2" <#if question.version?? && question.version==2>selected</#if>>English</option>
                     </select>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="active">Active</label>
                     <div>
-                        <input type="checkbox" id="active" name="active"/>
+                        <input type="checkbox" id="active" name="active" <#if question.active==true>checked</#if>/>
                     </div>
                 </div>
             </div>

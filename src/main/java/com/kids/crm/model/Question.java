@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -42,4 +43,5 @@ public class Question {
     private Subject subject;
     private String answerExplanation;
     private Date uploadDate;
+    private Integer version;
 }

@@ -39,7 +39,8 @@ public class TopicController {
     }
 
     @PostMapping("/save")
-    public String saveTopic(@ModelAttribute Topic topic) {
+    public String saveTopic(@ModelAttribute Topic form) {
+        Topic topic = populateFormData(form);
         topicService.saveTopic(topic);
         return "redirect:/superadmin/topic";
     }
@@ -60,4 +61,21 @@ public class TopicController {
         return "super/add-topic";
     }
 
+    private Topic populateFormData(Topic form){
+        Topic topic;
+        if(form.getId()!=null){
+            topic = topicService.findTopicByTopicId(form.getId());
+        } else{
+            topic = new Topic();
+        }
+        if (form.getName()!=null){
+            topic.setName(form.getName());
+        }
+        if (form.getSubject()!=null){
+            Subject subject = new Subject();
+            subject.setId(form.getSubject().getId());
+            topic.setSubject(subject);
+        }
+        return topic;
+    }
 }

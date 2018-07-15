@@ -16,7 +16,7 @@
             <div class="form-group row">
                 <label for="subject" class="col-sm-3 col-form-label">Subject</label>
                 <div class="col-sm-8">
-                    <select name="subject.id" class="selectpicker show-tick">
+                    <select name="subject.id" class="selectpicker show-tick" required>
                         <option value="">Select</option>
                         <#list subjects as subject>
                             <option value="${subject.id}" <#if topic.subject??><#if topic.subject.id==subject.id>selected</#if></#if> >${subject.name}</option>
