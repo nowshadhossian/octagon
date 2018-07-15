@@ -90,7 +90,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label>Total Attempts</label>
-                    <div id="totalAttempt"></div>
+                    <div id="totalAttempt">${(questionStats.timesAnsweredCount)!""}</div>
                 </div>
             </div>
 
@@ -122,7 +122,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label>Flag Count</label>
-                    <div id="flag-count"></div>
+                    <div id="flag-count">${(questionStats.flagCount)!""}</div>
                 </div>
             </div>
 
@@ -139,7 +139,15 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label>Flag Message</label>
-                    <div id="flagMessage"></div>
+                    <div id="flagMessage">
+                        <#if questionStats??>
+                            <ul>
+                                <#list questionStats.flagMessageCount?keys as key>
+                                    <li>${key.name()}: ${questionStats.flagMessageCount[key]}</li>
+                                </#list>
+                            </ul>
+                        </#if>
+                    </div>
                 </div>
             </div>
 
@@ -147,26 +155,37 @@
                 <div class="form-group col-md-4">
                     <label for="correctAnswers">Correct Answers: </label>
                     <div>
-                        A <input type="checkbox" id="optionA" name="answer" value="A" <#if question.answer?? && question.answer?contains("A")>checked </#if>/>
-                        B <input type="checkbox" id="optionB" name="answer" value="B" <#if question.answer?? && question.answer?contains("B")>checked</#if>/>
-                        C <input type="checkbox" id="optionC" name="answer" value="C" <#if question.answer?? && question.answer?contains("C")>checked</#if>/>
-                        D <input type="checkbox" id="optionD" name="answer" value="D" <#if question.answer?? && question.answer?contains("D")>checked</#if>/>
+                        <ul>
+                            <li>A <input type="checkbox" id="optionA" name="answer" value="A" <#if question.answer?? && question.answer?contains("A")>checked </#if>/></li>
+                            <li>B <input type="checkbox" id="optionB" name="answer" value="B" <#if question.answer?? && question.answer?contains("B")>checked</#if>/></li>
+                            <li>C <input type="checkbox" id="optionC" name="answer" value="C" <#if question.answer?? && question.answer?contains("C")>checked</#if>/></li>
+                            <li>D <input type="checkbox" id="optionD" name="answer" value="D" <#if question.answer?? && question.answer?contains("D")>checked</#if>/></li>
+                        </ul>
                     </div>
                 </div>
                 <div class="form-group col-md-4">
-                    <label>Answer Duration</label>
-                    <div id="answerDuration"></div>
+                    <label for="answeredQuestion">Question Answered</label>
+                    <div id="answeredQuestion">
+                        <#if questionStats??>
+                            <ul>
+                                <#list questionStats.answeredCountWithOption?keys as key>
+                                    <li>${key}: ${questionStats.answeredCountWithOption[key]}</li>
+                                </#list>
+                            </ul>
+                        </#if>
+                    </div>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-4">
-                    <label for="answeredQuestion">Question Answered</label>
-                    <div id="answeredQuestion"></div>
+                    <label>Answer Duration</label>
+                    <div id="answerDuration"></div>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="skippedQuestion">Question Skipped</label>
-                    <div id="skippedQuestion"></div>
+                    <div id="skippedQuestion">${(questionStats.skipCount)!""}</div>
                 </div>
+
             </div>
             <div class="form-row">
                 <div class="form-group col-md-4">

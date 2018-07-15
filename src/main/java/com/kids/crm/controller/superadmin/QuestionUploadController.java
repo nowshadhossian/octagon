@@ -1,7 +1,9 @@
 package com.kids.crm.controller.superadmin;
 
 import com.kids.crm.model.*;
+import com.kids.crm.model.mongo.QuestionStats;
 import com.kids.crm.service.*;
+import com.kids.crm.service.exception.NotFoundException;
 import com.kids.crm.service.fileupload.StorageService;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/superadmin/questions")
@@ -29,6 +34,8 @@ public class QuestionUploadController {
     private SessionService sessionService;
     @Autowired
     private SubTopicService subTopicService;
+    @Autowired
+    private QuestionStatService questionStatService;
 
     @GetMapping(value = {"","/"})
     public String questionsList(ModelMap modelMap){
@@ -77,6 +84,12 @@ public class QuestionUploadController {
         modelMap.addAttribute("sessions",sessions);
         List<SubTopic> subTopics = subTopicService.getAllSubTopic();
         modelMap.addAttribute("subTopics",subTopics);
+
+        Optional<QuestionStats> questionStats = questionStatService.findQuestionStatById(Long.parseLong(questionId));
+        if(questionStats.isPresent()){
+            modelMap.addAttribute("questionStats",questionStats.get());
+        }
+
         return "super/question-upload";
     }
 
