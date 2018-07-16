@@ -1,10 +1,10 @@
 package com.kids.crm.model;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -42,6 +42,8 @@ public class Question {
     @JoinColumn(name="subject_id")
     private Subject subject;
     private String answerExplanation;
+    @CreatedDate
     private Date uploadDate;
-    private Integer version;
+
+    private Version version;
 }
