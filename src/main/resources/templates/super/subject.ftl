@@ -17,8 +17,6 @@
                     <tr>
                         <th scope="col">Code</th>
                         <th scope="col">Subject</th>
-                        <th scope="col">Board</th>
-                        <th scope="col">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -26,9 +24,6 @@
                     <tr>
                         <td>${subject.code}</td>
                         <td>${subject.name}</td>
-                        <td></td>
-                        <td><#if subject.board??>${subject.board.name}</#if></td>
-                        <td></td>
                     </tr>
                     </#list>
                     </tbody>
