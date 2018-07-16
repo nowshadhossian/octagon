@@ -103,7 +103,7 @@ public class RestApiController {
                     studentAnswerRepository.save(studentAnswer);
 
                     threadPoolTaskExecutor.execute(() -> {
-                        QuestionStats questionStats = questionStatService.findQuestionStatById(questionId)
+                        QuestionStats questionStats = questionStatService.findQuestionStatByQuestionId(questionId)
                                 .orElse(QuestionStats.builder()
                                         .questionId(questionId)
                                         .build());
@@ -206,7 +206,7 @@ public class RestApiController {
 
     @RequestMapping(value = BASE_ROUTE + "/question/{questionId}/answer/stats", method = RequestMethod.GET)
     private AnswerStatsData retrieveAnswerStats(HttpServletRequest request, @PathVariable long questionId) {
-        QuestionStats questionStats = questionStatService.findQuestionStatById(questionId).orElse(QuestionStats.builder()
+        QuestionStats questionStats = questionStatService.findQuestionStatByQuestionId(questionId).orElse(QuestionStats.builder()
                 .timesAnsweredCount(0)
                 .answeredCountWithOption(Map.of("A", 0, "B", 0, "C", 0, "D", 0))
                 .build());
@@ -216,6 +216,16 @@ public class RestApiController {
                 .options(new ArrayList<>(questionStats.getAnsweredCountWithOption().values()))
                 .build();
 
+    }
+
+    @RequestMapping(value = BASE_ROUTE + "/question/{questionId}/flag/{flagValue}", method = RequestMethod.GET)
+    private void saveQuestionFlag(HttpServletRequest request, @PathVariable long questionId, @PathVariable int flagValue) {
+        QuestionStats questionStats = questionStatService.findQuestionStatByQuestionId(questionId).orElse(QuestionStats.builder()
+                .questionId(questionId)
+                .build());
+
+        questionStats.incrementFlagCount(FlagMessageType.getById(flagValue));
+        questionStatService.save(questionStats);
     }
 
 

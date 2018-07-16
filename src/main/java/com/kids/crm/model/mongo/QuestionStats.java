@@ -19,6 +19,7 @@ import java.util.Map;
 @Document
 public class QuestionStats {
     @Id
+    private String id;
     private long questionId;
     private int skipCount;
     private int flagCount;
@@ -41,6 +42,9 @@ public class QuestionStats {
     }
 
     public void incrementFlagCount(FlagMessageType flagMessageType) {
+        if (flagMessageCount == null) {
+            flagMessageCount = new HashMap<>();
+        }
         incrementFlagCount();
         flagMessageCount.put(flagMessageType, flagMessageCount.getOrDefault(flagMessageType, 0) + 1);
     }

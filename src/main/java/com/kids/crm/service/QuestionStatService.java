@@ -16,8 +16,8 @@ public class QuestionStatService {
         this.questionStatRepository = questionStatRepository;
     }
 
-    public Optional<QuestionStats> findQuestionStatById(long questionId) {
-        return questionStatRepository.findById(questionId);
+    public Optional<QuestionStats> findQuestionStatByQuestionId(long questionId) {
+        return questionStatRepository.findByQuestionId(questionId);
     }
 
     public QuestionStats save(QuestionStats questionStats){
