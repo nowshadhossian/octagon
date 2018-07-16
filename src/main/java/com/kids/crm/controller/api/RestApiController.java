@@ -17,8 +17,10 @@ import com.kids.crm.service.JwtToken;
 import com.kids.crm.service.QuestionService;
 import com.kids.crm.service.QuestionStatService;
 import com.kids.crm.service.exception.UserNotFoundException;
+import com.kids.crm.utils.Utils;
 import org.jasypt.exceptions.EncryptionOperationNotPossibleException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,9 +44,10 @@ public class RestApiController {
     private final QuestionService questionService;
     private final Config config;
     private final QuestionStatService questionStatService;
+    private final ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
     @Autowired
-    public RestApiController(QuestionRepository questionRepository, DataMapper mapper, JwtToken jwtToken, UserRepository userRepository, StudentAnswerRepository studentAnswerRepository, QuestionSolvingTimeRepository questionSolvingTimeRepository, RestApiManager restApiManager, QuestionService questionService, Config config, QuestionStatService questionStatService) {
+    public RestApiController(QuestionRepository questionRepository, DataMapper mapper, JwtToken jwtToken, UserRepository userRepository, StudentAnswerRepository studentAnswerRepository, QuestionSolvingTimeRepository questionSolvingTimeRepository, RestApiManager restApiManager, QuestionService questionService, Config config, QuestionStatService questionStatService, ThreadPoolTaskExecutor threadPoolTaskExecutor) {
         this.questionRepository = questionRepository;
         this.mapper = mapper;
         this.jwtToken = jwtToken;
@@ -55,6 +58,7 @@ public class RestApiController {
         this.questionService = questionService;
         this.config = config;
         this.questionStatService = questionStatService;
+        this.threadPoolTaskExecutor = threadPoolTaskExecutor;
     }
 
    /* @RequestMapping(value = BASE_ROUTE + "/token/{encryptedUserId}", method = RequestMethod.GET)
@@ -85,7 +89,7 @@ public class RestApiController {
     private AnswerData isAnswerCorrect(@PathVariable long questionId, @PathVariable String answer, Authentication authentication, HttpServletRequest request) {
         return questionRepository.findById(questionId)
                 .map(question -> {
-                    boolean answerIsCorrect = Objects.equals(answer, question.getAnswer());
+                    boolean answerIsCorrect = Utils.answerMatched(answer, question.getAnswer());
                     StudentAnswer studentAnswer = StudentAnswer.builder()
                             .answer(answer)
                             .attendedOn(new Date())
@@ -97,6 +101,20 @@ public class RestApiController {
                             .examType(ExamType.getByValue(restApiManager.getExamSettingsDTO().getExamTypeId()))
                             .build();
                     studentAnswerRepository.save(studentAnswer);
+
+                    threadPoolTaskExecutor.execute(() -> {
+                        QuestionStats questionStats = questionStatService.findQuestionStatById(questionId)
+                                .orElse(QuestionStats.builder()
+                                        .questionId(questionId)
+                                        .build());
+                        if (answerIsCorrect) {
+                            questionStats.incrementCorrectCount(answer);
+                        } else {
+                            questionStats.incrementWrongCount(answer);
+                        }
+                        questionStatService.save(questionStats);
+                    });
+
                     return AnswerData.builder()
                             .correctOption(Arrays.asList(question.getAnswer().split(",")))
                             .explanation(question.getAnswerExplanation())
@@ -122,7 +140,7 @@ public class RestApiController {
         return mapper.from(randomQuestionId(subjectId, restApiManager.getUser()));
     }
 
-    private List<Question> randomQuestionId(long subjectId, User user){
+    private List<Question> randomQuestionId(long subjectId, User user) {
         Set<Long> studentAnswers = studentAnswerRepository.findByUser(user)
                 .stream()
                 .map(StudentAnswer::getQuestion)
@@ -146,14 +164,14 @@ public class RestApiController {
 
         Set<Long> randomQuestionIds = new HashSet<>();
         Random random = new Random();
-        while(randomQuestionIds.size() < 10){
+        while (randomQuestionIds.size() < 10) {
             int randomQuestionId = random.nextInt(unAnsweredQuestions.size());
             randomQuestionIds.add(unAnsweredQuestions.get(randomQuestionId).getId());
         }
         return questionRepository.findByIdIn(randomQuestionIds);
     }
 
-    private List<Question> randomQuestionId(long subjectId, User user, ExamSettingsDTO examSettingsDTO){
+    private List<Question> randomQuestionId(long subjectId, User user, ExamSettingsDTO examSettingsDTO) {
 
 
         Set<Long> studentAnswers = studentAnswerRepository.findByUser(user)
@@ -164,9 +182,9 @@ public class RestApiController {
 
         Iterable<Question> questions = questionService.findQuestionsByExamSettings(subjectId, examSettingsDTO);
         List<Long> unAnsweredQuestions = StreamSupport.stream(questions.spliterator(), false)
-                                    .filter(question -> !studentAnswers.contains(question.getId()))
-                                    .map(Question::getId)
-                                    .collect(Collectors.toList());
+                .filter(question -> !studentAnswers.contains(question.getId()))
+                .map(Question::getId)
+                .collect(Collectors.toList());
 
         if (unAnsweredQuestions.isEmpty()) {
             return Collections.emptyList();
@@ -177,10 +195,9 @@ public class RestApiController {
         }
 
 
-
         Set<Long> randomQuestionIds = new HashSet<>();
         Random random = new Random();
-        while(randomQuestionIds.size() < examSettingsDTO.getTotalQuestion()){
+        while (randomQuestionIds.size() < examSettingsDTO.getTotalQuestion()) {
             int randomQuestionId = random.nextInt(unAnsweredQuestions.size());
             randomQuestionIds.add(unAnsweredQuestions.get(randomQuestionId));
         }
@@ -210,7 +227,7 @@ public class RestApiController {
         User user = userRepository.findById(restApiManager.getUserId(jwtToken)) //Authorization header is not available yet
                 .orElseThrow(() -> new UserNotFoundException(-1));
         QuestionsData questionsData;
-        if(ExamType.getByValue(restApiManager.getExamSettingsDTO().getExamTypeId()) == ExamType.DAILY_EXAM){
+        if (ExamType.getByValue(restApiManager.getExamSettingsDTO().getExamTypeId()) == ExamType.DAILY_EXAM) {
             questionsData = mapper.from(randomQuestionId(restApiManager.getCurrentBatch().getSubject().getId(), user));
         } else {
             questionsData = mapper.from(randomQuestionId(restApiManager.getCurrentBatch().getSubject().getId(), user, restApiManager.getExamSettingsDTO()));

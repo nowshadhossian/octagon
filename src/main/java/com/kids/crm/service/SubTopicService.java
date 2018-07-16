@@ -15,21 +15,23 @@ public class SubTopicService {
     private final SubTopicRepository subTopicRepository;
 
     @Autowired
-    public SubTopicService(SubTopicRepository subTopicRepository){
-        this.subTopicRepository=subTopicRepository;
+    public SubTopicService(SubTopicRepository subTopicRepository) {
+        this.subTopicRepository = subTopicRepository;
     }
 
-    public void saveSubTopic(SubTopic subTopic){
+    public void saveSubTopic(SubTopic subTopic) {
         subTopicRepository.save(subTopic);
     }
-    public List<SubTopic> getAllSubTopic(){
+
+    public List<SubTopic> getAllSubTopic() {
         return subTopicRepository.findAll();
     }
-    public Optional<SubTopic> getSubTopicById(Long id){
+
+    public Optional<SubTopic> getSubTopicById(Long id) {
         return subTopicRepository.findById(id);
     }
-    public List<SubTopic> getSubTopicsByTopicId(Long topicId){
-        Optional<SubTopic> subTopicOptional = subTopicRepository.findSubTopicsByTopicId(topicId);
-        return subTopicOptional.stream().collect(Collectors.toList());
+
+    public List<SubTopic> getSubTopicsByTopicId(Long topicId) {
+        return subTopicRepository.findSubTopicsByTopicId(topicId);
     }
 }
