@@ -45,5 +45,5 @@ public class Question {
     @CreatedDate
     private Date uploadDate;
 
-    private Version version;
+    private Integer version;
 }

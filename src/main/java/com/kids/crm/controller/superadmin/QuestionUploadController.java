@@ -1,10 +1,12 @@
 package com.kids.crm.controller.superadmin;
 
 import com.kids.crm.model.*;
+import com.kids.crm.model.mongo.QuestionSolvingTime;
 import com.kids.crm.model.mongo.QuestionStats;
 import com.kids.crm.service.*;
 import com.kids.crm.service.exception.NotFoundException;
 import com.kids.crm.service.fileupload.StorageService;
+import com.kids.crm.utils.Constants;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,6 +38,8 @@ public class QuestionUploadController {
     private SubTopicService subTopicService;
     @Autowired
     private QuestionStatService questionStatService;
+    @Autowired
+    private QuestionSolvingTimeService questionSolvingTimeService;
 
     @GetMapping(value = {"","/"})
     public String questionsList(ModelMap modelMap){
@@ -74,7 +78,8 @@ public class QuestionUploadController {
         if (!questionId.matches("\\d+")){
             throw new IllegalArgumentException();
         }
-        Question question = questionService.getQuestionById(Long.parseLong(questionId));
+        Long qId = Long.parseLong(questionId);
+        Question question = questionService.getQuestionById(qId);
         modelMap.addAttribute("question",question);
         List<Topic> topics = topicService.getAllTopic();
         List<Subject> subjects = subjectService.getSubjects();
@@ -82,14 +87,23 @@ public class QuestionUploadController {
         modelMap.addAttribute("topics",topics);
         modelMap.addAttribute("subjects",subjects);
         modelMap.addAttribute("sessions",sessions);
-        List<SubTopic> subTopics = subTopicService.getAllSubTopic();
+        List<SubTopic> subTopics = subTopicService.getSubTopicsByTopicId(question.getTopic().getId());
         modelMap.addAttribute("subTopics",subTopics);
 
-        Optional<QuestionStats> questionStats = questionStatService.findQuestionStatById(Long.parseLong(questionId));
+        Optional<QuestionStats> questionStats = questionStatService.findQuestionStatById(qId);
         if(questionStats.isPresent()){
             modelMap.addAttribute("questionStats",questionStats.get());
         }
 
+        List<QuestionSolvingTime> questionSolvingTimes = questionSolvingTimeService.getQuestionSolvingTimeByQustionId(qId);
+        Integer totalAnswerDuration=0;
+        for (QuestionSolvingTime questionSolvingTime: questionSolvingTimes) {
+            if(questionSolvingTime.equals(Constants.ANSWERED)){
+                totalAnswerDuration+=questionSolvingTime.getDuration();
+            }
+        }
+
+        modelMap.addAttribute("totalAnswerDuration",totalAnswerDuration);
         return "super/question-upload";
     }
 

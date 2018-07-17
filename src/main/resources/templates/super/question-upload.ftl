@@ -1,13 +1,14 @@
 <#assign title="Dashboard | Octagon">
 <#assign navPage="/layout/nav/super-nav.ftl">
 <#include "/layout/nav/top.ftl">
-
+<#assign skipCount = (questionStats.skipCount)!0>
+<#assign totalAttempt = (questionStats.timesAnsweredCount)!0>
 <div class="row">
     <div class="col-12">
         <#if question.id??>
-            <h1>Edit Qestion</h1>
+            <h1>Edit Upload</h1>
         <#else>
-            <h1>Upload Qestion</h1>
+            <h1>New Upload</h1>
             <h4>You can upload new question here...</h4>
         </#if>
         <form action="/superadmin/questions/save" method="post" enctype="multipart/form-data">
@@ -55,7 +56,7 @@
                     <select class="form-control" id="subject" name="session" required>
                         <option value="">Select session...</option>
                         <#list sessions as session>
-                            <option value="${session.id}" <#if question.session?? && session.id==question.session.id>selected</#if> >${session.name}</option>
+                            <option value="${session.id}" <#if question.session?? && session.id==question.session.id>selected</#if> >Year:${session.year}:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${session.name}</option>
                         </#list>
                     </select>
                 </div>
@@ -106,7 +107,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label>Skip Frequency</label>
-                    <div id="skipFrequency"></div>
+                    <div id="skipFrequency"><#if totalAttempt gt 0 >${(skipCount/totalAttempt)*100}<#else ></#if></div>
                 </div>
             </div>
 
@@ -129,9 +130,9 @@
 
             <div class="form-row">
                 <div class="form-group col-md-4">
-                    <label for="exampleFormControlSelect1">Sub topic</label>
-                    <select class="form-control" id="subTopic" name="subTopics">
-                        <option value="">Select Sub-topic...</option>
+                    <label for="subTopic">Sub topic</label>
+                    <select class="form-control" id="subTopic" name="subTopics" data-placeholder="Select an option">
+                        <option>Select SubTopic</option>
                         <#list subTopics as subTopic>
                             <option value="${subTopic.id}" <#if question.subTopics?has_content && question.subTopics?seq_contains(subTopic)>selected</#if>>${subTopic.name}</option>
                         </#list>
@@ -155,12 +156,22 @@
                 <div class="form-group col-md-4">
                     <label for="correctAnswers">Correct Answers: </label>
                     <div>
-                        <ul>
-                            <li>A <input type="checkbox" id="optionA" name="answer" value="A" <#if question.answer?? && question.answer?contains("A")>checked </#if>/></li>
-                            <li>B <input type="checkbox" id="optionB" name="answer" value="B" <#if question.answer?? && question.answer?contains("B")>checked</#if>/></li>
-                            <li>C <input type="checkbox" id="optionC" name="answer" value="C" <#if question.answer?? && question.answer?contains("C")>checked</#if>/></li>
-                            <li>D <input type="checkbox" id="optionD" name="answer" value="D" <#if question.answer?? && question.answer?contains("D")>checked</#if>/></li>
-                        </ul>
+                        <div class="form-control-md form-check">
+                            <input type="checkbox" class="form-check-input" id="optionA" <#if question.answer?? && question.answer?contains("A")>checked </#if>>
+                            <label class="form-check-label" for="optionA">Option A</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="optionB" <#if question.answer?? && question.answer?contains("B")>checked</#if>>
+                            <label class="form-check-label" for="optionB">Option B</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="optionC" <#if question.answer?? && question.answer?contains("C")>checked</#if>>
+                            <label class="form-check-label" for="optionC">Option C</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="optionD" <#if question.answer?? && question.answer?contains("D")>checked</#if>>
+                            <label class="form-check-label" for="optionD">Option D</label>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group col-md-4">
@@ -179,7 +190,9 @@
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label>Answer Duration</label>
-                    <div id="answerDuration"></div>
+                    <div id="answerDuration">
+                    <#if totalAnswerDuration?? && 0<totalAnswerDuration>${totalAnswerDuration}</#if>
+                    </div>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="skippedQuestion">Question Skipped</label>
@@ -203,6 +216,7 @@
                     </div>
                 </div>
             </div>
+            <button type="button" id="cancelButton" class="btn btn-primary" onclick="window.location.href='/superadmin/questions'">Cancel</button>
             <input class="btn btn-primary" type="submit" name="medical-db-init" value="Upload Question">
         </form>
 
@@ -212,6 +226,27 @@
 <script>
     $( function() {
         $( "#uploadDate" ).datepicker();
+
+        $("#topic").change(function () {
+            var topicId = this.value;
+            var getUrl = '/superadmin/sub-topic/getSubtopic?topicId='+topicId;
+            $.ajax({
+                url: getUrl,
+                dataType: 'json',
+                success: function(data)
+                {
+                    populateSubtopic(data);
+                }
+            });
+        });
+
+        function populateSubtopic(subTopics) {
+            $("#subTopic").html("");
+            $("#subTopic").append('<option>Select SubTopic</option>');
+            $.each( subTopics, function( key, value ) {
+                $("#subTopic").append("<option value='"+ value.id+"' >"+value.name+"</option>");
+            });
+        }
     } );
 </script>
 

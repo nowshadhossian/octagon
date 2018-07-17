@@ -30,7 +30,7 @@
                         <tr>
                             <td>${topic.id}</td>
                             <td>${topic.name}</td>
-                            <td></td>
+                            <td>${abbreviateSubTopicMap["topicId_"+topic.id]}</td>
                             <td><#if topic.subject??>${topic.subject.name}</#if></td>
                             <td><a href="/superadmin/topic/${topic.id}/edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
                         </tr>

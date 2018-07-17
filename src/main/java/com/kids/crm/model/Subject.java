@@ -19,7 +19,4 @@ public class Subject {
     private Long id;
     private String name;
     private String code;
-    @ManyToOne
-    @JoinColumn(name="board_id")
-    private Board board;
 }

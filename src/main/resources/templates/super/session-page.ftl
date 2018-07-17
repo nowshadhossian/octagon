@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col-12">
-        <h1>Subject</h1>
+        <h1>Session</h1>
         <div>
             <a href="/superadmin/session/create" class="btn btn-dark">Create Session</a>
         </div>

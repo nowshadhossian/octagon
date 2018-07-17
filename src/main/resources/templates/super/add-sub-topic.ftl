@@ -20,6 +20,7 @@
                     <input type="text" name="name" value="${(subTopic.name)!""}" class="form-control" id="subTopicName" placeholder="Sub-Topic Name" required>
                 </div>
             </div>
+            <button type="button" id="cancelButton" class="btn btn-primary" onclick="window.location.href='/superadmin/topic/${(subTopic.topic.id)!topic.id}/edit'">Cancel</button>
             <button type="submit" id="submitForm" class="btn btn-primary"><#if subTopic.id??>Save<#else>Add</#if> Sub-Topic</button>
         </form>
     </div>

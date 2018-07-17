@@ -16,7 +16,7 @@
             <div class="form-group row">
                 <label for="subject" class="col-sm-3 col-form-label">Subject</label>
                 <div class="col-sm-8">
-                    <select name="subject.id" class="selectpicker show-tick" required>
+                    <select name="subject.id" class="form-control" required>
                         <option value="">Select</option>
                         <#list subjects as subject>
                             <option value="${subject.id}" <#if topic.subject??><#if topic.subject.id==subject.id>selected</#if></#if> >${subject.name}</option>
@@ -29,7 +29,7 @@
                     <div class="col-sm-6">
                         <div>Sub Topics</div>
                         <div>
-                            <a href="/superadmin/sub-topic/add?topicId=${topic.id}" class="btn btn-dark">Add Topic</a>
+                            <a href="/superadmin/sub-topic/add?topicId=${topic.id}" class="btn btn-dark">Add Sub Topic</a>
                         </div>
                         <table class="table">
                             <thead class="thead-light">
@@ -50,6 +50,7 @@
                     </div>
                 </div>
             </#if>
+            <button type="button" id="cancelButton" class="btn btn-primary" onclick="window.location.href='/superadmin/topic'">Cancel</button>
             <button type="submit" id="submitForm" class="btn btn-primary"><#if topic.id??>Save<#else>Add</#if> Topic</button>
         </form>
     </div>

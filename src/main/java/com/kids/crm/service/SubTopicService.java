@@ -34,4 +34,15 @@ public class SubTopicService {
     public List<SubTopic> getSubTopicsByTopicId(Long topicId) {
         return subTopicRepository.findSubTopicsByTopicId(topicId);
     }
+
+    public String getSubTopicNameAsString(List<SubTopic> subTopics){
+        StringBuilder subTopicsAsString = new StringBuilder();
+        String prefix="";
+        for (SubTopic subTopic: subTopics) {
+            subTopicsAsString.append(prefix);
+            subTopicsAsString.append(subTopic.getName());
+            prefix=", ";
+        }
+        return subTopicsAsString.toString();
+    }
 }

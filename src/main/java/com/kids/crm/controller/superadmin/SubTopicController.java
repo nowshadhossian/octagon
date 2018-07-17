@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -47,5 +48,12 @@ public class SubTopicController {
     public String saveSubTopic(@ModelAttribute SubTopic subTopic) {
         subTopicService.saveSubTopic(subTopic);
         return "redirect:/superadmin/topic/" + subTopic.getTopic().getId() + "/edit";
+    }
+
+    @GetMapping("/getSubtopic")
+    @ResponseBody
+    public List<SubTopic> getSubtopicByTopicId(@RequestParam(required = true, value = "topicId") long topicId){
+        List<SubTopic> subTopics = subTopicService.getSubTopicsByTopicId(topicId);
+        return subTopics;
     }
 }

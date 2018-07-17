@@ -6,12 +6,16 @@ import com.kids.crm.model.Topic;
 import com.kids.crm.service.SubTopicService;
 import com.kids.crm.service.SubjectService;
 import com.kids.crm.service.TopicService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 
 @Controller
 @RequestMapping("/superadmin/topic")
@@ -27,6 +31,13 @@ public class TopicController {
     public String topicPage(ModelMap modelMap) {
         List<Topic> topics = topicService.getAllTopic();
         modelMap.addAttribute("topics", topics);
+
+        Map<String,String> abbreviateSubTopicMap = new HashMap<>();
+        for (Topic topic: topics) {
+            List<SubTopic> subTopics = subTopicService.getSubTopicsByTopicId(topic.getId());
+            abbreviateSubTopicMap.put("topicId_"+topic.getId().toString(),StringUtils.abbreviate(subTopicService.getSubTopicNameAsString(subTopics),25));
+        }
+        modelMap.addAttribute("abbreviateSubTopicMap",abbreviateSubTopicMap);
         return "super/topic";
     }
     @GetMapping("/add")

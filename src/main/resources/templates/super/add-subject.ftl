@@ -18,6 +18,7 @@
                 </div>
             </div>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <button type="button" id="cancelButton" class="btn btn-primary" onclick="window.location.href='/superadmin/subject'">Cancel</button>
             <button type="submit" id="submitForm" class="btn btn-primary">Add Subject</button>
         </form>
     </div>
