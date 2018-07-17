@@ -4,7 +4,6 @@ import com.kids.crm.model.*;
 import com.kids.crm.model.mongo.QuestionSolvingTime;
 import com.kids.crm.model.mongo.QuestionStats;
 import com.kids.crm.service.*;
-import com.kids.crm.service.exception.NotFoundException;
 import com.kids.crm.service.fileupload.StorageService;
 import com.kids.crm.utils.Constants;
 import org.apache.commons.io.FilenameUtils;
@@ -17,8 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/superadmin/questions")
