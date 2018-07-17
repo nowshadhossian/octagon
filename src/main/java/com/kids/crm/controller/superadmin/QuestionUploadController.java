@@ -87,7 +87,7 @@ public class QuestionUploadController {
         List<SubTopic> subTopics = subTopicService.getSubTopicsByTopicId(question.getTopic().getId());
         modelMap.addAttribute("subTopics",subTopics);
 
-        Optional<QuestionStats> questionStats = questionStatService.findQuestionStatById(qId);
+        Optional<QuestionStats> questionStats = questionStatService.findQuestionStatByQuestionId(qId);
         if(questionStats.isPresent()){
             modelMap.addAttribute("questionStats",questionStats.get());
         }
