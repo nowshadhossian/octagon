@@ -52,8 +52,12 @@ public class QuestionService {
         return questionOptional.get();
     }
 
+    public List<Question> getQuestionsByYear(int year){
+        return questionRepository.findQuestionsByYear(year);
+    }
     public String generateQuestionName(Question question,String ext) {
         String name = question.getYear()+question.getSession().getId().toString()+question.getSubject().getId().toString()+question.getQuestionNo()+"."+ext;
         return name;
     }
+
 }

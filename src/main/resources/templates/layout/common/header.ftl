@@ -12,3 +12,5 @@
 <link href="/css/sb-admin.css" rel="stylesheet">
 <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet">
 <link href="/ui-lib/open-iconic/font/css/open-iconic-bootstrap.min.css" rel="stylesheet">
+
+<link href="/css/main.css" rel="stylesheet" type="text/css">

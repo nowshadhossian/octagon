@@ -52,7 +52,7 @@ public class SubTopicController {
 
     @GetMapping("/getSubtopic")
     @ResponseBody
-    public List<SubTopic> getSubtopicByTopicId(@RequestParam(required = true, value = "topicId") long topicId){
+    public List<SubTopic> getSubtopicByTopicId(@RequestParam(value = "topicId") long topicId){
         List<SubTopic> subTopics = subTopicService.getSubTopicsByTopicId(topicId);
         return subTopics;
     }
