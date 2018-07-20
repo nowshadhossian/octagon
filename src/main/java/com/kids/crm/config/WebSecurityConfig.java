@@ -36,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                     .antMatchers("/teacher/**").hasRole(Role.TEACHER.getNameStripped())
                     .antMatchers("/student/**").hasRole(Role.STUDENT.getNameStripped())
                     .antMatchers("/save","/find", "/list", "/register/**",
-                            "/forgot-password", "/images/**", "/css/**", "/js/**", "/ui-lib/**", "/api/**").permitAll()
+                            "/forgot-password", "/images/**", "/css/**", "/js/**", "/ui-lib/**", "/api/**","/forgot-password1").permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()

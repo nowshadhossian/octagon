@@ -41,7 +41,7 @@
             </form>
             <div class="text-center">
                 <a class="d-block small mt-3" href="/register">Register an Account</a>
-               <#-- <a class="d-block small" href="/forgot-password">Forgot Password?</a>-->
+                <a class="d-block small" href="/forgot-password1">Forgot Password?</a>
             </div>
         </div>
  </div>
