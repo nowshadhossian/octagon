@@ -243,7 +243,7 @@ public class RestApiController {
             questionsData = mapper.from(randomQuestionId(restApiManager.getCurrentBatch().getSubject().getId(), user, restApiManager.getExamSettingsDTO()));
         }
 
-        questionsData.setSettings(config.isMultipleAnswers());
+        questionsData.setSettings(config.isMultipleAnswers(), restApiManager.getExamSettingsDTO().isShowAnswersInTheEnd());
         return questionsData;
 
 

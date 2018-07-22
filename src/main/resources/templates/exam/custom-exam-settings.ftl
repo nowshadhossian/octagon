@@ -33,6 +33,12 @@
                     <label for="count">Number of questions</label>
                     <input id="count" class="form-control" type="number" max="50" min="10" name="questionCount"/>
                 </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input larger-checkbox" type="checkbox" name="showAnswersInTheEnd"> Show Answers in the end</label>
+                    </div>
+                </div>
                 <input type="hidden"
                        name="${_csrf.parameterName}"
                        value="${_csrf.token}"/>

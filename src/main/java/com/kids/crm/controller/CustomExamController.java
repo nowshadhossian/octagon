@@ -57,7 +57,7 @@ public class CustomExamController {
 
     @RequestMapping(value = "/custom/exam", method = RequestMethod.POST)
     private String customExamSettingsSaveAndStart(ModelMap modelMap, @RequestParam(required = false) long topicId, @RequestParam(required = false, defaultValue = "10") int questionCount,
-                                                  @RequestParam(required = false, defaultValue = "-1") int year) throws JsonProcessingException, UnsupportedEncodingException {
+                                                  @RequestParam(required = false, defaultValue = "-1") int year, @RequestParam(required = false, defaultValue = "false") boolean showAnswersInTheEnd) throws JsonProcessingException, UnsupportedEncodingException {
         User authUser = userSession.getLoggedInUser();
         modelMap.addAttribute("name", authUser.getName());
         String encryptedUserId = Encryption.encrypt(String.valueOf(authUser.getId()));
@@ -67,6 +67,7 @@ public class CustomExamController {
                 .totalQuestion(questionCount)
                 .topicId(topicId)
                 .year(year)
+                .showAnswersInTheEnd(showAnswersInTheEnd)
                 .build();
 
         String examSettingsDtoEncrypted = Encryption.encrypt(objectMapper.writeValueAsString(examSettingsDTO));

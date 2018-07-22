@@ -15,5 +15,6 @@ public class ExamSettingsDTO {
     //custom Exam
     private long topicId;
     private int year;
+    private boolean showAnswersInTheEnd;
 
 }

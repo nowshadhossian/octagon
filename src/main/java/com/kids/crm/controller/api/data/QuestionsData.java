@@ -14,15 +14,17 @@ public class QuestionsData {
 
     private Settings settings;
 
-    public void setSettings(boolean multipleAnswers){
+    public void setSettings(boolean multipleAnswers, boolean showAnswersInTheEnd){
         settings = new Settings();
         settings.setMultipleAnswers(multipleAnswers);
+        settings.setShowAnswersInTheEnd(showAnswersInTheEnd);
     }
 
    @Getter
    @Setter
    private class Settings {
        private boolean multipleAnswers;
+       private boolean showAnswersInTheEnd;
    }
 
 }
