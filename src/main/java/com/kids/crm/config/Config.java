@@ -13,5 +13,6 @@ public class Config {
     String examUiDomain;
     String companyName;
     boolean multipleAnswers;
-
+    String resourceLocation;
+    String uploadQuestionImageLocation;
 }

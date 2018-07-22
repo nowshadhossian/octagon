@@ -1,8 +1,8 @@
 package com.kids.crm.service.fileupload;
 
+import com.kids.crm.config.Config;
 import com.kids.crm.service.exception.StorageException;
 import com.kids.crm.service.exception.StorageFileNotFoundException;
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -25,8 +25,8 @@ public class StorageServiceImpl implements StorageService {
     private final Path rootLocation;
 
     @Autowired
-    public StorageServiceImpl(StorageProperties properties) {
-        this.rootLocation = Paths.get(properties.getLocation());
+    public StorageServiceImpl(Config config) {
+        this.rootLocation = Paths.get(config.getUploadQuestionImageLocation());
     }
 
     @Override
