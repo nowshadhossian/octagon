@@ -158,19 +158,19 @@
                     <label for="correctAnswers">Correct Answers: </label>
                     <div>
                         <div class="form-control-md form-check">
-                            <input type="checkbox" class="form-check-input" id="optionA" <#if question.answer?? && question.answer?contains("A")>checked </#if>>
+                            <input type="checkbox" class="form-check-input larger-checkbox" id="optionA" <#if question.answer?? && question.answer?contains("A")>checked </#if>>
                             <label class="form-check-label" for="optionA">Option A</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="optionB" <#if question.answer?? && question.answer?contains("B")>checked</#if>>
+                            <input type="checkbox" class="form-check-input larger-checkbox" id="optionB" <#if question.answer?? && question.answer?contains("B")>checked</#if>>
                             <label class="form-check-label" for="optionB">Option B</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="optionC" <#if question.answer?? && question.answer?contains("C")>checked</#if>>
+                            <input type="checkbox" class="form-check-input larger-checkbox" id="optionC" <#if question.answer?? && question.answer?contains("C")>checked</#if>>
                             <label class="form-check-label" for="optionC">Option C</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="optionD" <#if question.answer?? && question.answer?contains("D")>checked</#if>>
+                            <input type="checkbox" class="form-check-input larger-checkbox" id="optionD" <#if question.answer?? && question.answer?contains("D")>checked</#if>>
                             <label class="form-check-label" for="optionD">Option D</label>
                         </div>
                     </div>
@@ -211,10 +211,18 @@
                     </select>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="active">Active</label>
-                    <div>
-                        <input type="checkbox" id="active" name="active" <#if question.active==true>checked</#if>/>
+
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <div class="form-control-md form-check">
+                        <input type="checkbox" class="form-check-input larger-checkbox" id="active" name="active" <#if question.active==true>checked</#if>>
+                        <label class="form-check-label" for="active">Active</label>
                     </div>
+                </div>
+                <div class="form-group col-md-4">
+
                 </div>
             </div>
             <button type="button" id="cancelButton" class="btn btn-primary" onclick="window.location.href='/superadmin/questions'">Cancel</button>

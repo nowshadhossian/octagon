@@ -2,6 +2,7 @@
 <#assign navPage="/layout/nav/super-nav.ftl">
 <#include "/layout/nav/top.ftl">
 <div>
+    <h1>Add Session</h1>
     <form id="addTopicForm" action="/superadmin/session/create" method="post">
         <div class="form-group row">
             <label for="sessionName" class="col-sm-3 col-form-label">Session Name</label>
@@ -21,7 +22,7 @@
         </div>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <button type="button" id="cancelButton" class="btn btn-primary" onclick="window.location.href='/superadmin/session'">Cancel</button>
-        <button type="submit" id="submitForm" class="btn btn-primary">Add Topic</button>
+        <button type="submit" id="submitForm" class="btn btn-primary">Add Session</button>
     </form>
 </div>
 
