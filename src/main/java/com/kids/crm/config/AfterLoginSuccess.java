@@ -35,7 +35,7 @@ public class AfterLoginSuccess implements AuthenticationSuccessHandler{
         response.sendRedirect(targetUrl);
     }
 
-    protected String determineTargetUrl(Authentication authentication) {
+    public String determineTargetUrl(Authentication authentication) {
         Set<String> authorities = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         if (authorities.contains("ROLE_STUDENT")) {
             return "/student/switch-batch";
