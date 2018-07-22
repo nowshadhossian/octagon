@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -43,7 +44,8 @@ public class UserSession {
 
     public User getLoggedInUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (User) authentication.getPrincipal();
+
+        return Objects.equals(authentication.getPrincipal(), "anonymousUser") ? null : (User) authentication.getPrincipal();
     }
 
     public Subject getCurrentSubject() {

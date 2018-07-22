@@ -1,5 +1,4 @@
 <#assign title="Dashboard | Octagon">
-<#assign navPage="/layout/nav/super-nav.ftl">
 <#include "/layout/nav/top.ftl">
 
 <div class="row">
@@ -8,7 +7,7 @@
 
         <div class="form-row">
             <div class="form-group col-md-6">
-                <a href="/superadmin/questions/upload" class="btn btn-dark">Upload Question</a>
+                <a href="/assistant/questions/upload" class="btn btn-dark">Upload Question</a>
             </div>
             <div class="form-group col-md-6">
                 <div class="input-group col-sm-6 float-right-md padding-left-sm-0">
@@ -43,7 +42,7 @@
                         <td>${question.year}</td>
                         <td>${(question.session.name)!""}</td>
                         <td>${question.questionNo}</td>
-                        <td><a href="/superadmin/questions/${question.id}/edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+                        <td><a href="/assistant/questions/${question.id}/edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
                     </tr>
                     </#list>
                     </tbody>
@@ -64,7 +63,7 @@
             if(!($.isNumeric(year)) || year<1 || !(year.toString().length==4)){
                 return false;
             }
-            var getUrl = '/superadmin/questions/serarchQuestionsByYear?year='+year;
+            var getUrl = '/assistant/questions/searchQuestionsByYear?year='+year;
             $.ajax({
                 url: getUrl,
                 dataType: 'json',
@@ -78,7 +77,7 @@
         function populateQuestionList(data) {
             $("#questionList").html("");
             $.each( data, function( key, value ) {
-                $("#questionList").append('<tr><td>'+value.subject.name+'</td><td>'+value.topic.name+'</td><td>'+value.year+'</td><td>'+value.session.name+'</td><td>'+value.questionNo+'</td><td><a href="/superadmin/questions/'+value.id+'/edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td></tr>');
+                $("#questionList").append('<tr><td>'+value.subject.name+'</td><td>'+value.topic.name+'</td><td>'+value.year+'</td><td>'+value.session.name+'</td><td>'+value.questionNo+'</td><td><a href="/assistant/questions/'+value.id+'/edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td></tr>');
             });
         }
     } );

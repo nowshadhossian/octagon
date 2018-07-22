@@ -8,6 +8,7 @@
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 <!-- Navigation-->
+<#include "/layout/nav/nav.ftl">
 <#include navPage>
 <div class="content-wrapper">
     <div class="container-fluid">

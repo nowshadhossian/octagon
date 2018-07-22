@@ -1,19 +1,19 @@
 <#-- @ftlvariable name="question" type="com.kids.crm.model.Question" -->
 <#-- @ftlvariable name="questionStats" type="com.kids.crm.model.mongo.QuestionStats" -->
-<#assign title="Dashboard | Octagon">
-<#assign navPage="/layout/nav/super-nav.ftl">
+<#assign title="Question Upload | Octagon">
 <#include "/layout/nav/top.ftl">
 <#assign skipCount = (questionStats.skipCount)!0>
 <#assign totalAttempt = (questionStats.timesAnsweredCount)!0>
 <div class="row">
     <div class="col-12">
+
         <#if question.id??>
             <h1>Edit Upload</h1>
         <#else>
             <h1>New Upload</h1>
             <h4>You can upload new question here...</h4>
         </#if>
-        <form action="/superadmin/questions/save" method="post" enctype="multipart/form-data">
+        <form action="/assistant/questions/save" method="post" enctype="multipart/form-data">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <input type="hidden" name="id" value="${(question.id)!""}">
             <#if question.id??>
@@ -225,7 +225,7 @@
 
                 </div>
             </div>
-            <button type="button" id="cancelButton" class="btn btn-primary" onclick="window.location.href='/superadmin/questions'">Cancel</button>
+            <button type="button" id="cancelButton" class="btn btn-primary" onclick="window.location.href='/assistant/questions'">Cancel</button>
             <input class="btn btn-primary" type="submit" name="medical-db-init" value="Upload Question">
         </form>
 

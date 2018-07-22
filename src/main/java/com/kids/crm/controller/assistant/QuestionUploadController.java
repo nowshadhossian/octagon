@@ -1,4 +1,4 @@
-package com.kids.crm.controller.superadmin;
+package com.kids.crm.controller.assistant;
 
 import com.kids.crm.model.*;
 import com.kids.crm.model.mongo.QuestionSolvingTime;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/superadmin/questions")
+@RequestMapping("/assistant/questions")
 public class QuestionUploadController {
 
     @Autowired
@@ -42,7 +42,7 @@ public class QuestionUploadController {
     public String questionsList(ModelMap modelMap){
         List<Question> questions = questionService.getAllQuestions();
         modelMap.addAttribute("questions",questions);
-        return "super/questions";
+        return "assistant/questions";
     }
 
     @GetMapping("/upload")
@@ -56,7 +56,7 @@ public class QuestionUploadController {
         modelMap.addAttribute("sessions",sessions);
         List<SubTopic> subTopics = subTopicService.getAllSubTopic();
         modelMap.addAttribute("subTopics",subTopics);
-        return "super/question-upload";
+        return "assistant/question-upload";
     }
     @PostMapping("/save")
     public String uploadQuestionWithInfo(@ModelAttribute Question form,@RequestParam("file") MultipartFile file) {
@@ -66,7 +66,7 @@ public class QuestionUploadController {
             uploadService.store(file,question.getFileName());
         }
 
-        return "redirect:/superadmin/questions";
+        return "redirect:/assistant/questions";
     }
     @GetMapping("/{questionId}/edit")
     public String editQuestion(ModelMap modelMap,@PathVariable(value = "questionId") String questionId){
@@ -99,10 +99,10 @@ public class QuestionUploadController {
         }
 
         modelMap.addAttribute("totalAnswerDuration",totalAnswerDuration);
-        return "super/question-upload";
+        return "assistant/question-upload";
     }
 
-    @GetMapping("/serarchQuestionsByYear")
+    @GetMapping("/searchQuestionsByYear")
     @ResponseBody
     public List<Question> searchQuestionByYear(@RequestParam(required = false,value = "year") int year){
         return questionService.getQuestionsByYear(year);

@@ -1,5 +1,6 @@
 package com.kids.crm.config;
 
+import com.kids.crm.interceptor.GlobalVariablesInterceptor;
 import com.kids.crm.interceptor.QuestionApiInterceptor;
 import com.kids.crm.service.converter.IdToBatchConverter;
 import com.kids.crm.service.converter.IdToStudentConverter;
@@ -28,10 +29,16 @@ public class WebMvcConfig implements WebMvcConfigurer {
         return new QuestionApiInterceptor();
     }
 
+    @Bean
+    public GlobalVariablesInterceptor globalVariablesInterceptor(){
+        return new GlobalVariablesInterceptor();
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(questionApiInterceptor())
                 .addPathPatterns("/api/**");
+        registry.addInterceptor(globalVariablesInterceptor());
     }
 
     @Override

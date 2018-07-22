@@ -13,9 +13,9 @@
             </li>
 
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                <a class="nav-link" href="/teacher/switch-batch">
+                <a class="nav-link" href="/assistant/questions/">
                     <i class="fa fa-fw fa-table"></i>
-                    <span class="nav-link-text">Switch Subject</span>
+                    <span class="nav-link-text">Questions</span>
                 </a>
             </li>
         </ul>

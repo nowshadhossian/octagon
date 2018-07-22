@@ -29,7 +29,15 @@ public enum Role implements GrantedAuthority {
         return this == TEACHER;
     }
 
-    public String getNameStripped(){
+    public boolean isAssistant() {
+        return this == ASSISTANT;
+    }
+
+    public boolean isSuperAdmin() {
+        return this == SUPER_ADMIN;
+    }
+
+    public String getNameStripped() {
         return getName().substring(5);
     }
 }

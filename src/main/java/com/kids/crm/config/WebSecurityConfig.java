@@ -35,6 +35,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .authorizeRequests()
                     .antMatchers("/teacher/**").hasRole(Role.TEACHER.getNameStripped())
                     .antMatchers("/student/**").hasRole(Role.STUDENT.getNameStripped())
+                    .antMatchers("/assistant/**").hasAnyRole(Role.ASSISTANT.getNameStripped(), Role.SUPER_ADMIN.getNameStripped())
+                    .antMatchers("/superadmin/**").hasRole(Role.SUPER_ADMIN.getNameStripped())
                     .antMatchers("/save","/find", "/list", "/register/**",
                             "/forgot-password", "/images/**", "/css/**", "/js/**", "/ui-lib/**", "/api/**","/forgot-password1").permitAll()
                     .anyRequest().authenticated()
