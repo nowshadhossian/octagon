@@ -1,5 +1,6 @@
 package com.kids.crm.model.mongo;
 
+import com.google.common.collect.Maps;
 import com.kids.crm.model.FlagMessageType;
 import lombok.Builder;
 import lombok.Getter;
@@ -81,6 +82,14 @@ public class QuestionStats {
                             answeredCountWithOption.put(singleTrimmed, answeredCountWithOption.getOrDefault(singleTrimmed, 0) + 1);
                         }
                 );
+    }
+
+    public Map<FlagMessageType, Integer> getFlagMessageCountEmptyIfNull(){
+        return flagMessageCount == null ? Maps.newHashMap() : flagMessageCount;
+    }
+
+    public Map<String, Integer> getAnsweredCountWithOptionEmptyIfNull(){
+        return answeredCountWithOption == null ? Maps.newHashMap() : answeredCountWithOption;
     }
 
 

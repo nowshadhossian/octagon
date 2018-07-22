@@ -1,3 +1,5 @@
+<#-- @ftlvariable name="question" type="com.kids.crm.model.Question" -->
+<#-- @ftlvariable name="questionStats" type="com.kids.crm.model.mongo.QuestionStats" -->
 <#assign title="Dashboard | Octagon">
 <#assign navPage="/layout/nav/super-nav.ftl">
 <#include "/layout/nav/top.ftl">
@@ -142,9 +144,8 @@
                     <label>Flag Message</label>
                     <div id="flagMessage">
                         <#if questionStats??>
-                            <ul>
-                                <#list questionStats.flagMessageCount?keys as key>
-                                    <li>${key.name()}: ${questionStats.flagMessageCount[key]}</li>
+                                <#list questionStats.getFlagMessageCountEmptyIfNull() as key, value>
+                                     <li>${key}: ${value}</li>
                                 </#list>
                             </ul>
                         </#if>
@@ -179,9 +180,9 @@
                     <div id="answeredQuestion">
                         <#if questionStats??>
                             <ul>
-                                <#list questionStats.answeredCountWithOption?keys as key>
-                                    <li>${key}: ${questionStats.answeredCountWithOption[key]}</li>
-                                </#list>
+                                 <#list questionStats.getAnsweredCountWithOptionEmptyIfNull() as key, value>
+                                     <li>${key}: ${value}</li>
+                                 </#list>
                             </ul>
                         </#if>
                     </div>
