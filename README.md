@@ -29,3 +29,9 @@ Reverse Proxy makes the app run in port 80 for both the apps.
           }
 The above in /usr/local/etc/nginx/nginx.conf
 
+
+**4. Domain Setup**
+Go to godaddy and enter nameservers of digitalocean ns2.digitalocean.com
+
+Then, go to digital ocean and add nameserver hostname medprepbd.com value/directsTo ns2.digitalocean.com.
+Enter A record. hostname: medprepbd.com IP: digital ocean server IP

@@ -38,7 +38,7 @@
                     <label>Upload Question</label>
                 </div>
                 <div class="form-group col-md-4">
-                    <input type="file" name="file"/>
+                    <input type="file" name="file" required/>
                 </div>
             </div>
             <div class="form-row">
@@ -47,13 +47,7 @@
                     <input class="form-control" id="curriculum" name="curriculum" type="text"
                            value="${question.curriculum!""}" aria-describedby="nameHelp"
                            placeholder="Curriculum" required>
-                    <label for="year">Year</label>
-                    <select class="form-control" id="year" name="year" required>
-                        <option>Select Year...</option>
-                        <#list 1980..(.now?string('yyyy')?number) as i>
-                            <option value="${i}" <#if question.year?? && question.year==i>selected</#if> >${i}</option>
-                        </#list>
-                    </select>
+
                     <label for="session">Session</label>
                     <select class="form-control" id="subject" name="session" required>
                         <option value="">Select session...</option>
@@ -117,7 +111,7 @@
                 <div class="form-group col-md-4">
                     <label for="topic">Topic</label>
                     <select class="form-control" id="topic" name="topic" required>
-                        <option value="">Select Topic...</option>
+                        <option value="" disabled selected>Select Topic</option>
                         <#list topics as topic>
                             <option value="${topic.id}" <#if question.topic?? && question.topic.id==topic.id>selected</#if> >${topic.name}</option>
                         </#list>
@@ -133,17 +127,18 @@
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="subTopic">Sub topic</label>
-                    <select class="form-control" id="subTopic" name="subTopics" data-placeholder="Select an option">
-                        <option>Select SubTopic</option>
+                    <select class="form-control" id="subTopic" name="subTopics" data-placeholder="Select subtopic" multiple required>
                         <#list subTopics as subTopic>
                             <option value="${subTopic.id}" <#if question.subTopics?has_content && question.subTopics?seq_contains(subTopic)>selected</#if>>${subTopic.name}</option>
                         </#list>
                     </select>
+                    <small id="emailHelp" class="form-text text-muted">Use Control click to chose multiple</small>
                 </div>
                 <div class="form-group col-md-4">
                     <label>Flag Message</label>
                     <div id="flagMessage">
                         <#if questionStats??>
+                            <ul>
                                 <#list questionStats.getFlagMessageCountEmptyIfNull() as key, value>
                                      <li>${key}: ${value}</li>
                                 </#list>
@@ -158,19 +153,19 @@
                     <label for="correctAnswers">Correct Answers: </label>
                     <div>
                         <div class="form-control-md form-check">
-                            <input type="checkbox" class="form-check-input larger-checkbox" id="optionA" <#if question.answer?? && question.answer?contains("A")>checked </#if>>
+                            <input type="checkbox" class="form-check-input larger-checkbox" name="answer" value="A" id="optionA" <#if question.answer?? && question.answer?contains("A")>checked </#if>>
                             <label class="form-check-label" for="optionA">Option A</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input larger-checkbox" id="optionB" <#if question.answer?? && question.answer?contains("B")>checked</#if>>
+                            <input type="checkbox" class="form-check-input larger-checkbox" name="answer" value="B" id="optionB" <#if question.answer?? && question.answer?contains("B")>checked</#if>>
                             <label class="form-check-label" for="optionB">Option B</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input larger-checkbox" id="optionC" <#if question.answer?? && question.answer?contains("C")>checked</#if>>
+                            <input type="checkbox" class="form-check-input larger-checkbox" name="answer" value="C" id="optionC" <#if question.answer?? && question.answer?contains("C")>checked</#if>>
                             <label class="form-check-label" for="optionC">Option C</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input larger-checkbox" id="optionD" <#if question.answer?? && question.answer?contains("D")>checked</#if>>
+                            <input type="checkbox" class="form-check-input larger-checkbox" name="answer" value="D" id="optionD" <#if question.answer?? && question.answer?contains("D")>checked</#if>>
                             <label class="form-check-label" for="optionD">Option D</label>
                         </div>
                     </div>
@@ -205,9 +200,9 @@
                 <div class="form-group col-md-4">
                     <label>Version</label>
                     <select class="form-control" id="version" name="version" required>
-                        <option>Select version</option>
+                        <option value="" disabled>Select version</option>
+                        <option value="0" <#if question.version?? && question.version==0>selected</#if>>English</option>
                         <option value="1" <#if question.version?? && question.version==1>selected</#if>>Bengali</option>
-                        <option value="2" <#if question.version?? && question.version==2>selected</#if>>English</option>
                     </select>
                 </div>
                 <div class="form-group col-md-4">
@@ -217,7 +212,7 @@
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <div class="form-control-md form-check">
-                        <input type="checkbox" class="form-check-input larger-checkbox" id="active" name="active" <#if question.active==true>checked</#if>>
+                        <input type="checkbox" class="form-check-input larger-checkbox" id="active" name="active" <#if question.active==true || !question.id??>checked</#if>>
                         <label class="form-check-label" for="active">Active</label>
                     </div>
                 </div>
@@ -251,7 +246,6 @@
 
         function populateSubtopic(subTopics) {
             $("#subTopic").html("");
-            $("#subTopic").append('<option>Select SubTopic</option>');
             $.each( subTopics, function( key, value ) {
                 $("#subTopic").append("<option value='"+ value.id+"' >"+value.name+"</option>");
             });
