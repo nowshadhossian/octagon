@@ -10,9 +10,10 @@
         <#else>
             <form id="password-reset-form" action="/reset-password" method="post">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <input type="hidden" name="userId" value="${user.id!""}"/>
                 <div class="form-group">
-                    <label for="password">Current Password</label>
-                    <input class="form-control" name="password" id="password" type="password" placeholder="Current Password" minlength="2" title="Enter minimum 4 character" required/>
+                    <label for="password">New Password</label>
+                    <input class="form-control" name="password" id="password" type="password" placeholder="New Password" minlength="2" title="Enter minimum 4 character" required/>
                 </div>
                 <div class="form-group">
                     <label for="confirmPassword">Re-enter Password</label>

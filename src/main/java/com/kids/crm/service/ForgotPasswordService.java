@@ -35,9 +35,9 @@ public class ForgotPasswordService {
         return true;
     }
 
-    public boolean processResetPassword(String token) {
-        boolean isValidate = validateToken(token);
-        return isValidate;
+    public User processResetPassword(String token) {
+        User requestedUser = getValidRequestedUser(token);
+        return requestedUser;
     }
 
     private String generateResetPasswordURL(User user){
@@ -54,7 +54,7 @@ public class ForgotPasswordService {
         return resetUrl;
     }
 
-    private boolean validateToken(String token){
+    private User getValidRequestedUser(String token){
         String decryptedToken = "";
         try {
             decryptedToken = Encryption.decrypt(token);
@@ -63,18 +63,18 @@ public class ForgotPasswordService {
             String timeStamp = getParameterValue(elements,KEY_TIMESTAMP);
             User user = userService.loadUserById(Long.parseLong(userId));
             if (user==null){
-                return false;
+                return user;
             }
             Instant instant = Instant.now();
             long currentTimeStampSeconds = instant.getEpochSecond();
             long timeStampSeconds = Long.parseLong(timeStamp);
             if(timeStampSeconds<=currentTimeStampSeconds){
-                return true;
+                return user;
             }
         } catch (Exception e) {
-            return false;
+            return null;
         }
-        return false;
+        return null;
     }
 
     private String getParameterValue(List<String> elements,String key){

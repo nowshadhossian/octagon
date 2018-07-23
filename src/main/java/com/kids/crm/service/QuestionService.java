@@ -56,7 +56,7 @@ public class QuestionService {
         return questionRepository.findQuestionsByYear(year);
     }
     public String generateQuestionName(Question question,String ext) {
-        String name = question.getYear()+question.getSession().getId().toString()+question.getSubject().getId().toString()+question.getQuestionNo()+"."+ext;
+        String name = question.getSession().getYear()+question.getSession().getId().toString()+question.getSubject().getId().toString()+question.getQuestionNo()+"."+ext;
         return name;
     }
 
