@@ -1,10 +1,12 @@
 package com.kids.crm.service;
 
 import com.kids.crm.model.User;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
@@ -14,46 +16,63 @@ public class ForgotPasswordService {
     @Autowired
     UserService userService;
 
+    @Autowired
+    MailSender mailSender;
+
+    @Value("${app.root.url}")
+    private String rootUrl;
+
     private final long TOKEN_DURATION = 24*60*60;
     private final String KEY_ID = "id";
     private final String KEY_TIMESTAMP = "timestamp";
     private final String KEY_EMAIL = "email";
 
 
-    public String processForgetPassword(String email){
+    public boolean processForgetPassword(String email){
         User user = (User) userService.loadUserByUsername(email);
         String resetUrl = generateResetPasswordURL(user);
-
-        return "";
+        mailSender.sendmailForResetPassword("forgotPasswordMailTemplate.html",resetUrl,user);
+        return true;
     }
 
-    public String processResetPassword(String token) {
-        validateToken(token);
-        return "";
+    public boolean processResetPassword(String token) {
+        boolean isValidate = validateToken(token);
+        return isValidate;
     }
 
     private String generateResetPasswordURL(User user){
         Instant instant = Instant.now();
         long timeStampSeconds = instant.getEpochSecond();
-        String token = Encryption.encrypt(KEY_EMAIL+":"+user.getEmail()+";"+KEY_ID+":"+user.getId()+";"+KEY_TIMESTAMP+":"+timeStampSeconds);
-        String resetUrl ="?_token="+token;
+        String token =KEY_ID+":"+user.getId()+";"+KEY_TIMESTAMP+":"+timeStampSeconds;
+        String encToken = Encryption.encrypt(token);
+        String resetUrl = null;
+        try {
+            resetUrl = rootUrl+"/reset-password?_token="+URLEncoder.encode(encToken,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         return resetUrl;
     }
 
     private boolean validateToken(String token){
-        String decryptedToken = Encryption.decrypt(token);
-        List<String> elements = Arrays.asList(decryptedToken.split(";"));
-        String userEmail = getParameterValue(elements,KEY_EMAIL);
-        String timeStamp = getParameterValue(elements,KEY_TIMESTAMP);
-        User user = (User) userService.loadUserByUsername(userEmail);
-        if (user==null){
+        String decryptedToken = "";
+        try {
+            decryptedToken = Encryption.decrypt(token);
+            List<String> elements = Arrays.asList(decryptedToken.split(";"));
+            String userId = getParameterValue(elements,KEY_ID);
+            String timeStamp = getParameterValue(elements,KEY_TIMESTAMP);
+            User user = userService.loadUserById(Long.parseLong(userId));
+            if (user==null){
+                return false;
+            }
+            Instant instant = Instant.now();
+            long currentTimeStampSeconds = instant.getEpochSecond();
+            long timeStampSeconds = Long.parseLong(timeStamp);
+            if(timeStampSeconds<=currentTimeStampSeconds){
+                return true;
+            }
+        } catch (Exception e) {
             return false;
-        }
-        Instant instant = Instant.now();
-        long currentTimeStampSeconds = instant.getEpochSecond();
-        long timeStampSeconds = Long.parseLong(timeStamp);
-        if(timeStampSeconds<=currentTimeStampSeconds){
-            return true;
         }
         return false;
     }

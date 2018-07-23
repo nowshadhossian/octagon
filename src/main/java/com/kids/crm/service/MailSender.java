@@ -129,4 +129,15 @@ public class MailSender {
             }
         }
     }
+
+    public void sendmailForResetPassword(String template,String resetUrl, User user){
+        Map<String,String> params = new HashMap<>();
+        String mailSubject = "Reset Password";
+        params.put("name",user.getName());
+        params.put("resetUrl",resetUrl);
+        params.put("application","Octagon");
+        String body = getTemplate(params,template);
+        send(mailSubject,body,user.getEmail());
+
+    }
 }

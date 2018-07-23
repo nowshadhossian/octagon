@@ -3,10 +3,11 @@
 <div class="card card-login mx-auto mt-5">
         <div class="card-header">Reset Password</div>
         <div class="card-body">
-            <#if message??>
-                <p>Your request has been sent.</p>
-                <p>You'll get an email soon.</p>
-                <p>Please check in your inbox</p>
+            <#if success?? && success==true>
+                <div class="text-center mt-4 mb-5">
+                    <p>Your request has been sent. You'll get an email soon.</p>
+                    <h4>Please check in your inbox</h4>
+                </div>
                 <div>
                     <a class="d-block small" href="/login">Login Page</a>
                 </div>
