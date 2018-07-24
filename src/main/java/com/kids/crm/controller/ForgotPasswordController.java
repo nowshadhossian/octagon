@@ -57,7 +57,7 @@ public class ForgotPasswordController {
         User user = userService.loadUserById(form.getUserId());
         user.setPassword(passwordEncoder.encode(form.getPassword()));
         userService.saveUser(user);
-        redirectAttributes.addFlashAttribute("requestMessage","Password reset successfully done");
+        redirectAttributes.addFlashAttribute("successMsg","Password reset successfully done");
         return "redirect:/login";
     }
 
