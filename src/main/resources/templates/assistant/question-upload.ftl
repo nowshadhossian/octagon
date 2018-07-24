@@ -233,7 +233,7 @@
 
         $("#topic").change(function () {
             var topicId = this.value;
-            var getUrl = '/superadmin/sub-topic/getSubtopic?topicId='+topicId;
+            var getUrl = '/assistant/questions/getSubtopic?topicId='+topicId;
             $.ajax({
                 url: getUrl,
                 dataType: 'json',

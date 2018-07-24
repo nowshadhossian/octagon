@@ -141,4 +141,11 @@ public class QuestionUploadController {
         question.setVersion(form.getVersion());
         return question;
     }
+
+    @GetMapping("/getSubtopic")
+    @ResponseBody
+    public List<SubTopic> getSubtopicByTopicId(@RequestParam(value = "topicId") long topicId){
+        List<SubTopic> subTopics = subTopicService.getSubTopicsByTopicId(topicId);
+        return subTopics;
+    }
 }

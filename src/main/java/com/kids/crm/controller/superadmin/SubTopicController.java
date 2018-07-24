@@ -50,10 +50,4 @@ public class SubTopicController {
         return "redirect:/superadmin/topic/" + subTopic.getTopic().getId() + "/edit";
     }
 
-    @GetMapping("/getSubtopic")
-    @ResponseBody
-    public List<SubTopic> getSubtopicByTopicId(@RequestParam(value = "topicId") long topicId){
-        List<SubTopic> subTopics = subTopicService.getSubTopicsByTopicId(topicId);
-        return subTopics;
-    }
 }

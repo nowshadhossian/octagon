@@ -46,7 +46,7 @@
             <div class="form-group row">
                 <label for="password" class="col-sm-3 col-form-label">Password</label>
                 <div class="col-sm-8">
-                    <input type="text" name="${spring.status.expression}" value="${spring.status.value!""}" class="form-control" id="password">
+                    <input type="password" name="${spring.status.expression}" value="${spring.status.value!""}" class="form-control" id="password" required>
                 </div>
             </div>
 
