@@ -6,5 +6,5 @@
     <#include "/layout/common/header.ftl">
 </head>
 
-<body class="bg-dark">
+<body class="bg-white">
 <div class="container">

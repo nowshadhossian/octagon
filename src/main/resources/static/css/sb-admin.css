@@ -373,3 +373,7 @@ footer.sticky-footer {
   -o-transform: scale(1.5); /* Opera */
   padding: 10px;
 }
+
+.bg-white{
+  background-color: #f8f8f8 !important;
+}
