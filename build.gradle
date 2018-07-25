@@ -52,6 +52,7 @@ sourceSets {
 
 
 task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
+	group = 'dev';
 	file(new File(projectDir, "/src/main/generated")).deleteDir()
 	file(new File(projectDir, "/src/main/generated")).mkdirs()
 	source = sourceSets.main.java
@@ -122,9 +123,15 @@ dependencies {
 	// https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
 	compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.3.3'
 
+	// https://mvnrepository.com/artifact/com.h2database/h2
+	testCompile group: 'com.h2database', name: 'h2', version: '1.4.197'
 
 }
 
+bootRun {
+	group = "dev";
+	sourceResources sourceSets.main
+}
 
 task wrapper(type: Wrapper) {
 	gradleVersion = '4.4.1'

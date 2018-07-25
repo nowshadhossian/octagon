@@ -19,4 +19,6 @@ public class Subject {
     private Long id;
     private String name;
     private String code;
+
+    //Board was here. Re-enable when needed
 }

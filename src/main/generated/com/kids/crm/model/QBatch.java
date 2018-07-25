@@ -51,7 +51,7 @@ public class QBatch extends EntityPathBase<Batch> {
     public QBatch(Class<? extends Batch> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.session = inits.isInitialized("session") ? new QSession(forProperty("session")) : null;
-        this.subject = inits.isInitialized("subject") ? new QSubject(forProperty("subject"), inits.get("subject")) : null;
+        this.subject = inits.isInitialized("subject") ? new QSubject(forProperty("subject")) : null;
         this.teacher = inits.isInitialized("teacher") ? new QTeacher(forProperty("teacher")) : null;
     }
 

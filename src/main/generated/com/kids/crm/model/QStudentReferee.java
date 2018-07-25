@@ -49,7 +49,7 @@ public class QStudentReferee extends EntityPathBase<StudentReferee> {
     public QStudentReferee(Class<? extends StudentReferee> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.student = inits.isInitialized("student") ? new QStudent(forProperty("student")) : null;
-        this.subject = inits.isInitialized("subject") ? new QSubject(forProperty("subject"), inits.get("subject")) : null;
+        this.subject = inits.isInitialized("subject") ? new QSubject(forProperty("subject")) : null;
     }
 
 }

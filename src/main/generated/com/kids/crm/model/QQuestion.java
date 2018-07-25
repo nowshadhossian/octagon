@@ -46,7 +46,11 @@ public class QQuestion extends EntityPathBase<Question> {
 
     public final QTopic topic;
 
+    public final DateTimePath<java.util.Date> uploadDate = createDateTime("uploadDate", java.util.Date.class);
+
     public final StringPath variant = createString("variant");
+
+    public final NumberPath<Integer> version = createNumber("version", Integer.class);
 
     public final NumberPath<Integer> year = createNumber("year", Integer.class);
 
@@ -69,7 +73,7 @@ public class QQuestion extends EntityPathBase<Question> {
     public QQuestion(Class<? extends Question> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.session = inits.isInitialized("session") ? new QSession(forProperty("session")) : null;
-        this.subject = inits.isInitialized("subject") ? new QSubject(forProperty("subject"), inits.get("subject")) : null;
+        this.subject = inits.isInitialized("subject") ? new QSubject(forProperty("subject")) : null;
         this.topic = inits.isInitialized("topic") ? new QTopic(forProperty("topic"), inits.get("topic")) : null;
     }
 

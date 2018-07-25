@@ -60,7 +60,7 @@ public class QStudentAnswer extends EntityPathBase<StudentAnswer> {
         super(type, metadata, inits);
         this.batch = inits.isInitialized("batch") ? new QBatch(forProperty("batch"), inits.get("batch")) : null;
         this.question = inits.isInitialized("question") ? new QQuestion(forProperty("question"), inits.get("question")) : null;
-        this.subject = inits.isInitialized("subject") ? new QSubject(forProperty("subject"), inits.get("subject")) : null;
+        this.subject = inits.isInitialized("subject") ? new QSubject(forProperty("subject")) : null;
         this.user = inits.isInitialized("user") ? new QUser(forProperty("user")) : null;
     }
 
