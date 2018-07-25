@@ -4,13 +4,11 @@ import com.kids.crm.OctagonApplication;
 import com.kids.crm.config.Config;
 import com.kids.crm.config.WebSecurityConfig;
 import com.kids.crm.controller.RegistrationController;
-import com.kids.crm.controller.api.RestApiManager;
-import com.kids.crm.mongo.repository.UserLoginSessionRepository;
-import com.kids.crm.repository.*;
+import com.kids.crm.repository.GuardianRepository;
+import com.kids.crm.repository.StudentBatchInterestRepository;
+import com.kids.crm.repository.StudentRefereeRepository;
+import com.kids.crm.repository.SubjectRepository;
 import com.kids.crm.service.BatchService;
-import com.kids.crm.service.JwtToken;
-import com.kids.crm.service.StudentService;
-import com.kids.crm.service.UserService;
 import com.kids.crm.validator.SignupValidator;
 import org.hamcrest.core.StringContains;
 import org.junit.Test;
@@ -31,19 +29,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @WebMvcTest(controllers = RegistrationController.class)
 @ContextConfiguration(classes = OctagonApplication.class)
 @Import({WebSecurityConfig.class, Config.class})
-public class RegistrationControllerTest {
+public class RegistrationControllerTest extends BaseController {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @MockBean JwtToken jwtToken;
-    @MockBean RestApiManager restApiManager;
-    @MockBean private StudentService studentService;
-    @MockBean private UserService userService;
-    @MockBean private UserLoginSessionRepository userLoginSessionRepository;
-    @MockBean private StudentRepository studentRepository;
-    @MockBean private BatchRepository batchRepository;
-
 
     @MockBean private SignupValidator validator;
     @MockBean private BatchService batchService;
