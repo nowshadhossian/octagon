@@ -83,6 +83,7 @@ public class RegistrationController {
                 .dateOfBirth(df.parse(signup.getDateOfBirth()))
                 .gender(signup.getGender())
                 .school(signup.getSchool())
+                .examsCurriculum(signup.getExamsCurriculum())
                 .build();
         student.setFirstName(signup.getFirstName());
         student.setLastName(signup.getLastName());

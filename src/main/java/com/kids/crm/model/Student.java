@@ -20,6 +20,8 @@ public class Student extends User{
     private Date dateOfBirth;
     private String gender;
     private String school;
+    private String examsCurriculum;
+    private Version version;
 
     @ManyToMany
     @JoinTable(

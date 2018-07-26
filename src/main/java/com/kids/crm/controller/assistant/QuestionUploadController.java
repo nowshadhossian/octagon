@@ -1,6 +1,7 @@
 package com.kids.crm.controller.assistant;
 
 import com.google.common.collect.Lists;
+import com.kids.crm.config.Config;
 import com.kids.crm.model.*;
 import com.kids.crm.model.mongo.QuestionSolvingTime;
 import com.kids.crm.model.mongo.QuestionStats;
@@ -39,6 +40,8 @@ public class QuestionUploadController {
     private QuestionStatService questionStatService;
     @Autowired
     private QuestionSolvingTimeService questionSolvingTimeService;
+    @Autowired
+    private Config config;
 
 
     @GetMapping(value = {"", "/"})
@@ -58,7 +61,14 @@ public class QuestionUploadController {
         modelMap.addAttribute("subjects", subjects);
         modelMap.addAttribute("sessions", sessions);
         modelMap.addAttribute("subTopics", Lists.newArrayList());
+
+        addModelMap(modelMap);
         return "assistant/question-upload";
+    }
+
+    public void addModelMap(ModelMap modelMap){
+        modelMap.addAttribute("curriculums", config.getCurriculums());
+        modelMap.addAttribute("variants", config.getQuestionVariants());
     }
 
     @PostMapping("/save")
@@ -80,6 +90,7 @@ public class QuestionUploadController {
         Long qId = Long.parseLong(questionId);
         Question question = questionService.getQuestionById(qId);
         modelMap.addAttribute("question", question);
+
         List<Topic> topics = topicService.getAllTopic();
         List<Subject> subjects = subjectService.getSubjects();
         List<Session> sessions = sessionService.getAllSessions();
@@ -88,6 +99,8 @@ public class QuestionUploadController {
         modelMap.addAttribute("sessions", sessions);
         List<SubTopic> subTopics = subTopicService.getSubTopicsByTopicId(question.getTopic().getId());
         modelMap.addAttribute("subTopics", subTopics);
+
+        addModelMap(modelMap);
 
         Optional<QuestionStats> questionStats = questionStatService.findQuestionStatByQuestionId(qId);
         if (questionStats.isPresent()) {

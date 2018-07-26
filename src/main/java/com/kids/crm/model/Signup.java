@@ -22,6 +22,7 @@ public class Signup {
     private String school;
     private String gender;
     private long interestSessionId;
+    private String examsCurriculum;
 
     //referees
     private long[] refereesSubjectId;

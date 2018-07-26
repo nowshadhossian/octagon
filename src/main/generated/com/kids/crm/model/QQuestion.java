@@ -28,7 +28,7 @@ public class QQuestion extends EntityPathBase<Question> {
 
     public final StringPath answerExplanation = createString("answerExplanation");
 
-    public final StringPath curriculum = createString("curriculum");
+    public final NumberPath<Integer> curriculum = createNumber("curriculum", Integer.class);
 
     public final StringPath fileName = createString("fileName");
 
@@ -48,7 +48,7 @@ public class QQuestion extends EntityPathBase<Question> {
 
     public final DateTimePath<java.util.Date> uploadDate = createDateTime("uploadDate", java.util.Date.class);
 
-    public final StringPath variant = createString("variant");
+    public final NumberPath<Integer> variant = createNumber("variant", Integer.class);
 
     public final NumberPath<Integer> version = createNumber("version", Integer.class);
 

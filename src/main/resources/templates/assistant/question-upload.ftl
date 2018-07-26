@@ -43,10 +43,13 @@
             </div>
             <div class="form-row">
                 <div class="form-group col-md-4">
-                    <label for="curriculum">Curriculum</label>
-                    <input class="form-control" id="curriculum" name="curriculum" type="text"
-                           value="${question.curriculum!""}" aria-describedby="nameHelp"
-                           placeholder="Curriculum" required>
+                    <label class="form-control">Curriculum
+                        <select class="form-control" name="curriculum" disabled>
+                            <#list curriculums as curriculum>
+                                <option value="${curriculum.getId()}" <#if question.curriculum?? && curriculum.id==question.curriculum>selected</#if>>${curriculum.getName()}</option>
+                            </#list>
+                        </select>
+                    </label>
 
                     <label for="session">Session</label>
                     <select class="form-control" id="subject" name="session" required>
@@ -64,10 +67,13 @@
 
             <div class="form-row">
                 <div class="form-group col-md-4">
-                    <label>Variant</label>
-                    <input class="form-control" id="variant" name="variant" type="text" pattern="\d*" maxlength="2" minlength="2" title="Enter 2 digit number"
-                           value="${question.variant!""}" aria-describedby="nameHelp"
-                           placeholder="Enter 2 digit" required>
+                    <label class="form-control">Variant
+                        <select class="form-control" name="variant" disabled>
+                            <#list variants as variant>
+                                 <option value="${variant.getId()}" <#if question.variant?? && variant.id==question.variant>selected</#if>>${variant.getName()}</option>
+                            </#list>
+                        </select>
+                    </label>
                 </div>
                 <div class="form-group col-md-4 date_picker">
                     <label>Upload Date</label>

@@ -31,6 +31,8 @@ public class QStudent extends EntityPathBase<Student> {
     //inherited
     public final StringPath email = _super.email;
 
+    public final StringPath examsCurriculum = createString("examsCurriculum");
+
     //inherited
     public final StringPath firstName = _super.firstName;
 
@@ -55,6 +57,8 @@ public class QStudent extends EntityPathBase<Student> {
     public final StringPath school = createString("school");
 
     public final ListPath<StudentBatchInterest, QStudentBatchInterest> studentBatchInterests = this.<StudentBatchInterest, QStudentBatchInterest>createList("studentBatchInterests", StudentBatchInterest.class, QStudentBatchInterest.class, PathInits.DIRECT2);
+
+    public final EnumPath<Version> version = createEnum("version", Version.class);
 
     public QStudent(String variable) {
         super(Student.class, forVariable(variable));

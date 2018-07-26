@@ -26,7 +26,7 @@
                 <div class="form-group date_picker">
                      <@spring.bind "signup.dateOfBirth" />
                     <label>Date Of Birth</label>
-                    <input class="form-control" id="date" name="${spring.status.expression}" value="${spring.status.value?default("")}" placeholder="MM/DD/YYYY enter date" type="text"/>
+                    <input class="form-control" id="date" name="${spring.status.expression}" autocomplete="off" value="${spring.status.value?default("")}" placeholder="MM/DD/YYYY enter date" type="text"/>
                      <@spring.showErrors "<br>"/>
                 </div>
 
@@ -82,6 +82,21 @@
                         </#list>
                     </select>
                 </div>
+
+                <div class="form-group">
+                     <@spring.bind "signup.examsCurriculum" />
+                    <label for="session">Curriculum</label>
+                    <select class="form-control" id="session" name="${spring.status.expression}" onchange="showfield(this.options[this.selectedIndex].value, 'examsCurriculumOther')">
+                        <option value="SSC, HSC Bangla version">SSC, HSC Bangla version</option>
+                        <option value="SSC, HSC English version">SSC, HSC English version</option>
+                        <option value="O &amp; A level Edexcel">O &amp; A level Edexcel</option>
+                        <option value="O &amp; A level CIE">O &amp; A level CIE</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <div id="examsCurriculumOther" style="display: none"> <label for="examsCurriculumOtherInput">If Other:</label><input id="examsCurriculumOtherInput" type="text" class="form-control" name="${spring.status.expression}" /></div>
+                </div>
+
+
 
                 <div class="form-group referee-col">
                     <h5><label class="form-check-label">Referees</label></h5>
@@ -235,4 +250,10 @@
     $( function() {
         $( "#date" ).datepicker();
     } );
+
+    function showfield(name, otherDiv){
+        if(name=='Other')document.getElementById(otherDiv).style.display="block";
+        else document.getElementById(otherDiv).style.display="none";
+    }
+
 </script>

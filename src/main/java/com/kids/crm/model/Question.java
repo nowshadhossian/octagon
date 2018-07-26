@@ -25,9 +25,9 @@ public class Question {
     private int year;
     private int questionNo;
     private String fileName;
-    private String curriculum;
+    private int curriculum;
     private boolean active;
-    private String variant;
+    private int variant;
     @ManyToMany()
     @JoinTable(name = "question_sub_topic",
                 joinColumns = @JoinColumn(name = "question_id"),

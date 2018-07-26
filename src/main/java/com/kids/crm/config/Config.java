@@ -5,6 +5,9 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @Component
@@ -15,4 +18,20 @@ public class Config {
     boolean multipleAnswers;
     String resourceLocation;
     String uploadQuestionImageLocation;
+    List<QuestionVariant> questionVariants = new ArrayList<>();
+    List<Curriculum> curriculums = new ArrayList<>();
+
+    @Getter
+    @Setter
+    public static class QuestionVariant {
+        private int id;
+        private String name;
+    }
+
+    @Getter
+    @Setter
+    public static class Curriculum {
+        private int id;
+        private String name;
+    }
 }
