@@ -1,8 +1,9 @@
 package com.kids.crm.controller;
 
-import com.kids.crm.model.Batch;
 import com.kids.crm.model.Student;
+import com.kids.crm.model.StudentBatch;
 import com.kids.crm.repository.StudentAnswerRepository;
+import com.kids.crm.repository.StudentBatchRepository;
 import com.kids.crm.repository.StudentRepository;
 import com.kids.crm.repository.TeacherRepository;
 import com.kids.crm.service.BatchService;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class TeacherStudentsController {
@@ -29,15 +29,17 @@ public class TeacherStudentsController {
     private final BatchService batchService;
     private final TeacherService teacherService;
     private final StudentAnswerRepository studentAnswerRepository;
+    private final StudentBatchRepository studentBatchRepository;
 
     @Autowired
-    public TeacherStudentsController(UserSession userSession, TeacherRepository teacherRepository, StudentRepository studentRepository, BatchService batchService, TeacherService teacherService, StudentAnswerRepository studentAnswerRepository) {
+    public TeacherStudentsController(UserSession userSession, TeacherRepository teacherRepository, StudentRepository studentRepository, BatchService batchService, TeacherService teacherService, StudentAnswerRepository studentAnswerRepository, StudentBatchRepository studentBatchRepository) {
         this.userSession = userSession;
         this.teacherRepository = teacherRepository;
         this.studentRepository = studentRepository;
         this.batchService = batchService;
         this.teacherService = teacherService;
         this.studentAnswerRepository = studentAnswerRepository;
+        this.studentBatchRepository = studentBatchRepository;
     }
 
 
@@ -64,8 +66,10 @@ public class TeacherStudentsController {
     @RequestMapping(value = ADD_STUDENTS, method = RequestMethod.POST)
     public String addStudentsPage(ModelMap modelMap, Student student){
 
-        student.addToBatch(userSession.getCurrentBatch());
-        studentRepository.save(student);
+        studentBatchRepository.save(StudentBatch.builder()
+                .student(student)
+                .batch(userSession.getCurrentBatch())
+                .build());
 
         return "redirect:" + ADD_STUDENTS;
     }

@@ -5,6 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -22,15 +24,10 @@ public class Student extends User{
     private String school;
     private String examsCurriculum;
     private Version version;
+    private String referral;
 
-    @ManyToMany
-    @JoinTable(
-            name="student_batch",
-            joinColumns = @JoinColumn(name="student_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "batch_id", referencedColumnName = "id"),
-            uniqueConstraints = @UniqueConstraint(columnNames = {"student_id", "batch_id"})
-    )
-    private List<Batch> batches;
+    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER)
+    private Set<StudentBatch> studentBatches;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
     private List<StudentBatchInterest> studentBatchInterests;
@@ -38,13 +35,13 @@ public class Student extends User{
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
     private List<StudentReferee> referees;
 
-    public void addToBatch(Batch batch){
-        batches.add(batch);
+
+    public List<Batch> getBatches(){
+        return studentBatches.stream()
+                .map(StudentBatch::getBatch)
+                .collect(Collectors.toList());
     }
 
-    public void removeFromBatch(Batch batch){
-        batches.remove(batch);
-    }
 
     public boolean equals(Object o) {
         if (o == this) {

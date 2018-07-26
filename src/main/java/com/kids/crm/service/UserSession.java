@@ -45,7 +45,7 @@ public class UserSession {
     public User getLoggedInUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        return Objects.equals(authentication.getPrincipal(), "anonymousUser") ? null : (User) authentication.getPrincipal();
+        return authentication == null || Objects.equals(authentication.getPrincipal(), "anonymousUser") ? null : (User) authentication.getPrincipal();
     }
 
     public Subject getCurrentSubject() {

@@ -1,10 +1,14 @@
 package com.kids.crm.controller;
 
+import com.kids.crm.config.Config;
 import com.kids.crm.model.*;
 import com.kids.crm.repository.*;
 import com.kids.crm.service.BatchService;
 import com.kids.crm.service.StudentService;
+import com.kids.crm.service.TeacherService;
+import com.kids.crm.service.exception.BatchNotFoundException;
 import com.kids.crm.validator.SignupValidator;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.transaction.Transactional;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,11 +39,14 @@ public class RegistrationController {
     private final StudentBatchInterestRepository studentBatchInterestRepository;
     private final SubjectRepository subjectRepository;
     private final StudentRefereeRepository studentRefereeRepository;
+    private final Config config;
+    private final TeacherService teacherService;
+    private final StudentBatchRepository studentBatchRepository;
 
     public static final DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 
     @Autowired
-    public RegistrationController(StudentService studentService, SignupValidator validator, BatchService batchService, PasswordEncoder passwordEncoder, GuardianRepository guardianRepository, StudentBatchInterestRepository studentBatchInterestRepository, SubjectRepository subjectRepository, StudentRefereeRepository studentRefereeRepository) {
+    public RegistrationController(StudentService studentService, SignupValidator validator, BatchService batchService, PasswordEncoder passwordEncoder, GuardianRepository guardianRepository, StudentBatchInterestRepository studentBatchInterestRepository, SubjectRepository subjectRepository, StudentRefereeRepository studentRefereeRepository, Config config, TeacherService teacherService, StudentBatchRepository studentBatchRepository) {
         this.studentService = studentService;
         this.validator = validator;
         this.batchService = batchService;
@@ -47,6 +55,9 @@ public class RegistrationController {
         this.studentBatchInterestRepository = studentBatchInterestRepository;
         this.subjectRepository = subjectRepository;
         this.studentRefereeRepository = studentRefereeRepository;
+        this.config = config;
+        this.teacherService = teacherService;
+        this.studentBatchRepository = studentBatchRepository;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -67,9 +78,12 @@ public class RegistrationController {
                 .collect(Collectors.toSet());
         model.addAttribute("upcomingSessions", upcomingSessions);
         model.addAttribute("upcomingSubjects", upcomingSubjects);
+        model.addAttribute("isPerCourseReferral", config.getStudent().isPerCourseReferral());
+        model.addAttribute("teachers", teacherService.findAll());
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, params = "register")
+    @Transactional
     public String registerProcess(Model model, @ModelAttribute Signup signup, BindingResult bindingResult, RedirectAttributes redirectAttributes) throws ParseException {
         validator.validate(signup, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -83,7 +97,9 @@ public class RegistrationController {
                 .dateOfBirth(df.parse(signup.getDateOfBirth()))
                 .gender(signup.getGender())
                 .school(signup.getSchool())
-                .examsCurriculum(signup.getExamsCurriculum())
+                .examsCurriculum(StringUtils.removeEnd(signup.getExamsCurriculum(), ","))
+                .referral(signup.getReferral())
+                .version(Version.getById(signup.getVersion()))
                 .build();
         student.setFirstName(signup.getFirstName());
         student.setLastName(signup.getLastName());
@@ -110,16 +126,25 @@ public class RegistrationController {
                     .batch(batchService.findBySessionIdAndSubjecId(signup.getInterestSessionId(), signup.getEnrollingIds()[i]))
                     .build();
             studentBatchInterestRepository.save(studentBatchInterest);
+
+            StudentBatch studentBatch = StudentBatch.builder()
+                    .student(studentSaved)
+                    .batch(batchService.findBySessionIdAndSubjectIdAndTeacherId(signup.getInterestSessionId(), signup.getEnrollingIds()[i], signup.getTeacherId()).orElseThrow(BatchNotFoundException::new))
+                    .build();
+            studentBatchRepository.save(studentBatch);
         }
 
-        for (int i = 0; i < signup.getRefereesName().length; i++) {
-            StudentReferee studentReferee = StudentReferee.builder()
-                    .refereeName(signup.getRefereesName()[i])
-                    .student(studentSaved)
-                    .subject(subjectRepository.findById(signup.getRefereesSubjectId()[i]).get())
-                    .build();
-            studentRefereeRepository.save(studentReferee);
+        if(signup.getRefereesName() != null){
+            for (int i = 0; i < signup.getRefereesName().length; i++) {
+                StudentReferee studentReferee = StudentReferee.builder()
+                        .refereeName(signup.getRefereesName()[i])
+                        .student(studentSaved)
+                        .subject(subjectRepository.findById(signup.getRefereesSubjectId()[i]).get())
+                        .build();
+                studentRefereeRepository.save(studentReferee);
+            }
         }
+
 
         redirectAttributes.addFlashAttribute("successMsg", "Account created Successfully. Please contact your teacher for enrolment.");
         return "redirect:/login";

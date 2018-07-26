@@ -26,7 +26,7 @@ public class QBatch extends EntityPathBase<Batch> {
 
     public final QSession session;
 
-    public final ListPath<Student, QStudent> students = this.<Student, QStudent>createList("students", Student.class, QStudent.class, PathInits.DIRECT2);
+    public final SetPath<StudentBatch, QStudentBatch> studentBatches = this.<StudentBatch, QStudentBatch>createSet("studentBatches", StudentBatch.class, QStudentBatch.class, PathInits.DIRECT2);
 
     public final QSubject subject;
 

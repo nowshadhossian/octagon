@@ -24,8 +24,6 @@ public class QStudent extends EntityPathBase<Student> {
 
     public final StringPath address = createString("address");
 
-    public final ListPath<Batch, QBatch> batches = this.<Batch, QBatch>createList("batches", Batch.class, QBatch.class, PathInits.DIRECT2);
-
     public final DateTimePath<java.util.Date> dateOfBirth = createDateTime("dateOfBirth", java.util.Date.class);
 
     //inherited
@@ -51,10 +49,14 @@ public class QStudent extends EntityPathBase<Student> {
 
     public final ListPath<StudentReferee, QStudentReferee> referees = this.<StudentReferee, QStudentReferee>createList("referees", StudentReferee.class, QStudentReferee.class, PathInits.DIRECT2);
 
+    public final StringPath referral = createString("referral");
+
     //inherited
     public final EnumPath<Role> role = _super.role;
 
     public final StringPath school = createString("school");
+
+    public final SetPath<StudentBatch, QStudentBatch> studentBatches = this.<StudentBatch, QStudentBatch>createSet("studentBatches", StudentBatch.class, QStudentBatch.class, PathInits.DIRECT2);
 
     public final ListPath<StudentBatchInterest, QStudentBatchInterest> studentBatchInterests = this.<StudentBatchInterest, QStudentBatchInterest>createList("studentBatchInterests", StudentBatchInterest.class, QStudentBatchInterest.class, PathInits.DIRECT2);
 

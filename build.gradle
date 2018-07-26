@@ -115,6 +115,9 @@ dependencies {
 	compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.9'
 	optional "org.springframework.boot:spring-boot-configuration-processor"
 
+	// https://mvnrepository.com/artifact/org.flywaydb/flyway-core
+	compile group: 'org.flywaydb', name: 'flyway-core', version: '5.1.4'
+
 	// https://mvnrepository.com/artifact/com.querydsl/querydsl-apt
 	compile group: 'com.querydsl', name: 'querydsl-apt', version: '4.2.1'
 	// https://mvnrepository.com/artifact/com.querydsl/querydsl-jpa

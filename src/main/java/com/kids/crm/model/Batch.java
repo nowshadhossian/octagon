@@ -5,6 +5,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -25,11 +27,17 @@ public class Batch{
     @JoinColumn(name="session_id")
     private Session session;
 
-    @ManyToMany(mappedBy = "batches", fetch = FetchType.EAGER)
-    private List<Student> students;
+    @OneToMany(mappedBy = "batch", fetch = FetchType.EAGER)
+    private Set<StudentBatch> studentBatches;
 
     @ManyToOne
     @JoinColumn(name="teacher_id")
     private Teacher teacher;
+
+    public List<Student> getStudents(){
+        return studentBatches.stream()
+                .map(StudentBatch::getStudent)
+                .collect(Collectors.toList());
+    }
 
 }

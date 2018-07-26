@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -40,5 +41,9 @@ public class BatchService {
 
     public Batch findById(long batchId){
         return batchRepository.findById(batchId).orElseThrow(BatchNotFoundException::new);
+    }
+
+    public Optional<Batch> findBySessionIdAndSubjectIdAndTeacherId(long sessionId, long subjectId, long teacherId) {
+        return batchRepository.findBySubjectIdAndSessionIdAndTeacherId(subjectId, sessionId, teacherId);
     }
 }

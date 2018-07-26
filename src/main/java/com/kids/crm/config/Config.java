@@ -20,6 +20,14 @@ public class Config {
     String uploadQuestionImageLocation;
     List<QuestionVariant> questionVariants = new ArrayList<>();
     List<Curriculum> curriculums = new ArrayList<>();
+    private Student student;
+
+
+    @Getter
+    @Setter
+    public static class Student {
+        private boolean perCourseReferral;
+    }
 
     @Getter
     @Setter

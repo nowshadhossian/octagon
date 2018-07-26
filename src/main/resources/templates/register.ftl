@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="teachers" type="java.util.List<com.kids.crm.model.Teacher>" -->
 <#-- @ftlvariable name="upcomingSubjects" type="java.util.List<com.kids.crm.model.Subject>" -->
 <#-- @ftlvariable name="upcomingSessions" type="java.util.List<com.kids.crm.model.Session>" -->
 <#assign title="Register | Octagon">
@@ -61,16 +62,30 @@
                      <@spring.showErrors "<br>"/>
                 </div>
 
+                <@spring.bind "signup.enrollingIds" />
+                <#if upcomingSubjects?size == 1>
+                         <input class="form-check-input"  name="${spring.status.expression}" type="hidden" value="${upcomingSubjects[0].getId()}" id="subjects">
+                <#else>
                 <div class="form-group  enrolling-input">
                     <h5><label class="form-check-label" for="defaultCheck2">Enrolling</label></h5>
-                     <@spring.bind "signup.enrollingIds" />
-                    <#list upcomingSubjects as upcomingSubject>
+                        <#list upcomingSubjects as upcomingSubject>
                         <div class="form-check">
                             <input class="form-check-input"  name="${spring.status.expression}" type="checkbox" value="${upcomingSubject.getId()}" id="subjects">
                             <label class="form-check-label" for="subjects">${upcomingSubject.getName()}</label>
                         </div>
-                    </#list>
-                     <@spring.showErrors "<br>"/>
+                        </#list>
+                        <@spring.showErrors "<br>"/>
+                </div>
+                </#if>
+
+                <div class="form-group">
+                     <@spring.bind "signup.teacherId" />
+                    <label for="teacher">Teacher</label>
+                    <select class="form-control" id="teacher" name="${spring.status.expression}">
+                        <#list teachers as teacher>
+                            <option value="${teacher.getId()}">${teacher.getName()}</option>
+                        </#list>
+                    </select>
                 </div>
 
                 <div class="form-group">
@@ -96,8 +111,7 @@
                     <div id="examsCurriculumOther" style="display: none"> <label for="examsCurriculumOtherInput">If Other:</label><input id="examsCurriculumOtherInput" type="text" class="form-control" name="${spring.status.expression}" /></div>
                 </div>
 
-
-
+                <#if isPerCourseReferral>
                 <div class="form-group referee-col">
                     <h5><label class="form-check-label">Referees</label></h5>
                     <div class="referee-rows">
@@ -129,6 +143,14 @@
                         </button>
                     </a>
                 </div>
+                <#else>
+                  <div class="form-group">
+                     <@spring.bind "signup.referral" />
+                       <label for="referral">Referred By/ How did you know about us</label>
+                        <input class="form-control" name="${spring.status.expression}" type="text"
+                               aria-describedby="nameHelp" placeholder="Referred By/ How did you know about us">
+                  </div>
+                </#if>
 
                 <div class="form-group guardian-col">
                     <label class="form-check-label">Guardian Information</label>
@@ -193,6 +215,17 @@
                         </div>
                     </div>
                 </script>
+
+                 <@spring.bind "signup.version" />
+                <div class="form-group">
+                    <label for="version">Version</label>
+                    <select class="form-control" id="version" name="${spring.status.expression}">
+                        <option value="0">English</option>
+                        <option value="1">Bengali</option>
+                    </select>
+                     <@spring.showErrors "<br>"/>
+                </div>
+
 
                 <script id="template-referee-list-item" type="text/template">
                     <div class="form-row referee-row">
