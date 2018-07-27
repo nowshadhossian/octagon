@@ -1,5 +1,6 @@
 package com.kids.crm.controller;
 
+import com.kids.crm.model.BatchStatusType;
 import com.kids.crm.model.Student;
 import com.kids.crm.model.StudentBatch;
 import com.kids.crm.repository.StudentAnswerRepository;
@@ -9,6 +10,7 @@ import com.kids.crm.repository.TeacherRepository;
 import com.kids.crm.service.BatchService;
 import com.kids.crm.service.TeacherService;
 import com.kids.crm.service.UserSession;
+import com.kids.crm.service.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -55,21 +57,20 @@ public class TeacherStudentsController {
     public String getAddStudentsPage(ModelMap modelMap){
         userSession.setCurrentBatch(batchService.reFetch(userSession.getCurrentBatch()));
 
-        List<Student> students = studentRepository.findAll();
-        students.removeAll(userSession.getCurrentBatch().getStudents());
+/*        List<Student> students = userSession.getCurrentBatch().getStudents();
+      //  students.removeAll(userSession.getCurrentBatch().getStudents());*/
 
-        modelMap.addAttribute("students", students);
+        modelMap.addAttribute("studentBatches",  userSession.getCurrentBatch().getStudentBatches());
         modelMap.addAttribute("batch", userSession.getCurrentBatch());
         return "/teacher/all-students";
     }
 
     @RequestMapping(value = ADD_STUDENTS, method = RequestMethod.POST)
     public String addStudentsPage(ModelMap modelMap, Student student){
+        StudentBatch studentBatch = studentBatchRepository.findByStudentAndBatch(student, userSession.getCurrentBatch()).stream().findFirst().orElseThrow(NotFoundException::new);
+        studentBatch.setBatchStatusType(BatchStatusType.ACTIVE);
 
-        studentBatchRepository.save(StudentBatch.builder()
-                .student(student)
-                .batch(userSession.getCurrentBatch())
-                .build());
+        studentBatchRepository.save(studentBatch);
 
         return "redirect:" + ADD_STUDENTS;
     }

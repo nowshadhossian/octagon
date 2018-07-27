@@ -3,6 +3,7 @@ package com.kids.crm.config;
 import com.kids.crm.interceptor.GlobalVariablesInterceptor;
 import com.kids.crm.interceptor.QuestionApiInterceptor;
 import com.kids.crm.service.converter.IdToBatchConverter;
+import com.kids.crm.service.converter.IdToStudentBatchConverter;
 import com.kids.crm.service.converter.IdToStudentConverter;
 import com.kids.crm.service.converter.IdToSubjectConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,5 +76,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Bean
     public IdToSubjectConverter getIdToSubjectConverter(){
         return new IdToSubjectConverter();
+    }
+
+    @Bean
+    public IdToStudentBatchConverter getIdToStudentBatchConverter(){
+        return new IdToStudentBatchConverter();
     }
 }

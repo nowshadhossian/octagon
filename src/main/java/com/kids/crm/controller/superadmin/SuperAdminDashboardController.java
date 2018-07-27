@@ -60,6 +60,7 @@ public class SuperAdminDashboardController {
         if (subjectRepository.findByName("Medical") == null) {
             Subject subject = Subject.builder()
                     .name("Medical")
+                    .code("3333")
                     .build();
             subjectRepository.save(subject);
         }

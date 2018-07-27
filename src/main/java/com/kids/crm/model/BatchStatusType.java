@@ -12,4 +12,8 @@ public enum BatchStatusType {
     ACTIVE(2);
 
     private int id;
+
+    public boolean isPending(){
+        return this == PENDING;
+    }
 }

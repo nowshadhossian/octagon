@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="studentBatches" type="java.util.List<com.kids.crm.model.StudentBatch>" -->
 <#-- @ftlvariable name="students" type="java.util.List<com.kids.crm.model.Student>" -->
 <#-- @ftlvariable name="students" type="java.util.List<com.kids.crm.model.Student>" -->
 <#-- @ftlvariable name="myStudents" type="java.util.List<com.kids.crm.model.Student>" -->
@@ -22,22 +23,27 @@
                         <th>Name</th>
                         <th>Phone</th>
                         <th>Email</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                        <#list students as student>
-                        <tr <#if student.getBatches()?size == 0> class="table-info" </#if>>
-                            <td>${student?counter}</td>
+                        <#list studentBatches as studentBatch>
+                        <#assign student = studentBatch.getStudent()>
+                        <tr>
+                            <td>${studentBatch?counter}</td>
                             <td>${student.getName()}</td>
                             <td>${student.getPhone()!""}</td>
                             <td>${student.getUsername()}</td>
+                            <td>${studentBatch.getBatchStatusType()}</td>
                             <td>
-                                <form action="/teacher/students/add" method="POST">
-                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                    <input type="hidden" name="student" value=${student.getId()}>
-                                    <button class="btn-primary">Add</button>
-                                </form>
+                                <#if studentBatch.getBatchStatusType().isPending()>
+                                    <form action="/teacher/students/add" method="POST">
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                        <input type="hidden" name="student" value=${student.getId()}>
+                                        <button class="btn-primary">Approve</button>
+                                    </form>
+                                </#if>
                             </td>
                         </tr>
                         </#list>

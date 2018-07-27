@@ -130,6 +130,7 @@ public class RegistrationController {
             StudentBatch studentBatch = StudentBatch.builder()
                     .student(studentSaved)
                     .batch(batchService.findBySessionIdAndSubjectIdAndTeacherId(signup.getInterestSessionId(), signup.getEnrollingIds()[i], signup.getTeacherId()).orElseThrow(BatchNotFoundException::new))
+                    .batchStatusType(BatchStatusType.PENDING)
                     .build();
             studentBatchRepository.save(studentBatch);
         }
