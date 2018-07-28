@@ -32,6 +32,10 @@ public class StudentService {
         return repository.findByName(name).stream().findFirst().orElse(new Student());
     }*/
 
+   public Student findStudentById(long studentId){
+       return repository.findStudentById(studentId);
+   }
+
     public List<Student> findAllStudent() {
         return repository.findAll();
     }
@@ -81,5 +85,16 @@ public class StudentService {
 
     public Optional<LastAttendedResult> singleDayAttendedResults(User user, Batch batch, Date from, Date to){
         return lastAttendedResults(user, from, to, batch).stream().findFirst();
+    }
+
+    public List<StudentAnswer> getStudentAnswer(User user){
+       List<StudentAnswer> studentAnswers = studentAnswerRepository.findByUser(user);
+        for (StudentAnswer s: studentAnswers
+             ) {
+
+                System.out.println(s.getId()+": "+s.isGotCorrect());
+
+        }
+       return studentAnswers;
     }
 }
