@@ -15,5 +15,7 @@ public interface StudentAnswerRepository extends JpaRepository<StudentAnswer, Lo
     List<StudentAnswer> findByUserAndAttendedOnBetweenAndBatchAndExamType(User user, Date from, Date to, Batch batch, ExamType dailyExam);
     List<StudentAnswer> findByUser(User user);
 
+    List<StudentAnswer> findStudentAnswerByUserIdAndBatchId(long userId,long batchId);
+    List<StudentAnswer> findStudentAnswerByUserIdAndBatchIdAndQuestionSubjectId(long userId, long batcId, long subjectId);
     void removeByUserIdAndBatchId(long userId, long batchId);
 }

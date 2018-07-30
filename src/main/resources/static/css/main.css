@@ -1,3 +1,8 @@
+.btn-dark-light{color:#fff;background-color:#74797b;border-color:#74797b}
+.btn-dark-light:hover{color:#fff;background-color:#23272b;border-color:#1d2124}
+.btn-dark-light.focus,.btn-dark-light:focus{box-shadow:0 0 0 .2rem rgba(52,58,64,.5)}
+.btn-dark-light.disabled,.btn-dark-light:disabled{background-color:#343a40;border-color:#343a40}
+
 @media (min-width: 768px) {
     .float-right-md{
         float: right;

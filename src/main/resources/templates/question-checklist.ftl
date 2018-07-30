@@ -7,7 +7,17 @@
     <div class="row">
         <div class="col-sm-2">
         </div>
-        <div class="col-sm-7">
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="col-12">
+                    <div class="filter-menu">
+                        <a class="filter-item btn <#if selectedFilter?? && selectedFilter=="All">btn-dark<#else>btn-dark-light</#if>" href="/student/dashboard/question-checklist/?_subject=All">All</a>
+                        <#list subjects as subject>
+                            <a class="filter-item btn <#if selectedFilter?? && selectedFilter==subject.name>btn-dark<#else>btn-dark-light</#if>" href="/student/dashboard/question-checklist/?_subject=${subject.name}">${subject.name}</a>
+                        </#list>
+                    </div>
+                </div>
+            </div>
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fa fa-table"></i>
@@ -32,19 +42,19 @@
                                     </div>
                                 </#if>
                             </#list>
-                            <#list 2018..(.now?string('yyyy')?number) as yr>
+                            <#list 2004..(.now?string('yyyy')?number) as yr>
                                 <div class="box box-year">${yr}</div>
                                 <#assign index=0>
                                 <#list 1..100 as i>
-                                    <#if studentAnswers[index]?? && i==studentAnswers[index].id>
+                                    <#if studentAnswers[index]?? && yr==studentAnswers[index].question.year && i==studentAnswers[index].question.questionNo>
                                         <#if studentAnswers[index].gotCorrect==true>
-                                            <div class="box correct-answer"></div>
+                                            <div class="box correct-answer"><a href="#"></a></div>
                                         <#else >
-                                            <div class="box wrong-answer"></div>
+                                            <div class="box wrong-answer"><a href="#"></a></div>
                                         </#if>
                                         <#assign index=index+1>
                                     <#else>
-                                        <div class="box"></div>
+                                        <div class="box"><a href="#"></a></div>
                                     </#if>
 
                                 </#list>
@@ -54,7 +64,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-2">
 
         </div>
     </div>
@@ -64,7 +74,6 @@
     .wrapper {
         display: grid;
         grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto;
-        /*gird-template-rows: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto  auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto  auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto;*/
         grid-gap: 5px;
         background-color: #fff;
         color: #444;
@@ -82,6 +91,7 @@
     }
     .header-year{
         border: none;
+        background-color: none;
     }
     .box-question-No-1{
         color: black;
@@ -97,6 +107,26 @@
     .wrong-answer{
         background-color: red;
     }
-</style>
+    .filter-menu{
+        margin-bottom: 10px;
+        margin-left: 2px;
+    }
 
+    @media (min-width: 768px){
+        .filter-menu{
+            float: right;
+            margin-bottom: 10px;
+            margin-right: 2px;
+        }
+    }
+</style>
+<script>
+    // $(function () {
+    //     $(".filter-item").click(function () {
+    //         $(".filter-item").removeClass("btn-dark");
+    //         $(".filter-item").removeClass("btn-dark-light");
+    //         this.addClass("btn-dark");
+    //     })
+    // });
+</script>
 <#include "/layout/nav/bottom.ftl">

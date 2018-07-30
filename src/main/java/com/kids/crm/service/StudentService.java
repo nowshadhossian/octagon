@@ -4,6 +4,7 @@ import com.kids.crm.model.*;
 import com.kids.crm.pojo.LastAttendedResult;
 import com.kids.crm.repository.StudentAnswerRepository;
 import com.kids.crm.repository.StudentRepository;
+import com.kids.crm.repository.SubjectRepository;
 import com.kids.crm.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,9 @@ import java.util.*;
 public class StudentService {
     private StudentRepository repository;
     private StudentAnswerRepository studentAnswerRepository;
+
+    @Autowired
+    private SubjectRepository subjectRepository;
 
     @Autowired
     public StudentService(StudentRepository repository, StudentAnswerRepository studentAnswerRepository) {
@@ -89,12 +93,36 @@ public class StudentService {
 
     public List<StudentAnswer> getStudentAnswer(User user){
        List<StudentAnswer> studentAnswers = studentAnswerRepository.findByUser(user);
-        for (StudentAnswer s: studentAnswers
-             ) {
+       studentAnswers.sort((s1,s2)->(s1.getQuestion().getQuestionNo()-s2.getQuestion().getQuestionNo()));
 
-                System.out.println(s.getId()+": "+s.isGotCorrect());
-
-        }
        return studentAnswers;
+    }
+
+    public List<StudentAnswer> getStudentAnswerByUserIdAndBatchId(long userId, long batchId){
+       List<StudentAnswer> studentAnswers = studentAnswerRepository.findStudentAnswerByUserIdAndBatchId(userId, batchId);
+        sortStudentAnswers(studentAnswers);
+        return studentAnswers;
+    }
+
+    public List<StudentAnswer> getStudentAnswerByUserIdAndBatchIdAndSubject(long userId, long batchId, String subjectName){
+       Subject subject = subjectRepository.findByName(subjectName);
+       if(subject==null){
+           // need to throw exception for subject not found in future.
+       }
+       List<StudentAnswer> studentAnswers = studentAnswerRepository.findStudentAnswerByUserIdAndBatchIdAndQuestionSubjectId(userId,batchId,subject.getId());
+        sortStudentAnswers(studentAnswers);
+
+        return studentAnswers;
+    }
+
+    private void sortStudentAnswers(List<StudentAnswer> studentAnswers) {
+        studentAnswers.sort((s1,s2)->{
+            int ans =  s1.getQuestion().getQuestionNo()-s2.getQuestion().getQuestionNo();
+            if(ans==0){
+                return s1.getQuestion().getYear()-s2.getQuestion().getYear();
+            } else {
+                return ans;
+            }
+        });
     }
 }
