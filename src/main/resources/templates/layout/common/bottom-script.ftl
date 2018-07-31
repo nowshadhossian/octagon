@@ -6,3 +6,4 @@
 <script src="/js/sb-admin.min.js"></script>
 <!-- Include Date Range Picker -->
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>

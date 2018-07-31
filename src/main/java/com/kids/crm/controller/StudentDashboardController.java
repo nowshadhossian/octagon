@@ -24,7 +24,7 @@ import java.util.List;
 
 @Controller
 public class StudentDashboardController {
-    private static final String BASE_ROUTE = "/student/dashboard";
+    public static final String BASE_ROUTE = "/student/dashboard";
 
     @Autowired
     StudentAnswerRepository studentAnswerRepository;
