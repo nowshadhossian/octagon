@@ -9,11 +9,14 @@ import java.util.Arrays;
 @Getter
 public enum FlagMessageType {
 
-    ANSWER_NOT_HERE(1),
-    QUESTION_IS_WRONG(2),
-    OTHER(9);
+    ANSWER_NOT_HERE(1, "The correct answer is not in the options"),
+    QUESTION_IS_WRONG(2, "There is a mistake in the question"),
+    ANSWER_NOT_ACTUAL(3, "The given correct answer is not the actual correct one"),
+    QUESTION_NOT_RELEVANT(4, "This question is not relevant to my course syllabus"),
+    OTHER(9, "Other");
 
     private int id;
+    private String message;
 
     public static FlagMessageType getById(int flagId) {
         return Arrays.stream(FlagMessageType.values())
