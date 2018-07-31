@@ -35,3 +35,8 @@ Go to godaddy and enter nameservers of digitalocean ns2.digitalocean.com
 
 Then, go to digital ocean and add nameserver hostname medprepbd.com value/directsTo ns2.digitalocean.com.
 Enter A record. hostname: medprepbd.com IP: digital ocean server IP
+
+
+**5. Port**
+Mastermcq running at port 8793 and react at 3000
+medprepbd running at port 8794 and react at 3001
