@@ -1,5 +1,6 @@
 package com.kids.crm.service;
 
+import com.kids.crm.config.Config;
 import com.kids.crm.model.*;
 import com.kids.crm.repository.GuardianRepository;
 import com.kids.crm.repository.StudentAnswerRepository;
@@ -35,6 +36,10 @@ public class MailSender {
     StudentRepository studentRepository;
     @Autowired
     GuardianRepository guardianRepository;
+    @Autowired
+    private VerifyEmailService verifyEmailService;
+    @Autowired
+    private Config config;
 
     @Value("${mail.from.email}")
     private String from;
@@ -139,5 +144,15 @@ public class MailSender {
         String body = getTemplate(params,template);
         send(mailSubject,body,user.getEmail());
 
+    }
+
+    public void sendEmailToVerifyEmail(Student student) {
+        Map<String, String> params = new HashMap<>();
+        String mailSubject = "Reset Password";
+        params.put("name", student.getName());
+        params.put("verifyUrl", verifyEmailService.generateVerifyEmailUrl(student));
+        params.put("application", config.getCompanyName());
+        String body = getTemplate(params, "VerifyEmailTemplate.html");
+        send(mailSubject, body, student.getEmail());
     }
 }

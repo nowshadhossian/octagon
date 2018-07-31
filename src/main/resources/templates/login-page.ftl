@@ -3,7 +3,7 @@
 
 <#if (SPRING_SECURITY_LAST_EXCEPTION)??>
   <div class="alert alert-danger alert-dismissible fade show" role="alert">
-      Invalid Username or Password
+      ${SPRING_SECURITY_LAST_EXCEPTION.message}
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
       </button>

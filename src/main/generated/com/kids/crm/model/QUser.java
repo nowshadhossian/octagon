@@ -21,6 +21,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath email = createString("email");
 
+    public final BooleanPath enabled = createBoolean("enabled");
+
     public final StringPath firstName = createString("firstName");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);

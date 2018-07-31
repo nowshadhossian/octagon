@@ -52,6 +52,7 @@ public class AssistantController {
         assistant.setRole(Role.ASSISTANT);
         assistant.setEmail(form.getEmail());
         assistant.setLastName(form.getLastName());
+        assistant.setEnabled(true);
 
         userRepository.save(assistant);
 

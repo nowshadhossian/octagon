@@ -27,6 +27,9 @@ public class QAssistant extends EntityPathBase<Assistant> {
     public final StringPath email = _super.email;
 
     //inherited
+    public final BooleanPath enabled = _super.enabled;
+
+    //inherited
     public final StringPath firstName = _super.firstName;
 
     //inherited

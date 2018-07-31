@@ -65,7 +65,7 @@ public class SuperAdminDashboardController {
             subjectRepository.save(subject);
         }
 
-        if(!userRepository.findByEmail("us@medeprepbd.com").isPresent()){
+       /* if(!userRepository.findByEmail("us@medeprepbd.com").isPresent()){ //TODO ask client if they need this
             User theCompany = Teacher.builder()
                     .address("Uttara")
                     .degree("BS Medical")
@@ -75,10 +75,11 @@ public class SuperAdminDashboardController {
             theCompany.setPassword(passwordEncoder.encode("Tha3UIadf$h@$g5%f1"));
             theCompany.setRole(Role.TEACHER);
             theCompany.setEmail("us@medeprepbd.com");
+            theCompany.setEnabled(true);
             theCompany.setLastName("");
 
             userRepository.save(theCompany);
-        }
+        }*/
 
         return "super/danger-zone";
     }

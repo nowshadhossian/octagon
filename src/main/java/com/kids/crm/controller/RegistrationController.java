@@ -4,6 +4,7 @@ import com.kids.crm.config.Config;
 import com.kids.crm.model.*;
 import com.kids.crm.repository.*;
 import com.kids.crm.service.BatchService;
+import com.kids.crm.service.MailSender;
 import com.kids.crm.service.StudentService;
 import com.kids.crm.service.TeacherService;
 import com.kids.crm.service.exception.BatchNotFoundException;
@@ -42,11 +43,12 @@ public class RegistrationController {
     private final Config config;
     private final TeacherService teacherService;
     private final StudentBatchRepository studentBatchRepository;
+    private final MailSender mailSender;
 
     public static final DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 
     @Autowired
-    public RegistrationController(StudentService studentService, SignupValidator validator, BatchService batchService, PasswordEncoder passwordEncoder, GuardianRepository guardianRepository, StudentBatchInterestRepository studentBatchInterestRepository, SubjectRepository subjectRepository, StudentRefereeRepository studentRefereeRepository, Config config, TeacherService teacherService, StudentBatchRepository studentBatchRepository) {
+    public RegistrationController(StudentService studentService, SignupValidator validator, BatchService batchService, PasswordEncoder passwordEncoder, GuardianRepository guardianRepository, StudentBatchInterestRepository studentBatchInterestRepository, SubjectRepository subjectRepository, StudentRefereeRepository studentRefereeRepository, Config config, TeacherService teacherService, StudentBatchRepository studentBatchRepository, MailSender mailSender) {
         this.studentService = studentService;
         this.validator = validator;
         this.batchService = batchService;
@@ -58,6 +60,7 @@ public class RegistrationController {
         this.config = config;
         this.teacherService = teacherService;
         this.studentBatchRepository = studentBatchRepository;
+        this.mailSender = mailSender;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -123,7 +126,7 @@ public class RegistrationController {
 
             StudentBatchInterest studentBatchInterest = StudentBatchInterest.builder()
                     .student(studentSaved)
-                    .batch(batchService.findBySessionIdAndSubjecId(signup.getInterestSessionId(), signup.getEnrollingIds()[i]))
+                    .batch(batchService.findBySessionIdAndSubjectId(signup.getInterestSessionId(), signup.getEnrollingIds()[i]).stream().findAny().orElseThrow(RuntimeException::new))
                     .build();
             studentBatchInterestRepository.save(studentBatchInterest);
 
@@ -146,6 +149,7 @@ public class RegistrationController {
             }
         }
 
+        mailSender.sendEmailToVerifyEmail(studentSaved);
 
         redirectAttributes.addFlashAttribute("successMsg", "Account created Successfully. Please contact your teacher for enrolment.");
         return "redirect:/login";

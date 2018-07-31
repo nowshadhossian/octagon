@@ -32,6 +32,9 @@ public class QTeacher extends EntityPathBase<Teacher> {
     public final StringPath email = _super.email;
 
     //inherited
+    public final BooleanPath enabled = _super.enabled;
+
+    //inherited
     public final StringPath firstName = _super.firstName;
 
     //inherited

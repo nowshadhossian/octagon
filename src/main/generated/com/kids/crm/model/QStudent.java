@@ -29,6 +29,9 @@ public class QStudent extends EntityPathBase<Student> {
     //inherited
     public final StringPath email = _super.email;
 
+    //inherited
+    public final BooleanPath enabled = _super.enabled;
+
     public final StringPath examsCurriculum = createString("examsCurriculum");
 
     //inherited

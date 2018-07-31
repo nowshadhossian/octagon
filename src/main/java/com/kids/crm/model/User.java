@@ -27,6 +27,7 @@ public class User implements UserDetails{
     private String email;
     private String password;
     private Role role;
+    private boolean enabled;
 
     public String getName(){
         return firstName.concat(" ").concat(lastName);
@@ -59,11 +60,6 @@ public class User implements UserDetails{
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
         return true;
     }
 }

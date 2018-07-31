@@ -31,7 +31,7 @@ public class BatchService {
         batchRepository.save(batch);
     }
 
-    public Batch findBySessionIdAndSubjecId(long sessionId, long subjectId){
+    public List<Batch> findBySessionIdAndSubjectId(long sessionId, long subjectId){
         return batchRepository.findBySubjectIdAndSessionId(subjectId, sessionId);
     }
 
