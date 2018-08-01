@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class QuestionService {
@@ -56,8 +57,7 @@ public class QuestionService {
         return questionRepository.findQuestionsByYear(year);
     }
     public String generateQuestionName(Question question,String ext) {
-        String name = question.getSession().getYear()+question.getSession().getId().toString()+question.getSubject().getId().toString()+question.getQuestionNo()+"."+ext;
-        return name;
+        return question.getSession().getYear() + "-" + question.getSession().getId().toString() + "-" + question.getSubject().getId().toString() + "-" + question.getQuestionNo() + UUID.randomUUID() + "." + ext;
     }
 
 }
