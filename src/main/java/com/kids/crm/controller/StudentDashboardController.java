@@ -3,13 +3,11 @@ package com.kids.crm.controller;
 import com.kids.crm.controller.webcomponent.LeaderboardComponent;
 
 import com.kids.crm.model.StudentAnswer;
-import com.kids.crm.model.Subject;
+import com.kids.crm.model.Topic;
 import com.kids.crm.model.User;
 import com.kids.crm.repository.StudentAnswerRepository;
-
 import com.kids.crm.service.StudentService;
-
-import com.kids.crm.service.SubjectService;
+import com.kids.crm.service.TopicService;
 import com.kids.crm.service.UserSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -39,7 +37,7 @@ public class StudentDashboardController {
     LeaderboardComponent leaderboardComponent;
 
     @Autowired
-    SubjectService subjectService;
+    TopicService topicService;
 
     @RequestMapping(value = BASE_ROUTE, method = RequestMethod.GET)
     private String getStudentDashboard(Authentication authentication, ModelMap modelMap) {
@@ -55,21 +53,21 @@ public class StudentDashboardController {
     }
 
     @GetMapping(BASE_ROUTE+"/question-checklist")
-    public String showQuestionCheckList(ModelMap modelMap, @RequestParam (value ="_subject",required = false) String subjectParam){
+    public String showQuestionCheckList(ModelMap modelMap, @RequestParam (value ="_topic",required = false) String topicParam){
         User loggedInUser = userSession.getLoggedInUser();
         List<StudentAnswer> studentAnswers;
-        if (subjectParam==null || subjectParam.equalsIgnoreCase("all")){
+        if (topicParam==null || topicParam.equalsIgnoreCase("all")){
             studentAnswers = studentService.getStudentAnswerByUserIdAndBatchId(loggedInUser.getId(),userSession.getCurrentBatch().getId());
         } else{
-            studentAnswers = studentService.getStudentAnswerByUserIdAndBatchIdAndSubject(loggedInUser.getId(),userSession.getCurrentBatch().getId(),subjectParam);
+            studentAnswers = studentService.getStudentAnswerByUserIdAndBatchIdAndTopicId(loggedInUser.getId(),userSession.getCurrentBatch().getId(),Long.parseLong(topicParam));
         }
-        if (subjectParam!=null){
-            modelMap.addAttribute("selectedFilter",subjectParam);
+        if (topicParam!=null){
+            modelMap.addAttribute("selectedFilter",topicParam);
         }
         modelMap.addAttribute("studentAnswers",studentAnswers);
 
-        List<Subject> subjects = subjectService.getSubjects();
-        modelMap.addAttribute("subjects",subjects);
+        List<Topic> topics = topicService.getAllTopic();
+        modelMap.addAttribute("topics",topics);
 
         return "question-checklist";
     }

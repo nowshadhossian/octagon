@@ -11,9 +11,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="filter-menu">
-                        <a class="filter-item btn <#if selectedFilter?? && selectedFilter=="All">btn-dark<#else>btn-dark-light</#if>" href="/student/dashboard/question-checklist/?_subject=All">All</a>
-                        <#list subjects as subject>
-                            <a class="filter-item btn <#if selectedFilter?? && selectedFilter==subject.name>btn-dark<#else>btn-dark-light</#if>" href="/student/dashboard/question-checklist/?_subject=${subject.name}">${subject.name}</a>
+                        <a class="filter-item btn <#if selectedFilter?? && selectedFilter=="All">btn-dark<#else>btn-dark-light</#if>" href="/student/dashboard/question-checklist/?_topic=All">All</a>
+                        <#list topics as topic>
+                            <a class="filter-item btn <#if selectedFilter?? && selectedFilter==topic.id>btn-dark<#else>btn-dark-light</#if>" href="/student/dashboard/question-checklist/?_topic=${topic.id}">${topic.name}</a>
                         </#list>
                     </div>
                 </div>
@@ -42,9 +42,9 @@
                                     </div>
                                 </#if>
                             </#list>
+                            <#assign index=0>
                             <#list 2004..(.now?string('yyyy')?number) as yr>
                                 <div class="box box-year">${yr}</div>
-                                <#assign index=0>
                                 <#list 1..100 as i>
                                     <#if studentAnswers[index]?? && yr==studentAnswers[index].question.year && i==studentAnswers[index].question.questionNo>
                                         <#if studentAnswers[index].gotCorrect==true>

@@ -179,19 +179,14 @@ public class StudentService {
 
     public List<StudentAnswer> getStudentAnswerByUserIdAndBatchId(long userId, long batchId){
        List<StudentAnswer> studentAnswers = studentAnswerRepository.findStudentAnswerByUserIdAndBatchId(userId, batchId);
-        sortStudentAnswers(studentAnswers);
-        return studentAnswers;
+       sortStudentAnswers(studentAnswers);
+       return studentAnswers;
     }
 
-    public List<StudentAnswer> getStudentAnswerByUserIdAndBatchIdAndSubject(long userId, long batchId, String subjectName){
-       Subject subject = subjectRepository.findByName(subjectName);
-       if(subject==null){
-           // need to throw exception for subject not found in future.
-       }
-       List<StudentAnswer> studentAnswers = studentAnswerRepository.findStudentAnswerByUserIdAndBatchIdAndQuestionSubjectId(userId,batchId,subject.getId());
-        sortStudentAnswers(studentAnswers);
-
-        return studentAnswers;
+    public List<StudentAnswer> getStudentAnswerByUserIdAndBatchIdAndTopicId(long userId, long batchId, long topicId){
+       List<StudentAnswer> studentAnswers = studentAnswerRepository.findStudentAnswerByUserIdAndBatchIdAndQuestionTopicId(userId,batchId,topicId);
+       sortStudentAnswers(studentAnswers);
+       return studentAnswers;
     }
 
     private void sortStudentAnswers(List<StudentAnswer> studentAnswers) {
