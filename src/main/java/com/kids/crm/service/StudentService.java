@@ -191,9 +191,9 @@ public class StudentService {
 
     private void sortStudentAnswers(List<StudentAnswer> studentAnswers) {
         studentAnswers.sort((s1,s2)->{
-            int ans =  s1.getQuestion().getQuestionNo()-s2.getQuestion().getQuestionNo();
+            int ans =  s1.getQuestion().getYear()-s2.getQuestion().getYear();
             if(ans==0){
-                return s1.getQuestion().getYear()-s2.getQuestion().getYear();
+                return s1.getQuestion().getQuestionNo()-s2.getQuestion().getQuestionNo();
             } else {
                 return ans;
             }

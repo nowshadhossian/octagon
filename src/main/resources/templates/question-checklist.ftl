@@ -13,7 +13,7 @@
                     <div class="filter-menu">
                         <a class="filter-item btn <#if selectedFilter?? && selectedFilter=="All">btn-dark<#else>btn-dark-light</#if>" href="/student/dashboard/question-checklist/?_topic=All">All</a>
                         <#list topics as topic>
-                            <a class="filter-item btn <#if selectedFilter?? && selectedFilter==topic.id>btn-dark<#else>btn-dark-light</#if>" href="/student/dashboard/question-checklist/?_topic=${topic.id}">${topic.name}</a>
+                            <a class="filter-item btn <#if selectedFilter?? && selectedFilter==topic.id?c>btn-dark<#else>btn-dark-light</#if>" href="/student/dashboard/question-checklist/?_topic=${topic.id}">${topic.name}</a>
                         </#list>
                     </div>
                 </div>

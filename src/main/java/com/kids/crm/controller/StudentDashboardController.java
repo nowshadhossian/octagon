@@ -61,9 +61,8 @@ public class StudentDashboardController {
         } else{
             studentAnswers = studentService.getStudentAnswerByUserIdAndBatchIdAndTopicId(loggedInUser.getId(),userSession.getCurrentBatch().getId(),Long.parseLong(topicParam));
         }
-        if (topicParam!=null){
-            modelMap.addAttribute("selectedFilter",topicParam);
-        }
+        modelMap.addAttribute("selectedFilter",topicParam);
+
         modelMap.addAttribute("studentAnswers",studentAnswers);
 
         List<Topic> topics = topicService.getAllTopic();
