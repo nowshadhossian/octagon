@@ -98,6 +98,10 @@ dependencies {
 	compile 'com.auth0:java-jwt:3.3.0'
 	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
 	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+
+	// https://mvnrepository.com/artifact/commons-validator/commons-validator
+	compile group: 'commons-validator', name: 'commons-validator', version: '1.6'
+
 // https://mvnrepository.com/artifact/org.jasypt/jasypt
 	compile group: 'org.jasypt', name: 'jasypt', version: '1.9.2'
 

@@ -146,13 +146,13 @@ public class MailSender {
 
     }
 
-    public void sendEmailToVerifyEmail(Student student) {
+    public void sendEmailToVerifyEmail(User user) {
         Map<String, String> params = new HashMap<>();
         String mailSubject = "Reset Password";
-        params.put("name", student.getName());
-        params.put("verifyUrl", verifyEmailService.generateVerifyEmailUrl(student));
+        params.put("name", user.getName());
+        params.put("verifyUrl", verifyEmailService.generateVerifyEmailUrl(user));
         params.put("application", config.getCompanyName());
         String body = getTemplate(params, "VerifyEmailTemplate.html");
-        send(mailSubject, body, student.getEmail());
+        send(mailSubject, body, user.getEmail());
     }
 }
