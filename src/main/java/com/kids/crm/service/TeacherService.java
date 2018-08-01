@@ -59,4 +59,8 @@ public class TeacherService {
     public List<Teacher> findAll(){
         return teacherRepository.findAll();
     }
+
+    public Optional<Teacher> findById(long teacherId) {
+        return teacherRepository.findById(teacherId);
+    }
 }

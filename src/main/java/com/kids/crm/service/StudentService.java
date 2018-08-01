@@ -2,29 +2,44 @@ package com.kids.crm.service;
 
 import com.kids.crm.model.*;
 import com.kids.crm.pojo.LastAttendedResult;
-import com.kids.crm.repository.StudentAnswerRepository;
-import com.kids.crm.repository.StudentRepository;
-import com.kids.crm.repository.SubjectRepository;
+import com.kids.crm.repository.*;
+import com.kids.crm.utils.Constants;
 import com.kids.crm.utils.DateUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.*;
 
-@Component
+@Service
 public class StudentService {
-    private StudentRepository repository;
-    private StudentAnswerRepository studentAnswerRepository;
+    private final StudentRepository repository;
+    private final StudentAnswerRepository studentAnswerRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final StudentBatchRepository studentBatchRepository;
+    private final SubjectRepository subjectRepository;
+    private final GuardianRepository guardianRepository;
+    private final MailSender mailSender;
+    private final StudentBatchInterestRepository studentBatchInterestRepository;
+    private final StudentRefereeRepository studentRefereeRepository;
+
+    @Autowired private BatchService batchService;
 
     @Autowired
-    private SubjectRepository subjectRepository;
-
-    @Autowired
-    public StudentService(StudentRepository repository, StudentAnswerRepository studentAnswerRepository) {
+    public StudentService(StudentRepository repository, StudentAnswerRepository studentAnswerRepository, PasswordEncoder passwordEncoder, StudentBatchRepository studentBatchRepository, SubjectRepository subjectRepository, GuardianRepository guardianRepository, MailSender mailSender, StudentBatchInterestRepository studentBatchInterestRepository, StudentRefereeRepository studentRefereeRepository) {
         this.repository = repository;
         this.studentAnswerRepository = studentAnswerRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.studentBatchRepository = studentBatchRepository;
+        this.subjectRepository = subjectRepository;
+        this.guardianRepository = guardianRepository;
+        this.mailSender = mailSender;
+        this.studentBatchInterestRepository = studentBatchInterestRepository;
+        this.studentRefereeRepository = studentRefereeRepository;
     }
 
     public Student save(Student student){
@@ -42,6 +57,70 @@ public class StudentService {
 
     public List<Student> findAllStudent() {
         return repository.findAll();
+    }
+
+
+    public User registerStudent(Signup signup) throws ParseException {
+           Student student = Student.builder()
+                   .address(signup.getAddress())
+                   .phone(signup.getPhoneNo())
+                   .dateOfBirth(Constants.df.parse(signup.getDateOfBirth()))
+                   .gender(signup.getGender())
+                   .school(signup.getSchool())
+                   .examsCurriculum(StringUtils.removeEnd(signup.getExamsCurriculum(), ","))
+                   .referral(signup.getReferral())
+                   .version(Version.getById(signup.getVersion()))
+                   .build();
+           student.setFirstName(signup.getFirstName());
+           student.setLastName(signup.getLastName());
+           student.setEmail(signup.getEmail());
+           student.setPassword(passwordEncoder.encode(signup.getPassword()));
+
+           Student studentSaved = save(student);
+
+           for (int i = 0; i < signup.getGuardianEmail().length; i++) {
+               Guardian guardian = Guardian.builder()
+                       .email(signup.getGuardianEmail()[i])
+                       .phone(signup.getGuardianContactNo()[i])
+                       .relation(signup.getGuardianRelation()[i])
+                       .name(signup.getGuardianName()[i])
+                       .student(studentSaved)
+                       .build();
+               guardianRepository.save(guardian);
+           }
+
+           for (int i = 0; i < signup.getEnrollingIds().length; i++) {
+               Batch batch = batchService.findOrCreateBySessionIdAndSubjectIdAndTeacherId(signup.getInterestSessionId(), signup.getEnrollingIds()[i], signup.getTeacherId());
+
+               StudentBatch studentBatch = StudentBatch.builder()
+                       .student(studentSaved)
+                       .batch(batch)
+                       .batchStatusType(BatchStatusType.PENDING)
+                       .build();
+               studentBatchRepository.save(studentBatch);
+
+               StudentBatchInterest studentBatchInterest = StudentBatchInterest.builder()
+                       .student(studentSaved)
+                       .batch(batch)
+                       .build();
+               studentBatchInterestRepository.save(studentBatchInterest);
+           }
+
+           if (signup.getRefereesName() != null) {
+               for (int i = 0; i < signup.getRefereesName().length; i++) {
+                   StudentReferee studentReferee = StudentReferee.builder()
+                           .refereeName(signup.getRefereesName()[i])
+                           .student(studentSaved)
+                           .subject(subjectRepository.findById(signup.getRefereesSubjectId()[i]).get())
+                           .build();
+                   studentRefereeRepository.save(studentReferee);
+               }
+           }
+
+           mailSender.sendEmailToVerifyEmail(studentSaved);
+
+
+        return studentSaved;
     }
 
     public List<LastAttendedResult> lastAttendedResults(User user, Date from, Date to, Batch batch){

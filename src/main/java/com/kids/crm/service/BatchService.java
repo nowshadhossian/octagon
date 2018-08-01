@@ -3,17 +3,24 @@ package com.kids.crm.service;
 import com.kids.crm.model.Batch;
 import com.kids.crm.repository.BatchRepository;
 import com.kids.crm.service.exception.BatchNotFoundException;
+import com.kids.crm.service.exception.NotFoundException;
+import com.kids.crm.service.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 public class BatchService {
-    private BatchRepository batchRepository;
+    private final BatchRepository batchRepository;
+
+    @Autowired private TeacherService teacherService;
+    @Autowired private SessionService sessionService;
+    @Autowired private SubjectService subjectService;
 
     @Autowired
     public BatchService(BatchRepository batchRepository) {
@@ -45,5 +52,27 @@ public class BatchService {
 
     public Optional<Batch> findBySessionIdAndSubjectIdAndTeacherId(long sessionId, long subjectId, long teacherId) {
         return batchRepository.findBySubjectIdAndSessionIdAndTeacherId(subjectId, sessionId, teacherId);
+    }
+
+    public Batch findOrCreateBySessionIdAndSubjectIdAndTeacherId(long sessionId, long subjectId, long teacherId) {
+        return findBySessionIdAndSubjectIdAndTeacherId(sessionId, subjectId, teacherId)
+                .orElseGet(() -> createBatch(sessionId, subjectId, teacherId));
+    }
+
+    private Batch createBatch(long sessionId, long subjectId, long teacherId) {
+        return batchRepository.save(Batch.builder()
+                .teacher(teacherService.findById(teacherId).orElseThrow(new UserNotFoundException(teacherId)))
+                .session(sessionService.getAllSessions().stream()
+                        .filter(session -> Objects.equals(session.getId(), sessionId))
+                        .findFirst()
+                        .orElseThrow(NotFoundException::new)
+                )
+                .subject(subjectService.getSubjects().stream()
+                        .filter(subject -> Objects.equals(subject.getId(), subjectId))
+                        .findFirst()
+                        .orElseThrow(NotFoundException::new)
+                )
+                .build());
+
     }
 }

@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Table
+@Table(uniqueConstraints={@UniqueConstraint(columnNames = {"subject_id" , "session_id", "teacher_id"})})
 @Entity(name = "batch")
 public class Batch{
     @Id
