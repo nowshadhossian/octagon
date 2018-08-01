@@ -30,7 +30,7 @@ public class GraphService {
 
     public List<GraphStudentResult> getGraphStudentResultList(User user) {
         List<GraphStudentResult> graphStudentResults = new ArrayList<>();
-        Date to = new Date();
+        Date to =  DateUtils.toDate(LocalDate.now().plusDays(1));
         Date from = DateUtils.oneMonthBack(to);
 
         List<StudentAnswer> studentAnswerList = studentAnswerRepository.findByUserAndAttendedOnBetween(user, from, to);
