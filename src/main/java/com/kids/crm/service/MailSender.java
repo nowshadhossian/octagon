@@ -148,7 +148,7 @@ public class MailSender {
 
     public void sendEmailToVerifyEmail(User user) {
         Map<String, String> params = new HashMap<>();
-        String mailSubject = "Reset Password";
+        String mailSubject = "Verify Email";
         params.put("name", user.getName());
         params.put("verifyUrl", verifyEmailService.generateVerifyEmailUrl(user));
         params.put("application", config.getCompanyName());

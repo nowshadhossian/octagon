@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -68,14 +69,12 @@ public class RegistrationController {
     }
 
     private void addToModelMap(Model model) {
-        List<Batch> upcomingBatches = batchService.getUpcomingBatches();
+        //List<Batch> upcomingBatches = batchService.getUpcomingBatches();
         LocalDate localDate = LocalDate.now();
         List<Session> upcomingSessions = sessionService.getAllSessions().stream()
                 .filter(session -> session.getYear() >= localDate.getYear())
                 .collect(Collectors.toList());
-        Set<Subject> upcomingSubjects = upcomingBatches.stream()
-                .map(Batch::getSubject)
-                .collect(Collectors.toSet());
+        Set<Subject> upcomingSubjects = new HashSet<>(subjectRepository.findAll());
         model.addAttribute("upcomingSessions", upcomingSessions);
         model.addAttribute("upcomingSubjects", upcomingSubjects);
         model.addAttribute("isPerCourseReferral", config.getStudent().isPerCourseReferral());
