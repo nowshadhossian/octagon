@@ -7,23 +7,23 @@ import com.kids.crm.repository.StudentAnswerRepository;
 import com.kids.crm.repository.StudentRepository;
 import com.kids.crm.repository.UserRepository;
 import com.kids.crm.utils.DateUtils;
+import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Component("HappyMail")
+@Log
 public class MailSender {
 
     @Autowired
@@ -64,13 +64,11 @@ public class MailSender {
     }
 
     private String loadTemplate(String templateId) throws IOException {
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("email-templates/" + templateId).getFile());
         String content = "";
         try {
-            content = new String(Files.readAllBytes(file.toPath()));
+            content = new String(new ClassPathResource("email-templates/".concat(templateId)).getInputStream().readAllBytes());
         } catch (IOException e) {
-            throw new IOException("Could not read template with ID = " + templateId);
+            throw new IOException("Could not read template with ID = " + templateId, e);
         }
         return content;
     }
@@ -80,6 +78,7 @@ public class MailSender {
         try {
             cTemplate = loadTemplate(templateName);
         } catch (IOException e) {
+            log.warning(e.getMessage());
         }
 
         if (cTemplate != null) {
