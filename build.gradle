@@ -30,7 +30,7 @@ apply plugin: 'io.spring.dependency-management'
 
 group = 'com.kids.crm'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 9
+sourceCompatibility = JavaVersion.VERSION_1_10
 
 repositories {
 	mavenCentral()
@@ -107,7 +107,7 @@ dependencies {
 
 /*	compileOnly('org.springframework.boot:spring-boot-configuration-processor')*/
 	// https://mvnrepository.com/artifact/org.projectlombok/lombok
-	compileOnly('org.projectlombok:lombok:1.16.20')
+	compileOnly('org.projectlombok:lombok:1.18.2')
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('io.projectreactor:reactor-test')
@@ -141,5 +141,5 @@ bootRun {
 }
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '4.4.1'
+	gradleVersion = '4.9'
 }
