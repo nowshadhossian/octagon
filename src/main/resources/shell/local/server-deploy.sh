@@ -2,7 +2,7 @@
 
 PROJECT_LOCATION="/Users/nowshad/programming/octagon/"
 LOCAL_PROJECT_POST_BUILD_LOCATION="/Users/nowshad/programming/octagon/build/libs"
-
+SSH_TO="admin@medprepbd.com"
 
 
 JAR_FILE_NAME="medprepbd.jar"
@@ -12,7 +12,7 @@ echo "Clean ups"
 echo "############################"
 
 echo "...[start] cleaning jar and serve at 8793,3000.."
-ssh root@mastermcq.com /bin/bash << EOF
+ssh ${SSH_TO} /bin/bash << EOF
     kill $(lsof -i :8794 -sTCP:LISTEN | awk 'FNR==2 {print $2}')
     #kill $(lsof -i :3001 -sTCP:LISTEN | awk 'FNR==2 {print $2}')
     rm ${JAR_FILE_NAME}
@@ -34,10 +34,10 @@ echo "..[complete] build jar file..."
 
 echo "...transfer jar file..."
 
-scp ${LOCAL_PROJECT_POST_BUILD_LOCATION}/${JAR_FILE_NAME} root@mastermcq.com:/root
+scp ${LOCAL_PROJECT_POST_BUILD_LOCATION}/${JAR_FILE_NAME} ${SSH_TO}:/home/admin
 
 echo "....[start] java jar...."
-ssh root@mastermcq.com "java -Xmx192m -jar $JAR_FILE_NAME &"
+ssh ${SSH_TO} "java -jar $JAR_FILE_NAME &"
 echo "....[Complete] java jar...."
 
 
