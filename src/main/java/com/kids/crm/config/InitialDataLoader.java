@@ -25,7 +25,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
             return;
         }
 
-        if (!userRepository.findByEmail("super@super.com").isPresent()){
+        if (userRepository.findByRole(Role.SUPER_ADMIN).size() == 0){
             User user = new User();
             user.setFirstName("Super");
             user.setLastName("Admin");
