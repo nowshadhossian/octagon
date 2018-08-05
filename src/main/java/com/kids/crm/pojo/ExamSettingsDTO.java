@@ -16,5 +16,6 @@ public class ExamSettingsDTO {
     private long topicId;
     private int year;
     private boolean showAnswersInTheEnd;
+    private int questionNo;//question.questionNo
 
 }

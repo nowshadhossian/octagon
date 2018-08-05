@@ -46,15 +46,16 @@
                             <#list 2004..(.now?string('yyyy')?number) as yr>
                                 <div class="box box-year">${yr}</div>
                                 <#list 1..100 as i>
+                                    <#assign examUrl = "/student/dashboard/question-checklist/start/answer/questionNo/${i}/year/${yr}"/>
                                     <#if studentAnswers[index]?? && yr==studentAnswers[index].question.year && i==studentAnswers[index].question.questionNo>
                                         <#if studentAnswers[index].gotCorrect==true>
-                                            <div class="box correct-answer"><a href="#"></a></div>
+                                            <a href="${examUrl!"#"}"><div class="box correct-answer"></div></a>
                                         <#else >
-                                            <div class="box wrong-answer"><a href="#"></a></div>
+                                            <a href="${examUrl!"#"}"><div class="box wrong-answer"></div></a>
                                         </#if>
                                         <#assign index=index+1>
                                     <#else>
-                                        <div class="box"><a href="#"></a></div>
+                                        <a href="${examUrl!"#"}"><div class="box"></div></a>
                                     </#if>
 
                                 </#list>
@@ -79,7 +80,7 @@
         color: #444;
     }
     .box {
-        padding:10px;
+        padding:13px;
         background-color: #dddfe2;
         border: 1px solid #212529;
         color: #fff;

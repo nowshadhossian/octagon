@@ -30,6 +30,9 @@ public class QuestionService {
         if (examSettingsDTO.getYear() > 0) {
             predicate = predicate.and(QQuestion.question.year.eq(examSettingsDTO.getYear()));
         }
+        if(examSettingsDTO.getQuestionNo() > 0){
+            predicate = predicate.and(QQuestion.question.questionNo.eq(examSettingsDTO.getQuestionNo()));
+        }
 
         if (predicate == null) {
             return questionRepository.findAll();

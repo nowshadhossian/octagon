@@ -12,10 +12,7 @@ import com.kids.crm.pojo.ExamSettingsDTO;
 import com.kids.crm.repository.QuestionRepository;
 import com.kids.crm.repository.StudentAnswerRepository;
 import com.kids.crm.repository.UserRepository;
-import com.kids.crm.service.Encryption;
-import com.kids.crm.service.JwtToken;
-import com.kids.crm.service.QuestionService;
-import com.kids.crm.service.QuestionStatService;
+import com.kids.crm.service.*;
 import com.kids.crm.service.exception.UserNotFoundException;
 import com.kids.crm.utils.Utils;
 import org.jasypt.exceptions.EncryptionOperationNotPossibleException;
@@ -45,9 +42,10 @@ public class RestApiController {
     private final Config config;
     private final QuestionStatService questionStatService;
     private final ThreadPoolTaskExecutor threadPoolTaskExecutor;
+    private final StudentAnswerService studentAnswerService;
 
     @Autowired
-    public RestApiController(QuestionRepository questionRepository, DataMapper mapper, JwtToken jwtToken, UserRepository userRepository, StudentAnswerRepository studentAnswerRepository, QuestionSolvingTimeRepository questionSolvingTimeRepository, RestApiManager restApiManager, QuestionService questionService, Config config, QuestionStatService questionStatService, ThreadPoolTaskExecutor threadPoolTaskExecutor) {
+    public RestApiController(QuestionRepository questionRepository, DataMapper mapper, JwtToken jwtToken, UserRepository userRepository, StudentAnswerRepository studentAnswerRepository, QuestionSolvingTimeRepository questionSolvingTimeRepository, RestApiManager restApiManager, QuestionService questionService, Config config, QuestionStatService questionStatService, ThreadPoolTaskExecutor threadPoolTaskExecutor, StudentAnswerService studentAnswerService) {
         this.questionRepository = questionRepository;
         this.mapper = mapper;
         this.jwtToken = jwtToken;
@@ -59,6 +57,7 @@ public class RestApiController {
         this.config = config;
         this.questionStatService = questionStatService;
         this.threadPoolTaskExecutor = threadPoolTaskExecutor;
+        this.studentAnswerService = studentAnswerService;
     }
 
    /* @RequestMapping(value = BASE_ROUTE + "/token/{encryptedUserId}", method = RequestMethod.GET)
@@ -90,16 +89,17 @@ public class RestApiController {
         return questionRepository.findById(questionId)
                 .map(question -> {
                     boolean answerIsCorrect = Utils.answerMatched(answer, question.getAnswer());
-                    StudentAnswer studentAnswer = StudentAnswer.builder()
-                            .answer(answer)
-                            .attendedOn(new Date())
-                            .question(question)
-                            .subject(question.getSubject())
-                            .batch(restApiManager.getCurrentBatch())
-                            .gotCorrect(answerIsCorrect)
-                            .user(restApiManager.getUser())
-                            .examType(ExamType.getByValue(restApiManager.getExamSettingsDTO().getExamTypeId()))
-                            .build();
+                    StudentAnswer studentAnswer = studentAnswerService.findByUserAndBatchAndQuestion(restApiManager.getUser(), restApiManager.getCurrentBatch(), question)
+                            .orElseGet(() -> StudentAnswer.builder()
+                                    .answer(answer)
+                                    .attendedOn(new Date())
+                                    .question(question)
+                                    .subject(question.getSubject())
+                                    .batch(restApiManager.getCurrentBatch())
+                                    .gotCorrect(answerIsCorrect)
+                                    .user(restApiManager.getUser())
+                                    .examType(ExamType.getByValue(restApiManager.getExamSettingsDTO().getExamTypeId()))
+                                    .build());
                     studentAnswerRepository.save(studentAnswer);
 
                     threadPoolTaskExecutor.execute(() -> {
@@ -182,7 +182,7 @@ public class RestApiController {
 
         Iterable<Question> questions = questionService.findQuestionsByExamSettings(subjectId, examSettingsDTO);
         List<Long> unAnsweredQuestions = StreamSupport.stream(questions.spliterator(), false)
-                .filter(question -> !studentAnswers.contains(question.getId()))
+                .filter(question -> examSettingsDTO.getQuestionNo() > 0 || !studentAnswers.contains(question.getId()))//if questionNo is included add it to unanswered. And Begin exam
                 .map(Question::getId)
                 .collect(Collectors.toList());
 

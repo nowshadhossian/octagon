@@ -1,13 +1,11 @@
 package com.kids.crm.repository;
 
-import com.kids.crm.model.Batch;
-import com.kids.crm.model.ExamType;
-import com.kids.crm.model.StudentAnswer;
-import com.kids.crm.model.User;
+import com.kids.crm.model.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface StudentAnswerRepository extends JpaRepository<StudentAnswer, Long>{
 
@@ -19,4 +17,6 @@ public interface StudentAnswerRepository extends JpaRepository<StudentAnswer, Lo
     List<StudentAnswer> findStudentAnswerByUserIdAndBatchIdAndQuestionTopicId(long userId, long batchId, long topicId);
     List<StudentAnswer> findByUserAndAttendedOnBetween(User user, Date from, Date to);
     void removeByUserIdAndBatchId(long userId, long batchId);
+
+    Optional<StudentAnswer> findByUserAndBatchAndQuestion(User user, Batch batch, Question question);
 }

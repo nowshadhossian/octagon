@@ -52,22 +52,5 @@ public class StudentDashboardController {
         return "subject-page";
     }
 
-    @GetMapping(BASE_ROUTE+"/question-checklist")
-    public String showQuestionCheckList(ModelMap modelMap, @RequestParam (value ="_topic",required = false) String topicParam){
-        User loggedInUser = userSession.getLoggedInUser();
-        List<StudentAnswer> studentAnswers;
-        if (topicParam==null || topicParam.equalsIgnoreCase("all")){
-            studentAnswers = studentService.getStudentAnswerByUserIdAndBatchId(loggedInUser.getId(),userSession.getCurrentBatch().getId());
-        } else{
-            studentAnswers = studentService.getStudentAnswerByUserIdAndBatchIdAndTopicId(loggedInUser.getId(),userSession.getCurrentBatch().getId(),Long.parseLong(topicParam));
-        }
-        modelMap.addAttribute("selectedFilter",topicParam);
 
-        modelMap.addAttribute("studentAnswers",studentAnswers);
-
-        List<Topic> topics = topicService.getAllTopic();
-        modelMap.addAttribute("topics",topics);
-
-        return "question-checklist";
-    }
 }
