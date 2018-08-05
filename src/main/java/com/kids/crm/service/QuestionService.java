@@ -1,7 +1,6 @@
 package com.kids.crm.service;
 
-import com.kids.crm.model.QQuestion;
-import com.kids.crm.model.Question;
+import com.kids.crm.model.*;
 import com.kids.crm.pojo.ExamSettingsDTO;
 import com.kids.crm.repository.QuestionRepository;
 import com.kids.crm.service.exception.NotFoundException;
@@ -10,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class QuestionService {
@@ -63,4 +64,10 @@ public class QuestionService {
         return question.getSession().getYear() + "-" + question.getSession().getId().toString() + "-" + question.getSubject().getId().toString() + "-" + question.getQuestionNo() + UUID.randomUUID() + "." + ext;
     }
 
+    public List<Question> findByVersionAndSubject(Version version, Subject subject) {
+        return questionRepository.findAll().stream()
+                .filter(question -> Objects.equals(version.getId(), question.getVersion()))
+                .filter(question -> Objects.equals(subject.getId(), question.getSubject().getId()))
+                .collect(Collectors.toList());
+    }
 }

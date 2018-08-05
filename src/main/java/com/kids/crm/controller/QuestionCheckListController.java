@@ -3,15 +3,10 @@ package com.kids.crm.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kids.crm.config.Config;
-import com.kids.crm.model.ExamType;
-import com.kids.crm.model.StudentAnswer;
-import com.kids.crm.model.Topic;
-import com.kids.crm.model.User;
+import com.kids.crm.model.*;
 import com.kids.crm.pojo.ExamSettingsDTO;
-import com.kids.crm.service.Encryption;
-import com.kids.crm.service.StudentService;
-import com.kids.crm.service.TopicService;
-import com.kids.crm.service.UserSession;
+import com.kids.crm.pojo.QuestionKey;
+import com.kids.crm.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Controller
 public class QuestionCheckListController {
@@ -40,6 +37,8 @@ public class QuestionCheckListController {
 
     @Autowired private ObjectMapper objectMapper;
 
+    @Autowired private QuestionService questionService;
+
     @GetMapping(BASE_ROUTE)
     public String showQuestionCheckList(ModelMap modelMap, @RequestParam(value = "_topic", required = false) String topicParam) {
         User loggedInUser = userSession.getLoggedInUser();
@@ -48,6 +47,11 @@ public class QuestionCheckListController {
             studentAnswers = studentService.getStudentAnswerByUserIdAndBatchId(loggedInUser.getId(), userSession.getCurrentBatch().getId());
         } else {
             studentAnswers = studentService.getStudentAnswerByUserIdAndBatchIdAndTopicId(loggedInUser.getId(), userSession.getCurrentBatch().getId(), Long.parseLong(topicParam));
+            List<QuestionKey> questionKeys = questionService.findByVersionAndSubject(((Student) loggedInUser).getVersion(), userSession.getCurrentBatch().getSubject()).stream()
+                .filter(question -> Objects.equals(question.getId(), Long.parseLong(topicParam)))
+                    .map(question -> QuestionKey.get(question.getYear(), question.getQuestionNo()))
+                .collect(Collectors.toList());
+            modelMap.addAttribute("questionKeys", questionKeys);
         }
         modelMap.addAttribute("selectedFilter", topicParam);
 

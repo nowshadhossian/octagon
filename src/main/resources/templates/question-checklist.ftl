@@ -1,3 +1,5 @@
+<#-- @ftlvariable name="questionKeys" type="java.util.List<com.kids.crm.pojo.QuestionKey>" -->
+<#-- @ftlvariable name="QUESTION_KEY" type="com.kids.crm.pojo.QuestionKey" -->
 <#assign title="Dashboard | Octagon">
 <#assign navPage="/layout/nav/student-nav.ftl">
 <#include "/layout/nav/top.ftl">
@@ -55,7 +57,7 @@
                                         </#if>
                                         <#assign index=index+1>
                                     <#else>
-                                        <a href="${examUrl!"#"}"><div class="box"></div></a>
+                                        <a href="${examUrl!"#"}"><div class="box <#if questionKeys?? && QUESTION_KEY.get(yr, i)??  && questionKeys?seq_contains(QUESTION_KEY.get(yr, i))>similar-topic</#if>"></div></a>
                                     </#if>
 
                                 </#list>
@@ -111,6 +113,9 @@
     .filter-menu{
         margin-bottom: 10px;
         margin-left: 2px;
+    }
+    .similar-topic{
+        background-color: black;
     }
 
     @media (min-width: 768px){

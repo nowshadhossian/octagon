@@ -10,7 +10,7 @@ public class VersionConverter implements AttributeConverter<Version, Integer> {
 
     @Override
     public Integer convertToDatabaseColumn(Version version) {
-        return version == null ? null : version.getId();
+        return version == null ? Version.ENGLISH.getId() : version.getId();
     }
 
     @Override
