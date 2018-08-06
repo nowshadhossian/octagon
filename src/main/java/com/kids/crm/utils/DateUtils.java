@@ -35,5 +35,10 @@ public class DateUtils {
         cal.add(Calendar.DAY_OF_MONTH, -15);
         return cal.getTime();
     }
+    public static Date daysBack(Date from,int toBack){
+        cal.setTime(from);
+        cal.add(Calendar.DAY_OF_MONTH,-1*toBack);
+        return cal.getTime();
+    }
 
 }
