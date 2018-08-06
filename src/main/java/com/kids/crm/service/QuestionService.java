@@ -46,6 +46,13 @@ public class QuestionService {
     public List<Question> getAllQuestions() {
         return questionRepository.findAll();
     }
+
+    public List<Question> getAllQuestions(Version version) {
+        return getAllQuestions().stream()
+                .filter(question -> question.getVersion() == version.getId())
+                .collect(Collectors.toList());
+    }
+
     public void saveQuestion(Question question) {
         questionRepository.save(question);
     }

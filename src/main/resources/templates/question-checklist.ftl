@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="oldestQuestionYear" type="java.lang.Integer" -->
 <#-- @ftlvariable name="questionKeys" type="java.util.List<com.kids.crm.pojo.QuestionKey>" -->
 <#-- @ftlvariable name="QUESTION_KEY" type="com.kids.crm.pojo.QuestionKey" -->
 <#assign title="Dashboard | Octagon">
@@ -44,11 +45,13 @@
                                     </div>
                                 </#if>
                             </#list>
+                            <div class="box box-year header-year"></div>
                             <#assign index=0>
-                            <#list 2004..(.now?string('yyyy')?number) as yr>
+                            <#list oldestQuestionYear..(.now?string('yyyy')?number) as yr>
                                 <div class="box box-year">${yr}</div>
                                 <#list 1..100 as i>
-                                    <#assign examUrl = "/student/dashboard/question-checklist/start/answer/questionNo/${i}/year/${yr}"/>
+                                    <#assign questionNo = i/>
+                                    <#assign examUrl = "/student/dashboard/question-checklist/start/answer/questionNo/${questionNo}/year/${yr}"/>
                                     <#if studentAnswers[index]?? && yr==studentAnswers[index].question.year && i==studentAnswers[index].question.questionNo>
                                         <#if studentAnswers[index].gotCorrect==true>
                                             <a href="${examUrl!"#"}"><div class="box correct-answer"></div></a>
@@ -59,8 +62,10 @@
                                     <#else>
                                         <a href="${examUrl!"#"}"><div class="box <#if questionKeys?? && QUESTION_KEY.get(yr, i)??  && questionKeys?seq_contains(QUESTION_KEY.get(yr, i))>similar-topic</#if>"></div></a>
                                     </#if>
-
                                 </#list>
+                                 <#assign questionNo = 0/>
+                                 <#assign examUrl = "/student/dashboard/question-checklist/start/answer/questionNo/${questionNo}/year/${yr}"/>
+                                 <a href="${examUrl!"#"}"><div class="box box-year" style="font-size: 16px;">Give</div></a>
                             </#list>
                         </div>
                     </div>
@@ -76,7 +81,7 @@
 <style>
     .wrapper {
         display: grid;
-        grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto;
+        grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto;
         grid-gap: 5px;
         background-color: #fff;
         color: #444;

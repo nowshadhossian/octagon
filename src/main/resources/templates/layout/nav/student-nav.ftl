@@ -128,6 +128,11 @@
                 </form>
             </li>-->
                 <li class="nav-item">
+                    <div class="nav-link">
+                        <i class="oi oi-person"></i> ${LOGGED_IN_USER.getFirstName()}
+                    </div>
+                </li>
+                <li class="nav-item">
                     <div class="nav-link" data-toggle="modal" data-target="#exampleModal">
                         <i class="fa fa-fw fa-sign-out"></i>Logout
                     </div>

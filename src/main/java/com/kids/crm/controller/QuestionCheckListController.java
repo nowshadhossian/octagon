@@ -47,12 +47,14 @@ public class QuestionCheckListController {
             studentAnswers = studentService.getStudentAnswerByUserIdAndBatchId(loggedInUser.getId(), userSession.getCurrentBatch().getId());
         } else {
             studentAnswers = studentService.getStudentAnswerByUserIdAndBatchIdAndTopicId(loggedInUser.getId(), userSession.getCurrentBatch().getId(), Long.parseLong(topicParam));
-            List<QuestionKey> questionKeys = questionService.findByVersionAndSubject(((Student) loggedInUser).getVersion(), userSession.getCurrentBatch().getSubject()).stream()
+            List<QuestionKey> questionKeys = questionService.findByVersionAndSubject(userSession.getStudentVersion(), userSession.getCurrentBatch().getSubject()).stream()
                 .filter(question -> Objects.equals(question.getId(), Long.parseLong(topicParam)))
                     .map(question -> QuestionKey.get(question.getYear(), question.getQuestionNo()))
                 .collect(Collectors.toList());
             modelMap.addAttribute("questionKeys", questionKeys);
         }
+
+        modelMap.addAttribute("oldestQuestionYear", questionService.getAllQuestions(userSession.getStudentVersion()).stream().map(Question::getYear).mapToInt(value -> value).min().orElse(2004));
         modelMap.addAttribute("selectedFilter", topicParam);
 
         modelMap.addAttribute("studentAnswers", studentAnswers);
@@ -82,6 +84,4 @@ public class QuestionCheckListController {
         return "redirect:" + config.getExamUiDomain() + "/?u=" + URLEncoder.encode(encryptedUserId, "UTF-8")
                 + "&s=" + URLEncoder.encode(examSettingsDtoEncrypted, "UTF-8");
     }
-
-
 }

@@ -1,8 +1,6 @@
 package com.kids.crm.service;
 
-import com.kids.crm.model.Batch;
-import com.kids.crm.model.Subject;
-import com.kids.crm.model.User;
+import com.kids.crm.model.*;
 import com.kids.crm.repository.BatchRepository;
 import com.kids.crm.repository.QuestionRepository;
 import com.kids.crm.repository.SubjectRepository;
@@ -50,6 +48,10 @@ public class UserSession {
 
     public Subject getCurrentSubject() {
         return getCurrentBatch().getSubject();
+    }
+
+    public Version getStudentVersion() {
+        return ((Student) getLoggedInUser()).getVersion();
     }
 
 
