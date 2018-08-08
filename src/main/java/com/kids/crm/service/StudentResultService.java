@@ -20,9 +20,8 @@ public class StudentResultService {
     @Autowired
     StudentAnswerRepository studentAnswerRepository;
     public Map<String,Map<String,Map<String,Integer>>> getWeeklyStudentResultTopic(User user, int weekOffset){
-        Date currentDate = new Date();
-        Date to = DateUtils.daysBack(currentDate,1+7*weekOffset);
-        Date from = DateUtils.daysBack(currentDate,7+7*weekOffset);
+        Date to = DateUtils.daysBack(new Date(),0+7*weekOffset);
+        Date from = DateUtils.daysBack(DateUtils.toDate(LocalDate.now()),6+7*weekOffset);
         List<StudentAnswer> studentAnswerList = studentAnswerRepository.findByUserAndAttendedOnBetweenOrderByAttendedOn(user,from,to);
         return getStudentResultsMap(studentAnswerList);
     }
