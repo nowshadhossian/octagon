@@ -7,8 +7,8 @@
         <div class="col-12">
             <div class="card mb-3">
                 <div class="card-header card-header-nav">
-                    <span id="prev-week" class="btn btn-primary-outline left-nav">prev week</span>
-                    <span id="next-week" class="btn btn-primary-outline right-nav">next week</span>
+                    <span id="prev-week" class="btn btn-primary-outline left-nav"><i class="oi oi-chevron-left"></i></span>
+                    <span id="next-week" class="btn btn-primary-outline right-nav"><i class="oi oi-chevron-right"></i></span>
                 </div>
                 <div class="card-body table-responsive">
                     <div class="row">
