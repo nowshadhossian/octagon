@@ -5,7 +5,9 @@ import com.kids.crm.model.Role;
 import com.kids.crm.model.User;
 import com.kids.crm.mongo.repository.UserLoginSessionRepository;
 import com.kids.crm.repository.BatchRepository;
+import com.kids.crm.repository.StudentBatchRepository;
 import com.kids.crm.repository.StudentRepository;
+import com.kids.crm.repository.SubjectRepository;
 import com.kids.crm.service.JwtToken;
 import com.kids.crm.service.StudentService;
 import com.kids.crm.service.UserService;
@@ -32,6 +34,10 @@ public class BaseController {
     protected BatchRepository batchRepository;
     @MockBean
     protected UserSession userSession;
+    @MockBean
+    protected StudentBatchRepository studentBatchRepository;
+    @MockBean
+    protected SubjectRepository subjectRepository;
 
     @Before
     public void setup(){

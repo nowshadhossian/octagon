@@ -42,7 +42,7 @@
                                 <#list subTopics as subTopic>
                                     <tr>
                                         <td>${subTopic.name}</td>
-                                        <td><a href="/superadmin/sub-topic/edit?subTopicId=${subTopic.id}" title="Edit Sub-topic"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+                                        <td><a href="/superadmin/sub-topic/${subTopic.id}/edit" title="Edit Sub-topic"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
                                     </tr>
                                 </#list>
                             </tbody>
