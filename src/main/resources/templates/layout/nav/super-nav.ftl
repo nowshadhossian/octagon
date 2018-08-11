@@ -47,6 +47,12 @@
                     <span class="nav-link-text">Assistant</span>
                 </a>
             </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                <a class="nav-link" href="/register/teacher">
+                    <i class="fa fa-fw fa-table"></i>
+                    <span class="nav-link-text">Create Teacher</span>
+                </a>
+            </li>
         </ul>
         <ul class="navbar-nav sidenav-toggler">
             <li class="nav-item">

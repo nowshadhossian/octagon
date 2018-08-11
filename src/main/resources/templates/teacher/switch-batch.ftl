@@ -27,4 +27,13 @@
          <a href="/teacher/batch/add" class="btn btn-success">Add Batch</a>
      </div>
  </div>
+
+<div class="row" style="margin-top: 220px">
+    <form action="/logout" method="post">
+        <input type="hidden"
+               name="${_csrf.parameterName}"
+               value="${_csrf.token}"/>
+        <input class="btn btn-primary" type="submit" value="Logout">
+    </form>
+</div>
 <#include "/layout/no-nav/bottom.ftl">
