@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class SessionService {
@@ -27,5 +28,9 @@ public class SessionService {
 
     public void saveSession(Session session){
         sessionRepository.save(session);
+    }
+    public Session findSessionById(long sessionId){
+        Optional<Session> session = sessionRepository.findById(sessionId);
+        return session.get();
     }
 }

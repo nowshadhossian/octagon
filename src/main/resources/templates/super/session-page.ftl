@@ -26,7 +26,7 @@
                     <tr>
                         <td>${session.name}</td>
                         <td>${session.year}</td>
-                        <td></td>
+                        <td><a href="/superadmin/session/${session.id}/edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
                     </tr>
                     </#list>
                     </tbody>

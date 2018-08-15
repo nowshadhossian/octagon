@@ -3,6 +3,7 @@ package com.kids.crm.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -17,4 +18,5 @@ public class Session {
     private Long id;
     private String name;
     private int year;//new
+    private Date examDate;
 }
