@@ -35,6 +35,12 @@
                     <span class="nav-link-text">Student Result</span>
                 </a>
             </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                <a class="nav-link" href="/student/dashboard/exam-info">
+                    <i class="fa fa-fw fa-table"></i>
+                    <span class="nav-link-text">Exam-info</span>
+                </a>
+            </li>
         </ul>
         <ul class="navbar-nav sidenav-toggler">
             <li class="nav-item">

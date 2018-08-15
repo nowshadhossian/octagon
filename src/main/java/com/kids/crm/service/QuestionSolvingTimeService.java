@@ -18,4 +18,8 @@ public class QuestionSolvingTimeService {
     public List<QuestionSolvingTime> getQuestionSolvingTimeByQustionId(Long questionId){
         return questionSolvingTimeRepository.findQuestionSolvingTimeByQuestionId(questionId);
     }
+
+    public List<QuestionSolvingTime> getQuestionSolvingTimeByUserId(Long userId){
+        return getQuestionSolvingTimeByUserId(userId);
+    }
 }

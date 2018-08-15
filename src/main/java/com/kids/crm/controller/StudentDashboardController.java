@@ -5,11 +5,9 @@ import com.kids.crm.controller.webcomponent.LeaderboardComponent;
 import com.kids.crm.model.StudentAnswer;
 import com.kids.crm.model.Topic;
 import com.kids.crm.model.User;
+import com.kids.crm.model.mongo.QuestionSolvingTime;
 import com.kids.crm.repository.StudentAnswerRepository;
-import com.kids.crm.service.StudentResultService;
-import com.kids.crm.service.StudentService;
-import com.kids.crm.service.TopicService;
-import com.kids.crm.service.UserSession;
+import com.kids.crm.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -41,6 +39,9 @@ public class StudentDashboardController {
     @Autowired
     StudentResultService studentResultService;
 
+    @Autowired
+    QuestionSolvingTimeService questionSolvingTimeService;
+
     @RequestMapping(value = BASE_ROUTE, method = RequestMethod.GET)
     private String getStudentDashboard(Authentication authentication, ModelMap modelMap) {
         User loggedIn = userSession.getLoggedInUser();
@@ -65,6 +66,22 @@ public class StudentDashboardController {
         User loggedInUser = userSession.getLoggedInUser();
         Map<String,Map<String,Map<String,Integer>>> studentResults = studentResultService.getWeeklyStudentResultTopic(loggedInUser, weekOffset);
         return studentResults;
+    }
+    @GetMapping(BASE_ROUTE+"/exam-info")
+    public String showExamInfo(ModelMap modelMap){
+        if(userSession.getCurrentBatch()!=null){
+            modelMap.addAttribute("examDate",userSession.getCurrentBatch().getSession().getExamDate());
+            List<QuestionSolvingTime> questionSolvingTimeList = questionSolvingTimeService.getQuestionSolvingTimeByUserId(userSession.getLoggedInUser().getId());
+            int totalTime = 0;
+            for (QuestionSolvingTime questionSolvingTime: questionSolvingTimeList) {
+                totalTime+=questionSolvingTime.getDuration();
+            }
+            if (questionSolvingTimeList.size()>0){
+                int avgTime = totalTime/questionSolvingTimeList.size();
+                modelMap.addAttribute("avgTime",avgTime);
+            }
+        }
+        return "student/exam-info";
     }
 
 }
