@@ -93,7 +93,7 @@ $(document).ready(function(){
         $('#marksTableHead').append('<td></td>');
         for (var i=0; i < dates.length; i++)
         {
-            $('#marksTableHead').append('<td>' + new Date(dates[i]).toDateString().fixed() + '</td>');
+            $('#marksTableHead').append('<td style="max-width: 30px;">' + new Date(dates[i]).toDateString().fixed() + '</td>');
         }
 
         var marks_table_body = $('#marksTableBody');

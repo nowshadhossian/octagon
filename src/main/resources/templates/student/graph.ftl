@@ -20,8 +20,8 @@
     </div>
 </div>
 
-<div  style=" max-width: 1400px; max-height: 440px; overflow-x: scroll; overflow-y: scroll; margin-bottom: 30px">
-    <table style="border-collapse: separate; border-spacing: 5px  " >
+<div  style=" width: 50%; max-height: 440px; overflow-x: scroll; overflow-y: scroll; margin-bottom: 30px">
+    <table style="border-collapse: separate; border-spacing: 5px; width: 100%;  " >
         <thead >
         <tr id="marksTableHead" > </tr>
         </thead>
