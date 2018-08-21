@@ -52,8 +52,5 @@
 </div>
 <#include "/layout/nav/bottom.ftl">
 
-
-
-
-
+<script src="/js/graph.js"></script>
 

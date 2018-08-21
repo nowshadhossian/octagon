@@ -63,93 +63,6 @@ public class GraphService {
 
     }
 
-//    public HashMap<Date, HashMap<String, Integer>> graphStudentMarksMap(User user){
-//        Date to = new Date();
-//        Date from = DateUtils.daysBack15(to);
-//        List<StudentAnswer> studentAnswerList = studentAnswerRepository.findByUserAndAttendedOnBetween(user, from, to);
-//        studentAnswerList.sort((StudentAnswer o1, StudentAnswer o2) ->
-//                new CompareToBuilder()
-//                        .append(o1.getAttendedOn(), o2.getAttendedOn())
-//                        .append(o1.getQuestion().getTopic().getName(), o2.getQuestion().getTopic().getName()).toComparison());
-//        Date globaldate = from;
-//
-//        String globalTopic = studentAnswerList.get(0).getQuestion().getTopic().getName();
-//        int globalMarks = 0;
-//        int incorrectTopic = 0;
-//
-//        HashMap<String, Integer> innerMap = new HashMap<String, Integer>();
-//        HashMap<Date, HashMap<String, Integer>> outerMap = new HashMap<Date, HashMap<String, Integer>>();
-//
-//        for (int i = 0; i < studentAnswerList.size(); i++) {
-//            if (globaldate.compareTo(studentAnswerList.get(i).getAttendedOn()) == 0){
-//                if (globalTopic.equals(studentAnswerList.get(i).getQuestion().getTopic().getName())){
-//                    if (studentAnswerList.get(i).isGotCorrect())
-//                        globalMarks += 1;
-//                    else
-//                        incorrectTopic += 1;
-//                    if (i == studentAnswerList.size()-1){
-//                        innerMap.put(studentAnswerList.get(i).getQuestion().getTopic().getName(),(globalMarks*100)/(globalMarks+incorrectTopic));
-//                        outerMap.put(globaldate, innerMap);
-//                    }
-//                }
-//                else{
-//
-//                    innerMap.put(studentAnswerList.get(i-1).getQuestion().getTopic().getName(),(globalMarks*100)/(globalMarks+incorrectTopic));
-//                    if (studentAnswerList.get(i).isGotCorrect()){
-//                        globalMarks = 1;
-//                        incorrectTopic = 0;
-//                    }
-//                    else{
-//                        incorrectTopic = 1;
-//                        globalMarks = 0;
-//                    }
-//                    globalTopic = studentAnswerList.get(i).getQuestion().getTopic().getName();
-//                    if (i == studentAnswerList.size()-1){
-//                        innerMap.put(studentAnswerList.get(i).getQuestion().getTopic().getName(),(globalMarks*100)/(globalMarks+incorrectTopic));
-//                        outerMap.put(globaldate, innerMap);
-//                    }
-//                }
-//            }
-//            else {
-//                if (i == 0){
-//                    if (studentAnswerList.get(i).isGotCorrect()){
-//                        globalMarks = 1;
-//                        incorrectTopic = 0;
-//                    }
-//                    else{
-//                        incorrectTopic = 1;
-//                        globalMarks = 0;
-//                    }
-//                    globaldate = studentAnswerList.get(i).getAttendedOn();
-//                    globalTopic = studentAnswerList.get(i).getQuestion().getTopic().getName();
-//                }
-//                else {
-//                    innerMap.put(studentAnswerList.get(i-1).getQuestion().getTopic().getName(),(globalMarks*100)/(globalMarks+incorrectTopic));
-//                    outerMap.put(globaldate, innerMap);
-//                    innerMap = new HashMap<String, Integer>();
-//                    if (studentAnswerList.get(i).isGotCorrect()){
-//                        globalMarks = 1;
-//                        incorrectTopic = 0;
-//                    }
-//                    else{
-//                        incorrectTopic = 1;
-//                        globalMarks = 0;
-//                    }
-//                    globaldate = studentAnswerList.get(i).getAttendedOn();
-//                    globalTopic = studentAnswerList.get(i).getQuestion().getTopic().getName();
-//                    if (i == studentAnswerList.size()-1){
-//                        innerMap.put(studentAnswerList.get(i).getQuestion().getTopic().getName(),(globalMarks*100)/(globalMarks+incorrectTopic));
-//                        outerMap.put(globaldate, innerMap);
-//                    }
-//                }
-//
-//            }
-//        }
-//
-//        return outerMap;
-//    }
-
-
     public HashMap<String, Integer> spiderServiceMap(User user) {
 
         HashMap<String, Integer> radarMap = new HashMap<>();
@@ -224,7 +137,7 @@ public class GraphService {
         int consistencyValue = 0;
         int totalDailyAccess = 0;
         if (studentAnswerRepository.findAllByUserAndAttendedOnGreaterThanAndAttendedOnLessThanEqualAndGotCorrectEquals(user,
-                Utils.daysBack10(new Date()), Utils.today(), true).size() >= 5){
+                DateUtils.daysBack10(new Date()), DateUtils.today(), true).size() >= 5){
             for(int i=1; i <=10; i++){
                 Calendar cal = Calendar.getInstance();
                 Calendar cal1 = Calendar.getInstance();
@@ -253,10 +166,10 @@ public class GraphService {
         //Last 10 days/last 30 days (11th to 40th day) accuracy ratio
         //Calculate accuracy of last 10 days and last 30 days(11th to 40th day). Percentage increase is the improvement.
         //(Accuracy of 10 days - accuracy of 30 days)/accuracy of 30 days.  * 100
-        List<StudentAnswer> studentAnswerForLast_10List = studentAnswerRepository.findAllByUserAndAttendedOnGreaterThanAndAttendedOnLessThanEqual(user,Utils.daysBack10(new Date()), Utils.today());
-        List<StudentAnswer> studentAnswerCorrectForLast_10List = studentAnswerRepository.findAllByUserAndAttendedOnGreaterThanAndAttendedOnLessThanEqualAndGotCorrectEquals(user, Utils.daysBack10(new Date()), Utils.today(), true);
-        List<StudentAnswer> studentAnswerForLast30Before10List  = studentAnswerRepository.findAllByUserAndAttendedOnGreaterThanAndAttendedOnLessThanEqual(user, Utils.backFortyFirstDate(), Utils.backEleventhDate());
-        List<StudentAnswer> studentAnswerCorrectForLast30Before10List = studentAnswerRepository.findAllByUserAndAttendedOnGreaterThanAndAttendedOnLessThanEqualAndGotCorrectEquals(user, Utils.backFortyFirstDate(), Utils.backEleventhDate(), true);
+        List<StudentAnswer> studentAnswerForLast_10List = studentAnswerRepository.findAllByUserAndAttendedOnGreaterThanAndAttendedOnLessThanEqual(user,DateUtils.daysBack10(new Date()), DateUtils.today());
+        List<StudentAnswer> studentAnswerCorrectForLast_10List = studentAnswerRepository.findAllByUserAndAttendedOnGreaterThanAndAttendedOnLessThanEqualAndGotCorrectEquals(user, DateUtils.daysBack10(new Date()), DateUtils.today(), true);
+        List<StudentAnswer> studentAnswerForLast30Before10List  = studentAnswerRepository.findAllByUserAndAttendedOnGreaterThanAndAttendedOnLessThanEqual(user, DateUtils.backFortyFirstDate(), DateUtils.backEleventhDate());
+        List<StudentAnswer> studentAnswerCorrectForLast30Before10List = studentAnswerRepository.findAllByUserAndAttendedOnGreaterThanAndAttendedOnLessThanEqualAndGotCorrectEquals(user, DateUtils.backFortyFirstDate(), DateUtils.backEleventhDate(), true);
 
         int improvementValue = 0;
         try {
