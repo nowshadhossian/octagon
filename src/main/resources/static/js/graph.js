@@ -100,7 +100,7 @@ $(document).ready(function(){
         for (var i = 0; i < topic_names.length; i++)
         {
             var table_row = '<tr>';
-            table_row += '<td style="min-width: 170px;">' + topic_names[i] + '</td>';
+            table_row += '<td style="min-width: 170px; text-align: right">' + topic_names[i] + '</td>';
             for (var j=0; j < dates.length; j++)
             {
                 if (topics[topic_names[i]][j] < 50 && topics[topic_names[i]][j] >= 0)
