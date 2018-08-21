@@ -57,21 +57,21 @@ public class SuperAdminDashboardController {
     @PostMapping(value = "/superadmin/danger-zone", params = "medical-db-init")
     public String initMedicalDb() {
 
-        if (subjectRepository.findByName("Medical") == null) {
+        if (subjectRepository.findByName("MBBS admission exams") == null) {
             Subject subject = Subject.builder()
-                    .name("Medical")
+                    .name("MBBS admission exams")
                     .code("3333")
                     .build();
             subjectRepository.save(subject);
         }
 
-       /* if(!userRepository.findByEmail("us@medeprepbd.com").isPresent()){ //TODO ask client if they need this
+        if(!userRepository.findByEmail("us@medeprepbd.com").isPresent()){
             User theCompany = Teacher.builder()
                     .address("Uttara")
                     .degree("BS Medical")
                     .phone("0181811111")
                     .build();
-            theCompany.setFirstName(config.getCompanyName());
+            theCompany.setFirstName("None");
             theCompany.setPassword(passwordEncoder.encode("Tha3UIadf$h@$g5%f1"));
             theCompany.setRole(Role.TEACHER);
             theCompany.setEmail("us@medeprepbd.com");
@@ -79,7 +79,7 @@ public class SuperAdminDashboardController {
             theCompany.setLastName("");
 
             userRepository.save(theCompany);
-        }*/
+        }
 
         return "super/danger-zone";
     }

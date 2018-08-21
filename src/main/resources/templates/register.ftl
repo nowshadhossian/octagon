@@ -146,9 +146,9 @@
                 <#else>
                   <div class="form-group">
                      <@spring.bind "signup.referral" />
-                       <label for="referral">Referred By/ How did you know about us</label>
+                       <label for="referral">How did you know about us</label>
                         <input class="form-control" name="${spring.status.expression}" type="text"
-                               aria-describedby="nameHelp" placeholder="Referred By/ How did you know about us">
+                               aria-describedby="nameHelp" placeholder="How did you know about us">
                   </div>
                 </#if>
 

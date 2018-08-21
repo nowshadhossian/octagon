@@ -90,6 +90,12 @@ public class RestApiController {
                 .map(question -> {
                     boolean answerIsCorrect = Utils.answerMatched(answer, question.getAnswer());
                     StudentAnswer studentAnswer = studentAnswerService.findByUserAndBatchAndQuestion(restApiManager.getUser(), restApiManager.getCurrentBatch(), question)
+                            .map(studentAnswer1 -> {
+                                studentAnswer1.setAnswer(answer);
+                                studentAnswer1.setAttendedOn(new Date());
+                                studentAnswer1.setGotCorrect(answerIsCorrect);
+                                return studentAnswer1;
+                            })
                             .orElseGet(() -> StudentAnswer.builder()
                                     .answer(answer)
                                     .attendedOn(new Date())

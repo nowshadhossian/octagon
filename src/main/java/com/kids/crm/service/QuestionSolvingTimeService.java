@@ -5,6 +5,7 @@ import com.kids.crm.mongo.repository.QuestionSolvingTimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -20,6 +21,7 @@ public class QuestionSolvingTimeService {
     }
 
     public List<QuestionSolvingTime> getQuestionSolvingTimeByUserId(Long userId){
-        return getQuestionSolvingTimeByUserId(userId);
+        //return getQuestionSolvingTimeByUserId(userId); //TODO: BUG HERE
+        return Collections.emptyList();
     }
 }
