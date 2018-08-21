@@ -20,4 +20,13 @@ public interface StudentAnswerRepository extends JpaRepository<StudentAnswer, Lo
     void removeByUserIdAndBatchId(long userId, long batchId);
 
     Optional<StudentAnswer> findByUserAndBatchAndQuestion(User user, Batch batch, Question question);
+
+    // import from medically
+
+    List<StudentAnswer> findAllByUser(User user);
+    List<StudentAnswer> findAllByUserAndGotCorrectEquals(User user, boolean gotCorrect);
+    List<StudentAnswer> findAllByUserAndAttendedOnGreaterThanAndAttendedOnLessThanEqual(User user, Date from, Date to);
+    List<StudentAnswer> findAllByUserAndAttendedOnGreaterThanAndAttendedOnLessThanEqualAndGotCorrectEquals(User user, Date from, Date to, boolean gotCorrect);
+
+
 }

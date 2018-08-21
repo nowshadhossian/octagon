@@ -8,4 +8,6 @@ import java.util.List;
 public interface QuestionSolvingTimeRepository extends MongoRepository<QuestionSolvingTime, Long>{
 
     public List<QuestionSolvingTime> findQuestionSolvingTimeByQuestionId(Long questionId);
+    public List<QuestionSolvingTime> findAllByUserId(Long uid);
+    public List<QuestionSolvingTime> findAllByActionEqualsAndUserId(String actionValue, Long userId);
 }

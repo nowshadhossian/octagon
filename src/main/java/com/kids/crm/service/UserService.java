@@ -45,4 +45,10 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
+
+    public User getAuthenticateUser(long id)
+    {
+
+        return userRepository.findById(id).get();
+    }
 }

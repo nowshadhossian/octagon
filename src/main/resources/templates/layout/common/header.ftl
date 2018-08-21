@@ -16,3 +16,4 @@
 <link href="/css/main.css" rel="stylesheet" type="text/css">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" />
+<link rel="stylesheet" href="css/styles.css?v=1.0">

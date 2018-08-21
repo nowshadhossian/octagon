@@ -32,10 +32,12 @@ public class TopicController {
         List<Topic> topics = topicService.getAllTopic();
         modelMap.addAttribute("topics", topics);
 
-        Map<String,String> abbreviateSubTopicMap = new HashMap<>();
+        Map<String,List<SubTopic>> abbreviateSubTopicMap = new HashMap<>();
+//        Map<String,String> abbreviateSubTopicMap = new HashMap<>();
         for (Topic topic: topics) {
             List<SubTopic> subTopics = subTopicService.getSubTopicsByTopicId(topic.getId());
-            abbreviateSubTopicMap.put("topicId_"+topic.getId().toString(),StringUtils.abbreviate(subTopicService.getSubTopicNameAsString(subTopics),25));
+            abbreviateSubTopicMap.put("topicId_"+topic.getId().toString(), subTopics);
+//            abbreviateSubTopicMap.put("topicId_"+topic.getId().toString(),StringUtils.abbreviate(subTopicService.getSubTopicNameAsString(subTopics),25));
         }
         modelMap.addAttribute("abbreviateSubTopicMap",abbreviateSubTopicMap);
         return "super/topic";

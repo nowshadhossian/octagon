@@ -40,9 +40,35 @@ public class GraphController {
         return graphService.getGraphStudentResultList(loggedIn);
     }
 
+//    @GetMapping("/subtopic/daily/progress/data")
+//    @ResponseBody
+//    public HashMap<Date, HashMap<String, Integer>> table(){
+//        return graphService.graphStudentMarksMap(userSession.getLoggedInUser());
+//    }
+
+    @GetMapping("/radar/data")
+    @ResponseBody
+    public HashMap<String, Integer> spiderController(){
+         return graphService.spiderServiceMap(userSession.getLoggedInUser());
+    }
+
     @GetMapping("/subtopic/daily/progress/data")
     @ResponseBody
     public HashMap<Date, HashMap<String, Integer>> table(){
-        return graphService.graphStudentMarksMap(userSession.getLoggedInUser());
+        return graphService.htmlTableMap(userSession.getLoggedInUser());
     }
+
+    @GetMapping("/topicSubTopicMarks/data")
+    @ResponseBody
+    public HashMap<String, Integer> topicSubTopicMarks(){
+        return graphService.TopicSubtopicMarksMap(userSession.getLoggedInUser());
+    }
+
+    @GetMapping("/topicWiseMarks/data")
+    @ResponseBody
+    public HashMap<String, Integer> topicWiseMarks(){
+        return graphService.TopicWiseMarksMap(userSession.getLoggedInUser());
+    }
+
+
 }

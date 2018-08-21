@@ -17,4 +17,5 @@ public interface QuestionRepository extends JpaRepository<Question, Long>, Query
     Page<Question> findBySubjectId(long subjectId, Pageable pageable);
     List<Question> findByIdIn(Set<Long> ids);
     List<Question> findQuestionsByYear(int year);
+  List<Question> findAllByVersionEquals(int version);
 }

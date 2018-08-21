@@ -4,6 +4,9 @@
 
 <head>
     <#include "/layout/common/header.ftl">
+
+
+
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">

@@ -10,3 +10,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 
 <script src="/js/moment.js"></script>
+
+
+<script src="/js/liquidFillGauge.js" language="JavaScript"></script>
+<script src="http://d3js.org/d3.v3.min.js" language="JavaScript"></script>
