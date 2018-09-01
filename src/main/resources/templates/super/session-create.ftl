@@ -39,8 +39,12 @@
         $("#examDate").datetimepicker({
             format:'M d, Y, h:00 a' // datetime picker format
         });
-        var dateTime = moment('${session.examDate!""}').format("MMM DD, Y, h:00 a"); // moment js format
-        $("#examDate").val(dateTime);
-        $("#examDate").datetimepicker("setValue",dateTime);
+        var dateTime = '${session.examDate!""}';
+        if(dateTime!=""){
+            dateTime = moment(dateTime).format("MMM DD, Y, h:00 a"); // moment js format
+            $("#examDate").val(dateTime);
+            $("#examDate").datetimepicker("setValue",dateTime);
+        }
+
     });
 </script>
