@@ -19,6 +19,8 @@ public class QSession extends EntityPathBase<Session> {
 
     public static final QSession session = new QSession("session");
 
+    public final DateTimePath<java.util.Date> examDate = createDateTime("examDate", java.util.Date.class);
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath name = createString("name");
