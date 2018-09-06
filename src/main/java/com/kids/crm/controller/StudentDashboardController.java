@@ -43,7 +43,7 @@ public class StudentDashboardController {
     QuestionSolvingTimeService questionSolvingTimeService;
 
     @RequestMapping(value = BASE_ROUTE, method = RequestMethod.GET)
-    private String getStudentDashboard(Authentication authentication, ModelMap modelMap) {
+    public String getStudentDashboard(Authentication authentication, ModelMap modelMap) {
         User loggedIn = userSession.getLoggedInUser();
         modelMap.addAttribute("name", loggedIn.getName());
 

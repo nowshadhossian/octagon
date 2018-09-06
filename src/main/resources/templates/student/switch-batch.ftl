@@ -28,6 +28,7 @@
 
 </div>
 
+
 <div class="row" style="margin-top: 220px">
     <form action="/logout" method="post">
         <input type="hidden"
@@ -36,4 +37,5 @@
         <input class="btn btn-primary" type="submit" value="Logout">
     </form>
 </div>
+<p>hfshfkjsdkfhsdkjfhkjsdhfkjdshfksdhfksdhfksdhfksdhfkjdhf</p>
 <#include "/layout/no-nav/bottom.ftl">

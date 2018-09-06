@@ -47,6 +47,7 @@ public class StudentSwitchBatchController {
         }
         userSession.setCurrentBatch(studentBatch.getBatch());
 
-        return "redirect:/student/dashboard";
+        return "redirect:/student/dashboard/graph";
+//        return "redirect:/student/dashboard";
     }
 }

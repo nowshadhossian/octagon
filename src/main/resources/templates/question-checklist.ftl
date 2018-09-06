@@ -82,7 +82,7 @@
     .wrapper {
         display: grid;
         grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto;
-        grid-gap: 5px;
+        grid-gap: 0px;
         background-color: #fff;
         color: #444;
     }
@@ -91,7 +91,7 @@
         background-color: #dddfe2;
         border: 1px solid #212529;
         color: #fff;
-        border-radius: 5px;
+        border-radius: 0px;
     }
     .box-year{
         padding: 1px;

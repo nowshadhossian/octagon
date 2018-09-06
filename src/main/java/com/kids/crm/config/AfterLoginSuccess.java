@@ -38,7 +38,7 @@ public class AfterLoginSuccess implements AuthenticationSuccessHandler{
     public String determineTargetUrl(Authentication authentication) {
         Set<String> authorities = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         if (authorities.contains("ROLE_STUDENT")) {
-            return "/student/switch-batch";
+             return "/student/switch-batch";
         } else if (authorities.contains("ROLE_TEACHER")) {
             return "/teacher/switch-batch";
         } else if (authorities.contains("ROLE_ASSISTANT")) {
