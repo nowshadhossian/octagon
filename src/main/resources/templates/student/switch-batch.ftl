@@ -37,5 +37,4 @@
         <input class="btn btn-primary" type="submit" value="Logout">
     </form>
 </div>
-<p>hfshfkjsdkfhsdkjfhkjsdhfkjdshfksdhfksdhfksdhfksdhfkjdhf</p>
 <#include "/layout/no-nav/bottom.ftl">
