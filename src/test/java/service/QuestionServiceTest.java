@@ -52,4 +52,10 @@ public class QuestionServiceTest {
 
     }
 
+//    @Test
+//    public void averageQuestionSolvingTime(){
+////        graphService.averageTimePerQues(userService.getAuthenticateUser(3l));
+//        System.out.println(userService.getAuthenticateUser(3L));
+//    }
+
 }

@@ -70,5 +70,17 @@ public class GraphController {
         return graphService.TopicWiseMarksMap(userSession.getLoggedInUser());
     }
 
+    @GetMapping("/averageTimePerQues/data")
+    @ResponseBody
+    public int averageTimePerQues(){
+        return graphService.averageTimePerQues(userSession.getLoggedInUser());
+    }
+
+    @GetMapping("/daysToGo/data")
+    @ResponseBody
+    public int daysToGo(){
+        return graphService.daysToGo();
+    }
+
 
 }

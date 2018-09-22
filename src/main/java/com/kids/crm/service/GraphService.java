@@ -1,18 +1,13 @@
 package com.kids.crm.service;
 
 import com.kids.crm.json.graph.GraphStudentResult;
-import com.kids.crm.model.Question;
-import com.kids.crm.model.StudentAnswer;
-import com.kids.crm.model.SubTopic;
-import com.kids.crm.model.User;
+import com.kids.crm.model.*;
 import com.kids.crm.model.mongo.QuestionSolvingTime;
 import com.kids.crm.mongo.repository.QuestionSolvingTimeRepository;
 import com.kids.crm.repository.QuestionRepository;
 import com.kids.crm.repository.StudentAnswerRepository;
 import com.kids.crm.repository.UserRepository;
 import com.kids.crm.utils.DateUtils;
-import com.kids.crm.utils.Utils;
-import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +29,8 @@ public class GraphService {
     QuestionRepository questionRepository;
     @Autowired
     QuestionSolvingTimeRepository questionSolvingTimeRepository;
+    @Autowired
+    UserSession userSession;
 
     public List<GraphStudentResult> getGraphStudentResultList(User user) {
         List<GraphStudentResult> graphStudentResults = new ArrayList<>();
@@ -196,7 +193,7 @@ public class GraphService {
     // daily correct wrong
     public HashMap<Date, HashMap<String, Integer>> htmlTableMap(User user){
         HashMap<Date, HashMap<String, Integer>> outerMap = new HashMap<>();
-        for(int i=1; i <= 15; i++){
+        for(int i=0; i <= 15; i++){
             HashMap<String, Integer> percentageMap = new HashMap<>();
             Calendar cal = Calendar.getInstance();
             Calendar cal_1 = Calendar.getInstance();
@@ -354,6 +351,20 @@ public class GraphService {
         }
 
         return  topicWiseMarks;
+    }
+
+    //average time per question(Exam-info)
+    public int averageTimePerQues(User user){
+         return (int)questionSolvingTimeRepository.findAllByUserId(user.getId()).stream()
+                .mapToInt(QuestionSolvingTime::getDuration)
+                .average().getAsDouble();
+
+    }
+
+    //Days to go(Exam-info)
+    public int daysToGo(){
+        Date date = userSession.getCurrentBatch().getSession().getExamDate();
+        return DateUtils.getDifferenceDays(date);
     }
 
 }
