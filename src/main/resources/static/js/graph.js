@@ -14,7 +14,7 @@ $(document).ready(function(){
         if (totalwrong == 0 && totalCorrect == 0){}
         else {
             var element = "";
-            element = element + '<canvas id="studentDailyRightWrong" width="550" height="405"></canvas>';
+            element = element + '<canvas id="studentDailyRightWrong" style="  display: block;height: 405px;width: 550px;" ></canvas>';
             $('#dailyRightWrong').append(element);
             var ctx = document.getElementById("studentDailyRightWrong").getContext('2d');
             var chart = new Chart(ctx, {
@@ -174,6 +174,50 @@ $(document).ready(function(){
     });
 });
 
+// side bar
+$(document).ready(function(){
+    $.ajax({
+        method: "GET",
+        url: "/student/dashboard/graph/topicWiseMarks/data"
+    }).done(function( json ) {
+        if (Object.keys(json).length == 0){}
+        else {
+
+            var element = '    <div id="schoolEngage" style=" max-height: 440px; max-width: 230px; overflow-y: scroll; float: right; margin-right: 230px;">\n' +
+                '                   <div id="test" class="border" style = " height: 800px; width: 200px; background-color: #ffffff;  "></div>\n' +
+                '              </div>';
+
+            $('#subTopicAndSchoolEngage').append(
+                element
+            );
+            var totalScores = 0;
+            var valuesLength = Object.values(json).length;
+            for(var i=0; i < valuesLength; i++){
+                totalScores += Object.values(json)[i];
+            }
+
+            var resultElement="";
+            resultElement =  resultElement + ' <div style = " height: 40px; width: 200px; background-color: #4f616d;">'+
+                '<h6 style="text-align: center; color: white">'+'School Engagement Overview'+'</h6>'+
+                ' </div>' + '<div>';
+            var colorvalue = ["#407707", "#f6a92f", "#407707", "#f6a92f"];
+            for(var j=0; j < valuesLength; j++){
+                resultElement = resultElement + '<div  style=" padding-left: 46px; "><p><span id="phy" style = "color: '+colorvalue[j]+'; font-size: 50px; text-align: center;">'+Object.values(json)[j]+'</span></br><span     text-align: center;> '+ Object.keys(json)[j]+'</span></P></div>';
+            }
+            resultElement = resultElement + '<div style=" padding-left: 46px; "><p> <span id="total" style = "color: #494949; font-size: 50px;    text-align: center;">'+totalScores+'</span> </br><span    text-align: center;>total</span></P></div>';
+            resultElement = resultElement + '</div>';
+
+            $('#test').append(
+                resultElement
+            );
+
+
+            $('#totalScore').append(totalScores);
+        }
+
+    });
+});
+
 //topicSubTopicMarks
 $(document).ready(function(){
     $.ajax({
@@ -185,14 +229,14 @@ $(document).ready(function(){
         }
         else {
             var resultElement = "";
-            resultElement = resultElement + '    <div class="border" style="height: 440px; width: 750px; background-color: #ffffff; float: left; margin-bottom: 30px;">\n' +
-                                            '        <div style="background-color: #4f616d; width: 750px; height: 40px; text-align: center">\n' +
-                                            '            <h6 style="padding-top: 5px; color: white">Sub Topic Completion</h6>\n' +
-                                            '        </div>\n' +
-                                            '        <div style=" max-height: 400px; max-width: 730px; overflow-y: scroll; float: left;">\n' +
-                                            '            <canvas id="horizontalChart" width="700" height="600" ></canvas>\n' +
-                                            '        </div>\n' +
-                                            '    </div>';
+            resultElement = resultElement + '    <div id="topicSubTopicOuter" class="border" style="height: 440px; width: 750px; background-color: #ffffff; float: left; margin-bottom: 30px;">\n' +
+                '        <div id="topicSubTopicHead" style="background-color: #4f616d; width: 750px; height: 40px; text-align: center">\n' +
+                '            <h6 style="padding-top: 5px; color: white">Sub Topic Completion</h6>\n' +
+                '        </div>\n' +
+                '        <div id="topicSubTopicBody" style=" max-height: 400px; max-width: 730px; overflow-y: scroll; float: left;">\n' +
+                '            <canvas id="horizontalChart" width="700" height="600" ></canvas>\n' +
+                '        </div>\n' +
+                '    </div>';
             $('#subTopicAndSchoolEngage').append(
                 resultElement
             );
@@ -284,50 +328,6 @@ $(document).ready(function(){
             });
         }
 
-
-    });
-});
-
-// side bar
-$(document).ready(function(){
-    $.ajax({
-        method: "GET",
-        url: "/student/dashboard/graph/topicWiseMarks/data"
-    }).done(function( json ) {
-        if (Object.keys(json).length == 0){}
-        else {
-
-            var element = '    <div style=" max-height: 440px; max-width: 230px; overflow-y: scroll; float: right; margin-right: 230px;">\n' +
-                '        <div id="test" class="border" style = " height: 800px; width: 200px; background-color: #ffffff;  "></div>\n' +
-                '    </div>';
-
-            $('#subTopicAndSchoolEngage').append(
-                element
-            );
-            var totalScores = 0;
-            var valuesLength = Object.values(json).length;
-            for(var i=0; i < valuesLength; i++){
-                totalScores += Object.values(json)[i];
-            }
-
-            var resultElement="";
-            resultElement =  resultElement + ' <div style = " height: 40px; width: 200px; background-color: #4f616d;">'+
-                '<h6 style="text-align: center; color: white">'+'School Engagement Overview'+'</h6>'+
-                ' </div>' + '<div>';
-            var colorvalue = ["#407707", "#f6a92f", "#407707", "#f6a92f"];
-            for(var j=0; j < valuesLength; j++){
-                resultElement = resultElement + '<div  style=" padding-left: 46px; "><p><span id="phy" style = "color: '+colorvalue[j]+'; font-size: 50px; text-align: center;">'+Object.values(json)[j]+'</span></br><span     text-align: center;> '+ Object.keys(json)[j]+'</span></P></div>';
-            }
-            resultElement = resultElement + '<div style=" padding-left: 46px; "><p> <span id="total" style = "color: #494949; font-size: 50px;    text-align: center;">'+totalScores+'</span> </br><span    text-align: center;>total</span></P></div>';
-            resultElement = resultElement + '</div>';
-
-            $('#test').append(
-                resultElement
-            );
-
-
-            $('#totalScore').append(totalScores);
-        }
 
     });
 });

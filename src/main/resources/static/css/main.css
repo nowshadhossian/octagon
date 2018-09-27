@@ -14,3 +14,208 @@
         padding-left: 0px;
     }
 }
+/*#studentDailyRightWrong{*/
+
+    /*display: block;*/
+    /*height: 405px;*/
+    /*width: 550px;*/
+/*}*/
+
+/*@media screen and (min-width: 300px) and (max-width: 400px){*/
+    /*#studentDailyRightWrong{*/
+
+        /*width: 332px;*/
+    /*}*/
+/*}*/
+
+@media (max-width: 359px) and (min-width: 300px){
+    #studentDailyRightWrong{
+        width: 280px !important;
+    }
+    #radar{
+        margin-right: -42px;
+    }
+    #radar-chart{
+        width: 363px !important;
+        height: 246px !important;
+    }
+    #liquidGraph{
+        max-height: 423px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+    }
+    #schoolEngage{
+        max-height: 415px !important;
+        max-width: fit-content !important;
+        overflow-y: auto !important;
+        margin-bottom: 30px !important;
+        float: none !important;
+        margin-right: unset !important;
+    }
+    #topicSubTopicOuter{
+        height: 390px !important;
+        width: 270px !important;
+    }
+    #topicSubTopicHead{
+        width: inherit !important;
+        height: 31px !important;
+    }
+    #topicSubTopicBody{
+        max-height: 350px !important;
+        max-width: 268px !important;
+        overflow-y: auto !important;
+    }
+    #horizontalChart{
+        height: 500px !important;
+        width: auto !important;
+    }
+}
+@media (max-width: 400px) and (min-width: 360px) {
+   #studentDailyRightWrong{
+        width: 340px !important;
+    }
+    #radar{
+        margin-right: -42px;
+    }
+    #radar-chart{
+        width: 417px !important;
+        height: 306px !important;
+    }
+    #schoolEngage{
+        max-height: 415px !important;
+        max-width: fit-content !important;
+        overflow-y: auto !important;
+        margin-bottom: 30px !important;
+        float: none !important;
+        margin-right: unset !important;
+    }
+    #topicSubTopicOuter{
+        height: 390px !important;
+        width: 330px !important;
+    }
+    #topicSubTopicHead{
+        width: inherit !important;
+        height: 31px !important;
+     }
+    #topicSubTopicBody{
+        max-height: 350px !important;
+        max-width: 328px !important;
+        overflow-y: auto !important;
+    }
+    #horizontalChart{
+        height: 500px !important;
+        width: auto !important;
+    }
+    #liquidGraph{
+        max-height: 483px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+    }
+}
+@media (max-width: 479px) and (min-width: 401px) {
+   #studentDailyRightWrong{
+        width: 381px !important;
+    }
+    #radar{
+        margin-right: -50px;
+    }
+    #radar-chart{
+        width: 479px !important;
+        height: 352px !important;
+    }
+    #schoolEngage{
+        max-height: 415px !important;
+        max-width: fit-content !important;
+        overflow-y: auto !important;
+        margin-bottom: 30px !important;
+        float: none !important;
+        margin-right: unset !important;
+    }
+    #topicSubTopicOuter{
+        height: 390px !important;
+        width: 370px !important;
+    }
+    #topicSubTopicHead{
+        width: inherit !important;
+        height: 31px !important;
+    }
+    #topicSubTopicBody{
+        max-height: 350px !important;
+        max-width: 368px !important;
+        overflow-y: auto !important;
+    }
+    #horizontalChart{
+        height: 500px !important;
+        width: auto !important;
+    }
+    #liquidGraph{
+        max-height: 483px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+    }
+}
+@media (max-width: 580px) and (min-width: 480px) {
+    #studentDailyRightWrong{
+        width: 420px !important;
+    }
+    #radar{
+        margin-right: 20px;
+    }
+    #schoolEngage{
+        max-height: 415px !important;
+        max-width: fit-content !important;
+        overflow-y: auto !important;
+        margin-bottom: 30px !important;
+        float: none !important;
+        margin-right: unset !important;
+    }
+    #topicSubTopicOuter{
+        height: 390px !important;
+        width: 450px !important;
+    }
+    #topicSubTopicHead{
+        width: inherit !important;
+        height: 31px !important;
+    }
+    #topicSubTopicBody{
+        max-height: 350px !important;
+        max-width: 448px !important;
+        overflow-y: auto !important;
+    }
+    #horizontalChart{
+        height: 500px !important;
+        width: auto !important;
+    }
+    #liquidGraph{
+        max-height: 483px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+    }
+}
+@media (max-width: 1024px) and (min-width: 581px){
+    #schoolEngage{
+        max-height: 415px !important;
+        max-width: fit-content !important;
+        overflow-y: auto !important;
+        margin-bottom: 30px !important;
+        float: none !important;
+        margin-right: unset !important;
+    }
+    #topicSubTopicOuter{
+        height: 390px !important;
+        width: 561px !important;
+    }
+    #topicSubTopicHead{
+        width: inherit !important;
+        height: 31px !important;
+    }
+    #topicSubTopicBody{
+        max-height: 350px !important;
+        max-width: 559px !important;
+        overflow-y: auto !important;
+    }
+    #horizontalChart{
+        height: 500px !important;
+        width: auto !important;
+    }
+}

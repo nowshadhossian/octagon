@@ -37,26 +37,19 @@
                     </div>
                 </div>
 <#--Exam-info end-->
-<div class="row">
-    <div class="col-12">
+<#--<div class="row">-->
+    <#--<div class="col-12">-->
 
         <div >
-
-
-
-            <div id="dailyRightWrong" style="float: left">
-
-             </div>
-
-
-            <div   style="float: right">
-                <canvas id="radar-chart" width="550" height="405"></canvas>
+            <div id="dailyRightWrong" style="float: left;"></div>
+            <div id="radar"  style="float: right;">
+                <canvas id="radar-chart" style="width: 550px; height: 405px"></canvas>
             </div>
         </div>
-    </div>
-</div>
+    <#--</div>-->
+<#--</div>-->
 
-<div  style=" width: fit-content; max-height: 440px; overflow-x: scroll; overflow-y: scroll; margin-bottom: 30px">
+<div  style=" width: inherit; max-height: 440px; overflow-x: auto; overflow-y: auto; margin-bottom: 30px; font-size: small">
     <table style="border-collapse: separate; border-spacing: 5px; min-width: 20px;" >
         <thead >
         <tr id="marksTableHead" > </tr>
@@ -113,8 +106,6 @@
 
 <script src="/js/graph.js"></script>
 
-<#include "/layout/nav/bottom.ftl">
-
 <style>
     .grid-container {
         display: grid;
@@ -155,6 +146,19 @@
         background-color: rgba(0,0,0,.03);
         font-weight: 400;
     }
+
+    /*responsive design start*/
+
+    /*@media screen and (max-width:360px){*/
+        /*#studentDailyRightWrong{*/
+
+            /*width: 337px;*/
+        /*}*/
+    /*}*/
+
+    /*responsive design end*/
+
 </style>
 <#--<script src="/js/student-result.js"></script>-->
+
 <#--end student result weekly-->
