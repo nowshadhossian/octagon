@@ -71,9 +71,15 @@ $(document).ready(function(){
         method: "GET",
         url: "/student/dashboard/graph/subtopic/daily/progress/data"
     }).done(function( json ) {
+            var topics = {};
 
-
-            var topics = {
+        for(var i=0; i< Object.values(json).length; i++){
+            var innerJson = Object.values(json)[i];
+            for(var j = 0; j< Object.keys(innerJson).length; j++){
+                topics[Object.keys(innerJson)[j]] = [];
+            }
+        }
+            /*var topics = {
 
                 'Ele-Electric Charge' : [],
                 'Ele-Current' : [],
@@ -89,7 +95,7 @@ $(document).ready(function(){
                 'Gen-Pressure' : [],
             };
 
-
+*/
             var dates = Object.keys(json);
 
             var daywiseTopic = Object.values(json);
