@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping(StudentDashboardController.BASE_ROUTE + "/graph")
@@ -80,6 +81,12 @@ public class GraphController {
     @ResponseBody
     public int daysToGo(){
         return graphService.daysToGo();
+    }
+    //
+    @GetMapping("/totalSubject")
+    @ResponseBody
+    public int sumId(){
+        return graphService.subjectPerStudent();
     }
 
 

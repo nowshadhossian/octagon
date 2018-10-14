@@ -11,11 +11,11 @@
                     <span class="nav-link-text">Custom Exam</span>
                 </a>
             </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                <a class="nav-link" href="/student/switch-batch">
-                    <i class="fa fa-fw fa-table"></i>
-                    <span class="nav-link-text">Switch Subject</span>
-                </a>
+            <li id="switchSubject" class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                <#--<a class="nav-link" href="/student/switch-batch">-->
+                    <#--<i class="fa fa-fw fa-table"></i>-->
+                    <#--<span class="nav-link-text">Switch Subject</span>-->
+                <#--</a>-->
             </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
                 <a class="nav-link" href="/student/dashboard/question-checklist">
@@ -29,12 +29,12 @@
                     <span class="nav-link-text">Graph</span>
                 </a>
             </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                <a class="nav-link" href="/student/dashboard/graphs-student-result">
-                    <i class="fa fa-fw fa-table"></i>
-                    <span class="nav-link-text">Student Result</span>
-                </a>
-            </li>
+            <#--<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">-->
+                <#--<a class="nav-link" href="/student/dashboard/graphs-student-result">-->
+                    <#--<i class="fa fa-fw fa-table"></i>-->
+                    <#--<span class="nav-link-text">Student Result</span>-->
+                <#--</a>-->
+            <#--</li>-->
             <#--<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">-->
                 <#--<a class="nav-link" href="/student/dashboard/exam-info">-->
                     <#--<i class="fa fa-fw fa-table"></i>-->
@@ -152,3 +152,34 @@
         </ul>
     </div>
 </nav>
+
+<script>
+    // $(function () {
+    //     $(".filter-item").click(function () {
+    //         $(".filter-item").removeClass("btn-dark");
+    //         $(".filter-item").removeClass("btn-dark-light");
+    //         this.addClass("btn-dark");
+    //     })
+    // });
+
+    // switch subject show for more than one subject
+    $(document).ready(function(){
+        $.ajax({
+            method: "GET",
+            url: "/student/dashboard/graph/totalSubject"
+        }).done(function( json ) {
+            var resultElement = "";
+            resultElement += '<a class="nav-link" href="/student/switch-batch">\n' +
+                    '                    <i class="fa fa-fw fa-table"></i>\n' +
+                    '                    <span class="nav-link-text">Switch Subject</span>\n' +
+                    '                 </a>';
+            if (json < 2){
+
+            }
+            else {
+                $('#switchSubject').append(resultElement);
+            }
+
+        });
+    });
+</script>

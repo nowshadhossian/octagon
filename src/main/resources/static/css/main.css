@@ -39,18 +39,30 @@
         width: 363px !important;
         height: 246px !important;
     }
+    #htmlTableOuter{
+        width: unset !important;
+        min-width: 88px;
+    }
     #liquidGraph{
         max-height: 423px;
         overflow-y: auto;
         margin-bottom: 20px;
     }
-    #schoolEngage{
-        max-height: 415px !important;
-        max-width: fit-content !important;
-        overflow-y: auto !important;
-        margin-bottom: 30px !important;
-        float: none !important;
-        margin-right: unset !important;
+    /*#schoolEngage{*/
+        /*max-height: 415px !important;*/
+        /*max-width: fit-content !important;*/
+        /*overflow-y: auto !important;*/
+        /*margin-bottom: 30px !important;*/
+        /*float: none !important;*/
+        /*margin-right: unset !important;*/
+    /*}*/
+    #scrolling{
+        margin-right: 72px !important;
+        /* margin-left: 190px; */
+        margin-bottom: 20px !important;
+    }
+    #test{
+        width: 218PX !important;
     }
     #topicSubTopicOuter{
         height: 390px !important;
@@ -81,13 +93,25 @@
         width: 417px !important;
         height: 306px !important;
     }
-    #schoolEngage{
-        max-height: 415px !important;
-        max-width: fit-content !important;
-        overflow-y: auto !important;
-        margin-bottom: 30px !important;
-        float: none !important;
-        margin-right: unset !important;
+    #htmlTableOuter{
+        width: unset !important;
+        min-width: 88px;
+    }
+    /*#schoolEngage{*/
+        /*max-height: 415px !important;*/
+        /*max-width: fit-content !important;*/
+        /*overflow-y: auto !important;*/
+        /*margin-bottom: 30px !important;*/
+        /*float: none !important;*/
+        /*margin-right: unset !important;*/
+    /*}*/
+    #scrolling{
+        margin-right: 72px !important;
+        /* margin-left: 190px; */
+        margin-bottom: 20px !important;
+    }
+    #test{
+        width: 218PX !important;
     }
     #topicSubTopicOuter{
         height: 390px !important;
@@ -123,13 +147,25 @@
         width: 479px !important;
         height: 352px !important;
     }
-    #schoolEngage{
-        max-height: 415px !important;
-        max-width: fit-content !important;
-        overflow-y: auto !important;
-        margin-bottom: 30px !important;
-        float: none !important;
-        margin-right: unset !important;
+    #htmlTableOuter{
+        width: unset !important;
+        min-width: 88px;
+    }
+    /*#schoolEngage{*/
+        /*max-height: 415px !important;*/
+        /*max-width: fit-content !important;*/
+        /*overflow-y: auto !important;*/
+        /*margin-bottom: 30px !important;*/
+        /*float: none !important;*/
+        /*margin-right: unset !important;*/
+    /*}*/
+    #scrolling{
+        margin-right: 72px !important;
+        /* margin-left: 190px; */
+        margin-bottom: 20px !important;
+    }
+    #test{
+        width: 218PX !important;
     }
     #topicSubTopicOuter{
         height: 390px !important;
@@ -161,13 +197,25 @@
     #radar{
         margin-right: 20px;
     }
-    #schoolEngage{
-        max-height: 415px !important;
-        max-width: fit-content !important;
-        overflow-y: auto !important;
-        margin-bottom: 30px !important;
-        float: none !important;
-        margin-right: unset !important;
+    #htmlTableOuter{
+        width: unset !important;
+        min-width: 88px;
+    }
+    /*#schoolEngage{*/
+        /*max-height: 415px !important;*/
+        /*max-width: fit-content !important;*/
+        /*overflow-y: auto !important;*/
+        /*margin-bottom: 30px !important;*/
+        /*float: none !important;*/
+        /*margin-right: unset !important;*/
+    /*}*/
+    #scrolling{
+        margin-right: 72px !important;
+        /* margin-left: 190px; */
+        margin-bottom: 20px !important;
+    }
+    #test{
+        width: 218PX !important;
     }
     #topicSubTopicOuter{
         height: 390px !important;
@@ -193,13 +241,25 @@
     }
 }
 @media (max-width: 1024px) and (min-width: 581px){
-    #schoolEngage{
-        max-height: 415px !important;
-        max-width: fit-content !important;
-        overflow-y: auto !important;
-        margin-bottom: 30px !important;
-        float: none !important;
-        margin-right: unset !important;
+    /*#schoolEngage{*/
+        /*max-height: 415px !important;*/
+        /*max-width: fit-content !important;*/
+        /*overflow-y: auto !important;*/
+        /*margin-bottom: 30px !important;*/
+        /*float: none !important;*/
+        /*margin-right: unset !important;*/
+    /*}*/
+    #scrolling{
+        margin-right: 72px !important;
+        /* margin-left: 190px; */
+        margin-bottom: 20px !important;
+    }
+    #test{
+        width: 218PX !important;
+    }
+    #htmlTableOuter{
+        /*width: unset !important;*/
+        min-width: 88px;
     }
     #topicSubTopicOuter{
         height: 390px !important;

@@ -6,6 +6,7 @@ import com.kids.crm.model.mongo.QuestionSolvingTime;
 import com.kids.crm.mongo.repository.QuestionSolvingTimeRepository;
 import com.kids.crm.repository.QuestionRepository;
 import com.kids.crm.repository.StudentAnswerRepository;
+import com.kids.crm.repository.StudentBatchRepository;
 import com.kids.crm.repository.UserRepository;
 import com.kids.crm.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class GraphService {
     QuestionRepository questionRepository;
     @Autowired
     QuestionSolvingTimeRepository questionSolvingTimeRepository;
+    @Autowired
+    StudentBatchRepository studentBatchRepository;
     @Autowired
     UserSession userSession;
 
@@ -365,6 +368,18 @@ public class GraphService {
     public int daysToGo(){
         Date date = userSession.getCurrentBatch().getSession().getExamDate();
         return DateUtils.getDifferenceDays(date);
+    }
+    //subject per student
+    public int subjectPerStudent(){
+        List<StudentBatch> studentBatchList = studentBatchRepository.findAllByStudent((Student) userSession.getLoggedInUser());
+
+        Set<Long> setId = new HashSet<>();
+
+        for (StudentBatch studentBatch : studentBatchList) {
+            setId.add(studentBatch.getBatch().getSubject().getId());
+
+        }
+        return setId.size();
     }
 
 }

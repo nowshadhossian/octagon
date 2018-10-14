@@ -181,6 +181,50 @@ $(document).ready(function(){
 });
 
 // side bar
+// $(document).ready(function(){
+//     $.ajax({
+//         method: "GET",
+//         url: "/student/dashboard/graph/topicWiseMarks/data"
+//     }).done(function( json ) {
+//         if (Object.keys(json).length == 0){}
+//         else {
+//
+//             var element = '    <div id="schoolEngage" style=" max-height: 440px; max-width: 230px; overflow-y: scroll; overflow-x: hidden; float: right; margin-right: 230px;">\n' +
+//                 '                   <div id="test" class="border" style = " height:fit-content; width: 200px; background-color: #ffffff;  "></div>\n' +
+//                 '              </div>';
+//
+//             $('#subTopicAndSchoolEngage').append(
+//                 element
+//             );
+//             var totalScores = 0;
+//             var valuesLength = Object.values(json).length;
+//             for(var i=0; i < valuesLength; i++){
+//                 totalScores += Object.values(json)[i];
+//             }
+//
+//             var resultElement="";
+//             resultElement =  resultElement + ' <div style = " height: 40px; width: 200px; background-color: #4f616d;">'+
+//                 '<h6 style="text-align: center; color: white">'+'School Engagement Overview'+'</h6>'+
+//                 ' </div>' + '<div>';
+//             var colorvalue = ["#407707", "#f6a92f", "#407707", "#f6a92f"];
+//             for(var j=0; j < valuesLength; j++){
+//                 resultElement = resultElement + '<div  style=" padding-left: 46px; "><p><span id="phy" style = "color: '+colorvalue[j]+'; font-size: 50px; text-align: center;">'+Object.values(json)[j]+'</span></br><span     text-align: center;> '+ Object.keys(json)[j]+'</span></P></div>';
+//             }
+//             resultElement = resultElement + '<div style=" padding-left: 46px; "><p> <span id="total" style = "color: #494949; font-size: 50px;    text-align: center;">'+totalScores+'</span> </br><span    text-align: center;>total</span></P></div>';
+//             resultElement = resultElement + '</div>';
+//
+//             $('#test').append(
+//                 resultElement
+//             );
+//
+//
+//             $('#totalScore').append(totalScores);
+//         }
+//
+//     });
+// });
+
+// side bar
 $(document).ready(function(){
     $.ajax({
         method: "GET",
@@ -189,9 +233,14 @@ $(document).ready(function(){
         if (Object.keys(json).length == 0){}
         else {
 
-            var element = '    <div id="schoolEngage" style=" max-height: 440px; max-width: 230px; overflow-y: scroll; float: right; margin-right: 230px;">\n' +
-                '                   <div id="test" class="border" style = " height: 800px; width: 200px; background-color: #ffffff;  "></div>\n' +
-                '              </div>';
+            var element = '    <div id="schoolEngage" style="float: right;">\n' +
+                '                   <div id="head" style = " height: 40px; width: 219px; background-color: #4f616d;">\n' +
+                '                       <h6 style="text-align: center; color: white; padding: 1px;">'+'School Engagement Overview'+'</h6>\n'+
+                '                   </div>\n'+
+                '                   <div id="scrolling" style=" max-height: 400px; max-width: 230px; overflow-y: scroll; overflow-x: hidden; float: right; margin-right: 230px;">\n' +
+                '                       <div id="test" class="border" style = " height:fit-content; width: 200px; background-color: #ffffff;  "></div>\n' +
+                '                   </div>';
+
 
             $('#subTopicAndSchoolEngage').append(
                 element
@@ -203,12 +252,11 @@ $(document).ready(function(){
             }
 
             var resultElement="";
-            resultElement =  resultElement + ' <div style = " height: 40px; width: 200px; background-color: #4f616d;">'+
-                '<h6 style="text-align: center; color: white">'+'School Engagement Overview'+'</h6>'+
-                ' </div>' + '<div>';
+
             var colorvalue = ["#407707", "#f6a92f", "#407707", "#f6a92f"];
             for(var j=0; j < valuesLength; j++){
                 resultElement = resultElement + '<div  style=" padding-left: 46px; "><p><span id="phy" style = "color: '+colorvalue[j]+'; font-size: 50px; text-align: center;">'+Object.values(json)[j]+'</span></br><span     text-align: center;> '+ Object.keys(json)[j]+'</span></P></div>';
+
             }
             resultElement = resultElement + '<div style=" padding-left: 46px; "><p> <span id="total" style = "color: #494949; font-size: 50px;    text-align: center;">'+totalScores+'</span> </br><span    text-align: center;>total</span></P></div>';
             resultElement = resultElement + '</div>';
@@ -376,12 +424,12 @@ $(document).ready(function(){
         else{
             var resultElement = "";
             resultElement = resultElement + '<div class="card text-black mb-3" style="width: fit-content; background-color: #ecece9; margin-left: 10px; margin-right: 10px;">\n' +
-                '    <div class="card-header text-white" style="background-color: #7ea121; color: #b4cb79">Progress</div>\n' +
+                '    <div class="card-header text-white" style="background-color: #4f616d; color: #b4cb79">Progress</div>\n' +
                 '    <div class="card-body" style="height: fit-content;">\n' +
                 '            <div  style=" display: table; margin: 0 auto;">\n' +
                 '                <svg id="fillgauge" width="200" height="200" onclick="gauge1.update(NewValue());"></svg>\n' +
-                '                <div style="display: table; margin: 0 auto; background-color: white;  width: 85%; margin-top: -124px;">\n' +
-                '                    <p style="text-align: center; margin-top: 121px;"><b>Overall</b></p>\n' +
+                '                <div style="display: table; margin: 0 auto; background-color: white;  width: 80%; margin-top: -47px;">\n' +
+                '                    <p style="text-align: center; margin-top: 57px;"><b>Overall</b></p>\n' +
                 '                </div>\n' +
                 '            </div>\n' +
                 '            <div id="liquid" class="row" style="margin-top: 10px"> </div>\n' +
@@ -422,8 +470,8 @@ $(document).ready(function(){
                     '<div class='+columnInSize+'>'+
                     '<div style=" display: table; margin: 0 auto;">'+
                     '<svg id="fillgauge'+i+'" width="120px" height="120px" onclick="gauge2.update(NewValue());"></svg>' +
-                    '<div style="display: table; margin: 0 auto; background-color: white;  width: 100px; margin-top: -40px;">' +
-                    '<p style="text-align: center; margin-top: 35px; color: #6ec1ef">'+Object.keys(json)[i]+'</p>' +
+                    '<div style="display: table; margin: 0 auto; background-color: white;  width: 86px; margin-top: -23px;">' +
+                    '<p style="text-align: center; margin-top: 19px; color: #6ec1ef">'+Object.keys(json)[i]+'</p>' +
                     '</div>' +
                     '</div>'+
                     '</div>');
@@ -503,3 +551,25 @@ function showResult(json) {
     $("#studentResult").html(resultElement);
 }
 //end student result weekly
+
+//switch subject show for more than one subject
+$(document).ready(function(){
+    $.ajax({
+        method: "GET",
+        url: "/student/dashboard/graph/totalSubject"
+    }).done(function( json ) {
+        var resultElement = "";
+        resultElement += '<a class="nav-link" href="/student/switch-batch">\n' +
+        '                    <i class="fa fa-fw fa-table"></i>\n' +
+        '                    <span class="nav-link-text">Switch Subject</span>\n' +
+        '                 </a>';
+        if (json < 2){
+
+        }
+        else {
+            $('#switchSubject').append(resultElement);
+        }
+
+
+    });
+});

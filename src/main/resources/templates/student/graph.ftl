@@ -49,7 +49,7 @@
     <#--</div>-->
 <#--</div>-->
 
-<div  style=" width: inherit; max-height: 440px; overflow-x: auto; overflow-y: auto; margin-bottom: 30px; font-size: small">
+<div id="htmlTableOuter"  style=" width: fit-content; max-height: 440px; overflow-x: auto; overflow-y: auto; margin-bottom: 30px; font-size: small">
     <table style="border-collapse: separate; border-spacing: 5px; min-width: 20px;" >
         <thead >
         <tr id="marksTableHead" > </tr>

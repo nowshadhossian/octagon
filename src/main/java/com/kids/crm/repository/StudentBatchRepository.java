@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface StudentBatchRepository extends JpaRepository<StudentBatch, Long> {
     List<StudentBatch> findByStudentAndBatch(Student student, Batch batch);
+    List<StudentBatch> findAllByStudent(Student student);
+
 }

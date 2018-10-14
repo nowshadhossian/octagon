@@ -131,6 +131,8 @@
         }
     }
 </style>
+
+<#include "/layout/nav/bottom.ftl">
 <script>
     // $(function () {
     //     $(".filter-item").click(function () {
@@ -139,5 +141,25 @@
     //         this.addClass("btn-dark");
     //     })
     // });
+
+    // switch subject show for more than one subject
+    $(document).ready(function(){
+        $.ajax({
+            method: "GET",
+            url: "/student/dashboard/graph/totalSubject"
+        }).done(function( json ) {
+            var resultElement = "";
+            resultElement += '<a class="nav-link" href="/student/switch-batch">\n' +
+                    '                    <i class="fa fa-fw fa-table"></i>\n' +
+                    '                    <span class="nav-link-text">Switch Subject</span>\n' +
+                    '                 </a>';
+            if (json < 2){
+
+            }
+            else {
+                $('#switchSubject').append(resultElement);
+            }
+
+        });
+    });
 </script>
-<#include "/layout/nav/bottom.ftl">
