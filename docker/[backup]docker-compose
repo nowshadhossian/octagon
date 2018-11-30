@@ -1,0 +1,40 @@
+version: '3.1'
+services:
+  mysql-master:
+    image: "mysql"
+    container_name: mysql_master
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    hostname: 'master'
+    volumes:
+     - $PWD/mysql/master/conf.d:/etc/mysql/mysql.conf.d/
+    ports:
+    - 8083:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+
+  mysql-slave:
+    image: "mysql"
+    container_name: mysql_slave
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    hostname: 'slave'
+    volumes:
+     - $PWD/mysql/slave/conf.d:/etc/mysql/mysql.conf.d/
+    ports:
+    - 8084:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    depends_on:
+      - mysql-master
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  prometheus:
+    image: grafana/grafana
+    ports:
+      - 3090:3000
