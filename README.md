@@ -40,3 +40,23 @@ Enter A record. hostname: medprepbd.com IP: digital ocean server IP
 **5. Port**
 Mastermcq running at port 8793 and react at 3000
 medprepbd running at port 8794 and react at 3001
+
+**6. Uptime Monitoring**
+email is sent to my email address when server is down for 20 minutes. This is done by 
+https://uptimerobot.com/
+
+**6. Auto restart after reboot**
+Done by systemctl also called systemd. Paste the two service named mastermcq.service & mastermcq-react.service 
+inside '/etc/systemd/system' of server.
+
+Then enable the service to run after boot by:
+systemctl enable mastermcq.service
+systemctl enable mastermcq-react.service
+
+if the jar doesn't run then 
+chmod +x medprepbd.jar
+
+for logs: 
+journalctl -u mastermcq-react
+
+for medprepbd since the user is admin, use sudo with all commands of systemctl

@@ -1,0 +1,11 @@
+[Unit]
+Description=MasterMCQ React
+After=syslog.target
+
+[Service]
+User=root
+ExecStart=/usr/bin/serve -s -p 3000 /root/build
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target

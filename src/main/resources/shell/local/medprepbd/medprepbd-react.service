@@ -1,0 +1,11 @@
+[Unit]
+Description=MedPrepBd React
+After=syslog.target
+
+[Service]
+User=root
+ExecStart=/usr/bin/serve -s -p 3001 /home/admin/med-build
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,11 @@
+[Unit]
+Description=MasterMCQ
+After=syslog.target
+
+[Service]
+User=root
+ExecStart=/usr/bin/java -jar /root/octagon-0.0.1-SNAPSHOT.jar
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target
