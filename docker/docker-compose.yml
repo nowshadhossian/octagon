@@ -3,10 +3,14 @@ services:
 
   prometheus:
     image: prom/prometheus
+    container_name: prometheus-octa
+    volumes:
+      - $PWD/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - 9090:9090
 
   grafana:
     image: grafana/grafana
+    container_name: grafana-octa
     ports:
       - 3090:3000

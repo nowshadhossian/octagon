@@ -3,6 +3,7 @@ package com.kids.crm.config;
 import com.kids.crm.model.User;
 import com.kids.crm.model.mongo.UserLoginSession;
 import com.kids.crm.mongo.repository.UserLoginSessionRepository;
+import com.kids.crm.service.metric.SignInMetric;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -19,6 +20,9 @@ public class AfterLoginSuccess implements AuthenticationSuccessHandler{
     @Autowired
     UserLoginSessionRepository userLoginSessionRepository;
 
+    @Autowired
+    SignInMetric signInMetric;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         User authUser = (User) authentication.getPrincipal();
@@ -31,6 +35,7 @@ public class AfterLoginSuccess implements AuthenticationSuccessHandler{
                 .role(authUser.getRole().getAuthority())
                 .build();
         userLoginSessionRepository.save(userLoginSession);
+        signInMetric.record();
         String targetUrl = determineTargetUrl(authentication);
         response.sendRedirect(targetUrl);
     }

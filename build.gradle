@@ -130,8 +130,10 @@ dependencies {
 	// https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
 	compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.3.3'
 
-	// https://mvnrepository.com/artifact/com.h2database/h2
+	// https://mvnrepository.com/artifact/com.h2database/h2 . Unit test uses this
 	testCompile group: 'com.h2database', name: 'h2', version: '1.4.197'
+
+	runtime("io.micrometer:micrometer-registry-prometheus")
 
 }
 
