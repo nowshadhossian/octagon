@@ -1,3 +1,7 @@
+## Screenshot
+https://www.screencast.com/t/CtzY5VJYWx
+https://www.screencast.com/t/WpoWCUXvem
+
 ##Installation:
 
 **1. Mongodb**
